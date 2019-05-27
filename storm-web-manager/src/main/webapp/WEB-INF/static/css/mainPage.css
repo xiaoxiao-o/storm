@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.main-content{
+	padding: 10px 10px 0px;
+}
+.margin-top-0{
+	margin-top: 0;
+}
+.margin-bottom-0{
+	margin-bottom: 0;
+}
+.margin-bottom-5{
+	margin-bottom: 5px;
+}
+.margin-left-0{
+	margin-left: 0;
+}
+.margin-right-0{
+	margin-right: 0;
+}
+.left{
+	text-align: left;
+}
+.right{
+	text-align: right;
+}
+.center{
+	text-align: center;
+}
+
+.table-a{
+	color: blue;
+	cursor: pointer;
+}
+.table-a-s{
+	font-size: 12px;
+}
+.table-a-m{
+	font-size: 14px;
+}
+.table-a:hover {
+	color: red;
+	text-decoration: underline;
+}
+.layui-table-view {
+    margin: 0;
+}
+.ztree{
+	margin-top: 10px;
+/*     border: 1px solid #617775; */
+/*     background: #f0f6e4; */
+    width: 333px;
+    height: 310px;
+    overflow-y: auto;
+    overflow-x: auto;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+.ztree-div{
+	
+}

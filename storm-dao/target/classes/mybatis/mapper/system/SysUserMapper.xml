@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whyxs.mapper.system.SysUserMapper">
+
+	<insert id="BatchSaveUserRoleRel" parameterType="list">
+        insert into sys_user_role (id, user_id, role_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
+    
+    <delete id="deleteUserRoleRelByUserId" parameterType="string">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+    
+    <select id="selectUserCountByRoleId" parameterType="string" resultType="_int">
+		SELECT
+			count(u.id) 
+		FROM
+			sys_role r,
+			sys_user_role ur,
+			sys_user u 
+		WHERE
+			r.id = ur.role_id 
+			AND ur.user_id = u.id
+			AND r.id = #{roleId}
+	</select>
+	
+	<select id="selectUserByRoleId" parameterType="string" resultType="SysUser">
+		SELECT
+			u.* 
+		FROM
+			sys_role r,
+			sys_user_role ur,
+			sys_user u 
+		WHERE
+			r.id = ur.role_id 
+			AND ur.user_id = u.id
+			AND r.id = #{roleId}
+	</select>
+	
+	<select id="findResourceByUserId" parameterType="string" resultType="string">
+		SELECT
+			m.resource 
+		FROM
+			sys_menu m,
+			sys_role_menu rm,
+			sys_role r,
+			sys_user_role ur,
+			sys_user u 
+		WHERE
+			m.id = rm.menu_id 
+			AND rm.role_id = r.id 
+			AND r.id = ur.role_id 
+			AND ur.user_id = u.id 
+			AND m.type = 1 and resource is not null and resource != ''
+			AND u.id = #{userId} 
+	</select>
+	
+</mapper>
