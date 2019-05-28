@@ -17,18 +17,18 @@
 <body>
 	<div class="main-content">
 		<form class="layui-form layui-form-pane">
-			<input type="hidden" name="id" value="${tags.id }">
+			<input type="hidden" name="id" value="${subject.id }">
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户名</label>
 				<div class="layui-input-block">
-					<input type="text" name="tagsName" value="${tags.tagsName }" lay-verify="tagsName"
+					<input type="text" name="subjectName" lay-verify="subjectName" value="${subject.subjectName }"
 						autocomplete="off" placeholder="请输入标签名称" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">描述</label>
 				<div class="layui-input-block">
-					<textarea name="tagsDesc" placeholder="请输入内容" class="layui-textarea" lay-verify="tagsDesc">${tags.tagsDesc }</textarea>
+					<textarea name="subjectDesc" placeholder="请输入内容" class="layui-textarea" lay-verify="subjectDesc">${subject.subjectDesc }</textarea>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -53,11 +53,11 @@
                 dataType:'json',
                 success:function(data){
                     if(data.code==200){
-                        layer.msg("修改标签成功",{shade: 0,icon:1},function(index){
+                        layer.msg("修改分类成功",{shade: 0,icon:1},function(index){
                             parent.layer.closeAll();	//关闭所有
                         });
                     }else{
-                        layer.msg("修改标签失败",{icon:2});
+                        layer.msg("修改分类失败",{icon:2});
                     }
                 }
             });
