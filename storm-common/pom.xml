@@ -4,6 +4,7 @@
     <groupId>com.whyxs</groupId>
     <artifactId>storm-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../storm-parent/pom.xml</relativePath>
   </parent>
   <groupId>com.whyxs</groupId>
   <artifactId>storm-common</artifactId>

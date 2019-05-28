@@ -4,7 +4,11 @@
   <artifactId>storm-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
     <modules>
-        <module>../storm-web-blog</module>
+        <module>../storm-common</module>
+        <module>../storm-dao</module>
+        <module>../storm-service</module>
+        <module>../storm-web-manager</module>
+        <module>../storm-web-portal</module>
         <module>../strom-web-blog</module>
     </modules>
     <packaging>pom</packaging>

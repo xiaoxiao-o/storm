@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.whyxs.common.bean.entity.BlogArticle;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.controller.BaseController;
-import com.whyxs.service.blog.BlogArticleService;
+import com.whyxs.service.blog.ArticleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ArticleController extends BaseController {
 
     @Autowired
-    private BlogArticleService blogArticleService;
+    private ArticleService blogArticleService;
 
     /**
      * 主页

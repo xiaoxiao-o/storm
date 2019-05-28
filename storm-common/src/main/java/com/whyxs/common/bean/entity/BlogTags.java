@@ -13,6 +13,7 @@ package com.whyxs.common.bean.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -28,10 +29,10 @@ import java.util.Date;
 public class BlogTags extends Model<BlogTags> {
 
     // 主键
-    @TableId
+    @TableId(type= IdType.UUID)
     private String id;
-    private String name;
-    private String desc;
+    private String tagsName;
+    private String tagsDesc;
     private String createBy;
     private Date createTime;
 
@@ -43,20 +44,20 @@ public class BlogTags extends Model<BlogTags> {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTagsName() {
+        return tagsName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTagsName(String tagsName) {
+        this.tagsName = tagsName;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getTagsDesc() {
+        return tagsDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setTagsDesc(String tagsDesc) {
+        this.tagsDesc = tagsDesc;
     }
 
     public String getCreateBy() {
