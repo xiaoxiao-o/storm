@@ -7,7 +7,7 @@
 			r.* 
 		FROM
 			sys_role r,
-			sys_user_role ur,
+			sys_user_role_rel ur,
 			sys_user u 
 		WHERE
 			r.id = ur.role_id 
@@ -18,7 +18,7 @@
 	<select id="deleteMenuIdByRoleId">
 		delete
 		from
-			sys_role_menu
+			sys_role_menu_rel
 		where
 			role_id = #{roleId}
 	</select>
@@ -26,7 +26,7 @@
 	<select id="batchInsterRoleMenu">
 		insert 
 		into
-			sys_role_menu
+			sys_role_menu_rel
 		( id,role_id,menu_id )
 		values 
 		<foreach collection="menuIds" index="index" item="menuId" open="" separator="," close="">
@@ -37,7 +37,7 @@
 	<select id="insterRoleMenu">
 		insert 
 		into
-			sys_role_menu
+			sys_role_menu_rel
 		( id,role_id,menu_id )
 		values 
        	( replace(uuid(),'-','') , #{roleId} , #{menuId} )

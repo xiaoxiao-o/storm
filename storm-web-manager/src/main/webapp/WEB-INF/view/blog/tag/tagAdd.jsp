@@ -20,14 +20,14 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">标签名称</label>
 				<div class="layui-input-block">
-					<input type="text" name="tagsName" lay-verify="tagsName"
+					<input type="text" name="tagName" lay-verify="tagName"
 						autocomplete="off" placeholder="请输入标签名称" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">描述</label>
 				<div class="layui-input-block">
-					<textarea name="tagsDesc" placeholder="请输入内容" class="layui-textarea" lay-verify="tagsDesc"></textarea>
+					<textarea name="tagDesc" placeholder="请输入内容" class="layui-textarea" lay-verify="tagDesc"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -47,7 +47,7 @@
 		//监听提交
 		form.on('submit(form)', function(data) {
 			$.ajax({
-				url:'blog/tags/save',
+				url:'blog/tag/save',
 				data:{"param":JSON.stringify(data.field)},
 				dataType:'json',
 				success:function(data){
@@ -65,12 +65,12 @@
 		
 		//表单校验
 		form.verify({
-			tagsName: function(value, item){
+			tagName: function(value, item){
 				if(value == ''){
 					return '必填项不能为空';
 				}
 			},
-			tagsDesc: function(value, item){
+			tagDesc: function(value, item){
 				if(value == ''){
 					return '必填项不能为空';
 				}

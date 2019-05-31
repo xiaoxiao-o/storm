@@ -11,9 +11,9 @@
 package com.whyxs.service.blog.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.whyxs.common.bean.entity.BlogTags;
+import com.whyxs.common.bean.entity.BlogTag;
 import com.whyxs.mapper.blog.TagsMapper;
-import com.whyxs.service.blog.TagsService;
+import com.whyxs.service.blog.TagService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +25,6 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
-public class TagsServiceImpl extends ServiceImpl<TagsMapper, BlogTags> implements TagsService {
+public class TagServiceImpl extends ServiceImpl<TagsMapper, BlogTag> implements TagService {
 
 }

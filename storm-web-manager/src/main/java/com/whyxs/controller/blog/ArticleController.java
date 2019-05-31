@@ -5,6 +5,8 @@ import com.whyxs.common.bean.entity.BlogArticle;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.controller.BaseController;
 import com.whyxs.service.blog.ArticleService;
+import com.whyxs.service.blog.SubjectService;
+import com.whyxs.service.blog.TagService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ArticleController extends BaseController {
 
     @Autowired
-    private ArticleService blogArticleService;
+    private ArticleService articleService;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private TagService tagService;
 
     /**
      * 主页
@@ -45,7 +53,7 @@ public class ArticleController extends BaseController {
             @RequestParam(defaultValue="10")int limit,
             @RequestParam(required=false)String paramJson) {
         try {
-            Page<BlogArticle> pageResut = blogArticleService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
+            Page<BlogArticle> pageResut = articleService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
             return PageListVo.success(pageResut.getTotal(), pageResut.getRecords());
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +66,8 @@ public class ArticleController extends BaseController {
      */
     @RequestMapping("/toAdd")
     public Object toAdd(Model model) {
+        model.addAttribute("subjects",subjectService.selectList(null));
+        model.addAttribute("tags",tagService.selectList(null));
         return "blog/article/articleAdd";
     }
 }

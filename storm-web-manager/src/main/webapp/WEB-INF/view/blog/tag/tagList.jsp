@@ -31,7 +31,7 @@
 			</div>
 		</div>
 
-		<table class="layui-hide" id="tags-table" lay-filter="tags-table"></table>
+		<table class="layui-hide" id="tag-table" lay-filter="tag-table"></table>
 		<!-- 右侧工具栏 -->
 		<script type="text/html" id="bar">
   			<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
@@ -48,20 +48,20 @@
 
 		//方法级渲染
 		table.render({
-			elem : '#tags-table',
-			url  : 'blog/tags/selectListPage',
+			elem : '#tag-table',
+			url  : 'blog/tag/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
 				{type  : 'numbers',title : '序号',align : 'center'}, 
-				{field : 'tagsName',title : '标签名称',align : 'center'},
-				{field : 'tagsDesc',title : '描述',align : 'center'},
+				{field : 'tagName',title : '标签名称',align : 'center'},
+				{field : 'tagDesc',title : '描述',align : 'center'},
 				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
 					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
 				}}, 
 				{fixed : 'right', title:'操作', toolbar: '#bar', width:200,align : 'center'}
 			] ],
-			id : 'tags-table-reload',//数据重载该表格
+			id : 'tag-table-reload',//数据重载该表格
 			page : true,
 			limits : [10,20,30,40,50,60,70,80,90],
 			limit : 10,
@@ -75,7 +75,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建标签","blog/tags/toAdd");	//执行新增
+            edit("新建标签","blog/tag/toAdd");	//执行新增
         });
 
         //执行查询
@@ -84,7 +84,7 @@
                 'title':$('[name="title"]').val(),
             };
             //执行重载
-            table.reload('tags-table-reload', {
+            table.reload('tag-table-reload', {
                 page : {
                     curr : 1
                 },
@@ -108,12 +108,12 @@
         }
 
 		//监听行工具事件
-		table.on('tool(tags-table)', function(obj) {
+		table.on('tool(-table)', function(obj) {
 			var data = obj.data;
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改标签",'blog/tags/toEdit?tagsId='+data.id);
+				edit("修改标签",'blog/tag/toEdit?tagId='+data.id);
 			}
 		});
 		
@@ -122,7 +122,7 @@
 		function del(blogId){
 			layer.confirm('确认删除该标签？', function(index) {
 				$.ajax({
-					url : 'blog/tags/del',
+					url : 'blog/tag/del',
 					data : {id:blogId},
 					success:function(data){
 						if(data.code==200){

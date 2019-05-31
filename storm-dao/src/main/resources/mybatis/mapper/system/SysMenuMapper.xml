@@ -7,9 +7,9 @@
 			m.* 
 		FROM
 			sys_menu m,
-			sys_role_menu rm,
+			sys_role_menu_rel rm,
 			sys_role r,
-			sys_user_role ur,
+			sys_user_role_rel ur,
 			sys_user u 
 		WHERE
 			m.id = rm.menu_id 
@@ -27,7 +27,7 @@
 		SELECT
 			menu_id 
 		FROM
-			sys_role_menu
+			sys_role_menu_rel
 		WHERE
 			role_id = #{roleId} 
 	</select>

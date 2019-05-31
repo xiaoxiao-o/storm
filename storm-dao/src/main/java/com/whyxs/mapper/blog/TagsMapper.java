@@ -11,14 +11,14 @@
 package com.whyxs.mapper.blog;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.whyxs.common.bean.entity.BlogTags;
+import com.whyxs.common.bean.entity.BlogTag;
 
 /**
  * @author whyxs
  * @create 2019/5/10
  * @since 1.0.0
  */
-public interface TagsMapper extends BaseMapper<BlogTags> {
+public interface TagsMapper extends BaseMapper<BlogTag> {
 
 }
  

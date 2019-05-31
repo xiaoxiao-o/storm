@@ -25,14 +25,14 @@ import java.util.Date;
  * @create 2019/5/10
  * @since 1.0.0
  */
-@TableName("blog_tags")
-public class BlogTags extends Model<BlogTags> {
+@TableName("blog_tag")
+public class BlogTag extends Model<BlogTag> {
 
     // 主键
     @TableId(type= IdType.UUID)
     private String id;
-    private String tagsName;
-    private String tagsDesc;
+    private String tagName;
+    private String tagDesc;
     private String createBy;
     private Date createTime;
 
@@ -44,20 +44,20 @@ public class BlogTags extends Model<BlogTags> {
         this.id = id;
     }
 
-    public String getTagsName() {
-        return tagsName;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTagsName(String tagsName) {
-        this.tagsName = tagsName;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
-    public String getTagsDesc() {
-        return tagsDesc;
+    public String getTagDesc() {
+        return tagDesc;
     }
 
-    public void setTagsDesc(String tagsDesc) {
-        this.tagsDesc = tagsDesc;
+    public void setTagDesc(String tagDesc) {
+        this.tagDesc = tagDesc;
     }
 
     public String getCreateBy() {
