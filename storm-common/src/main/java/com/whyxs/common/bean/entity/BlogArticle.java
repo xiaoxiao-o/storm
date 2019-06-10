@@ -1,6 +1,8 @@
 package com.whyxs.common.bean.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,10 +23,12 @@ public class BlogArticle extends Model<BlogArticle> {
     @TableId
     private String id;
     private String title;
-    private String summary;     //摘要
     private String content;     //内容
+    private String subject;     //分类
     private String cover;       //封面
-    private String enclosure;   //附件
+
+    @TableField(el="")
+    private JSONObject enclosure;   //附件
     private String createBy;
     private Date createTime;
 
@@ -44,14 +48,6 @@ public class BlogArticle extends Model<BlogArticle> {
         this.title = title;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
     public String getContent() {
         return content;
     }
@@ -68,11 +64,19 @@ public class BlogArticle extends Model<BlogArticle> {
         this.cover = cover;
     }
 
-    public String getEnclosure() {
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public JSONObject getEnclosure() {
         return enclosure;
     }
 
-    public void setEnclosure(String enclosure) {
+    public void setEnclosure(JSONObject enclosure) {
         this.enclosure = enclosure;
     }
 

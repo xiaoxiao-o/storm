@@ -10,8 +10,7 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/css/mainPage.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -36,14 +35,14 @@
 		<script type="text/html" id="bar">
   			<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
   			<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="resetPassword">重置密码</a>
+			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">发布</a>
+			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">置顶</a>
+			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">轮播</a>
 		</script>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
-	
 	layui.use(['table','form'], function() {
 		var table = layui.table;
 
@@ -54,20 +53,20 @@
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
-				{type  : 'numbers',title : '序号',align : 'center'}, 
-				{field : 'title',title : '标题',align : 'center'},
-				{field : 'summary',title : '摘要',align : 'center'},
+				{type  : 'numbers',title : '序号',align : 'center'},
+                {field : 'title',title : '标题',align : 'center',templet:function(d){d.title
+					return '<a class="table-a" onclick="showArticle(\''+d.id+'\')">'+d.title+'</a>';
+				}},
                 {field : 'createBy',title : '创建者',align : 'center'},
 				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
 					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
 				}}, 
-				{fixed : 'right', title:'操作', toolbar: '#bar', width:200,align : 'center'}
+				{fixed : 'right', title:'操作', toolbar: '#bar', align : 'center'}
 			] ],
 			id : 'article-table-reload',//数据重载该表格
 			page : true,
 			limits : [10,20,30,40,50,60,70,80,90],
-			limit : 10,
-			loading :false
+			limit : 10
 		});
 		
 		//查询按钮
@@ -101,7 +100,7 @@
             layer.open({
                 type : 2,
                 title : title,
-                area : [ '1000px', '90%' ],
+                area : [ '1000px', '500px' ],
                 content : url,
                 end:function(){	//在层销毁时回调，不管是通过什么方式的销毁
                     search();
@@ -188,7 +187,17 @@
 				});
 			});
 		}
-		
 	});
+
+    //角色下的用户
+    function showArticle(id){
+        layer.open({
+            type : 2,
+            title : "文章预览",
+            area : [ '770px', '380px' ],
+            content : "blog/article/showArticle?id="+id
+        });
+    }
+
 </script>
 </html>

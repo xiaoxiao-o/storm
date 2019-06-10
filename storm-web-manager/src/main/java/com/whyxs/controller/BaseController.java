@@ -1,24 +1,20 @@
 package com.whyxs.controller;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.whyxs.common.bean.entity.SysUser;
+import com.whyxs.common.util.JSONUtil;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.whyxs.common.bean.entity.SysUser;
-import com.whyxs.common.util.JSONUtil;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * super controller
@@ -65,8 +61,16 @@ public class BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> EntityWrapper<T> getEtityWrapper(String paramJson) {
-		//设置所有条件为相等，局限性较大，仅适用于部分功能
-		return (EntityWrapper<T>) new EntityWrapper<T>().allEq(JSONUtil.parseObject(paramJson, Map.class));
+		EntityWrapper<T> ew = new EntityWrapper<T>();
+		//设置所有条件为相似，局限性较大，仅适用于部分功能
+		Map<String,String> map = JSONUtil.parseObject(paramJson, Map.class);
+		map = map!=null ? map : new HashMap<>();
+		Iterator<Entry<String, String>> it = map.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, String> entry = it.next();
+			ew.like(entry.getKey(),entry.getValue());
+		}
+		return ew;
 	}
 	
 	

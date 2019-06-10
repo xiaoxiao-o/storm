@@ -11,8 +11,7 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/css/mainPage.css" />
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -38,8 +37,7 @@
 		</table>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
 	layui.use('table',function(){
 		var table = layui.table;

@@ -10,9 +10,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/css/mainPage.css" />
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
+<base href="<%=basePath%>">
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -45,20 +44,21 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">角色</label>
+				<div class="layui-input-block">
+					<select name="roleId" lay-verify="roleId" multiple lay-search>
+						<option value="">请选择角色</option>
+						<c:forEach var="role" items="${roles }">
+							<option value="${role.id }">${role.roleName }</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">状态</label>
 				<div class="layui-input-block">
 					<input type="radio" name="userState" value="1" title="启用" checked>
 					<input type="radio" name="userState" value="0" title="禁用">
-				</div>
-			</div>
-
-			<div class="layui-form-item">
-				<label class="layui-form-label">角色</label>
-				<div class="layui-input-block" lay-verify="roleId">
-					<c:forEach var="role" items="${roles }">
-						<input type="checkbox" name="roleId" value="${role.id }" 
-							lay-skin="primary" title="${role.roleName }">
-					</c:forEach>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -70,18 +70,16 @@
 		</form>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
-	layui.use(['form'], function(){
-		var form = layui.form;
+    layui.config({
+        base: 'static/plugin/layui-v2.4.5/layui/lay/modules/'
+    }).extend({
+        kzForm: 'kz.form'
+    }).use(['kzForm'], function(){
+		var form = layui.kzForm;
 		//监听提交
 		form.on('submit(form)', function(data) {
-			var roleId = new Array();
-			$("[type='checkbox']:checked").each(function(){
-				roleId.push($(this).val());
-			});
-			data.field.roleId = roleId;
 			$.ajax({
 				url:'system/user/save',
 				data:{"param":JSON.stringify(data.field)},
@@ -128,7 +126,7 @@
 				}
 			},
 			roleId: function(value, item){
-				if($('[name="roleId"]:checked').length ==0){
+				if(value == null){
 					return '请为用户至少分配一个角色';
 				}
 			}

@@ -11,15 +11,14 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/css/mainPage.css" />
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
 		<form class="layui-form layui-form-pane">
 			<input type="hidden" name="id" value="${subject.id }">
 			<div class="layui-form-item">
-				<label class="layui-form-label">用户名</label>
+				<label class="layui-form-label">分类名称</label>
 				<div class="layui-input-block">
 					<input type="text" name="subjectName" lay-verify="subjectName" value="${subject.subjectName }"
 						autocomplete="off" placeholder="请输入标签名称" class="layui-input">
@@ -40,15 +39,14 @@
 		</form>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
     layui.use(['form'], function(){
         var form = layui.form;
         //监听提交
         form.on('submit(form)', function(data) {
             $.ajax({
-                url:'blog/tags/save',
+                url:'blog/subject/save',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',
                 success:function(data){

@@ -11,9 +11,7 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" href="static/css/mainPage.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -29,10 +27,7 @@
 		</div>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="static/plugin/zTree_v3/js/jquery.ztree.core.js"></script>
-<script type="text/javascript" src="static/plugin/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
 	var setting = {
 		check: {enable: true},

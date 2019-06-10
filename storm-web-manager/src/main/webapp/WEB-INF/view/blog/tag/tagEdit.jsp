@@ -11,15 +11,14 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/css/mainPage.css" />
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
 		<form class="layui-form layui-form-pane">
 			<input type="hidden" name="id" value="${tag.id }">
 			<div class="layui-form-item">
-				<label class="layui-form-label">用户名</label>
+				<label class="layui-form-label">标签名称</label>
 				<div class="layui-input-block">
 					<input type="text" name="tagName" value="${tag.tagName }" lay-verify="tagName"
 						autocomplete="off" placeholder="请输入标签名称" class="layui-input">
@@ -40,8 +39,7 @@
 		</form>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
     layui.use(['form'], function(){
         var form = layui.form;

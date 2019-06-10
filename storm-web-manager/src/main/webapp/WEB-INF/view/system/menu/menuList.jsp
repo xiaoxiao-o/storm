@@ -10,10 +10,7 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/plugin/font-awesome-4.7.0/css/font-awesome.min.css" />
-<link rel="stylesheet" href="static/css/mainPage.css" />
-
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -28,18 +25,13 @@
 				</div>
 				<div class="layui-inline margin-bottom-5">
 					<button class="layui-btn layui-btn-normal" id="search"><i class="layui-icon layui-icon-search"></i>查询</button>
+					<button class="layui-btn layui-btn-normal" id="expandAll">全部展开</button>
+					<button class="layui-btn layui-btn-normal" id="foldAll">全部关闭</button>
+					<button class="layui-btn" id="add"><i class="layui-icon layui-icon-add-1"></i>新增菜单</button>
 				</div>
 			</div>
 		</div>
 		<table id="menu-table" class="layui-hide layui-table" lay-filter="menu-table"></table>
-		<!-- 头部工具栏 -->
-		<script type="text/html" id="toolbar">
-  			<div class="layui-btn-container">
-    			<button class="layui-btn" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>新增菜单</button>
-				<button class="layui-btn layui-btn-normal" lay-event="expandAll">全部展开</button>
-				<button class="layui-btn layui-btn-normal" lay-event="foldAll">全部关闭</button>
-  			</div>
-		</script>
 		<!-- 右侧工具栏 -->
 		<script type="text/html" id="bar">
   			<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
@@ -48,8 +40,7 @@
 	</div>
 
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
     layui.config({
         base: 'static/plugin/treetable-lay/module/'
@@ -67,8 +58,6 @@
             treeIdName: 'id',
             treePidName: 'pid',
             elem: '#menu-table',
-            toolbar: '#toolbar',
-            defaultToolbar: [],
             url: 'system/menu/selectList',
             cols: [[
                 {type: 'numbers',title:'序号', align: 'center'},
@@ -79,6 +68,10 @@
                 	return '<i class="'+d.icon+'"></i>'
                 }},
                 {field: 'resource', align: 'left', title: '资源标志'},
+				{field : 'createBy',title : '创建者',align : 'center'},
+				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
+					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
+				}},
                 {templet: '#bar', align: 'center', title: '操作'}
             ]],
             id : 'menu-table-reload',//数据重载该表格
@@ -88,7 +81,19 @@
 		$("#search").on('click',function(){
 			search();
 		});
-      
+
+		$("#add").on('click',function(){
+			edit("新建菜单",'system/menu/toAdd');
+		});
+
+		$("#expandAll").on('click',function(){
+			treetable.expandAll('#menu-table');
+		});
+
+		$("#foldAll").on('click',function(){
+			treetable.foldAll('#menu-table');
+		});
+
 		//执行查询,这里的查询仅仅是假查询,把相关查询结果标记起来
 		function search(){
 			var keyword = $('[name="menuName"]').val();
@@ -108,21 +113,6 @@
 	        });
 		}
         
-      	//头工具栏事件
-		table.on('toolbar(menu-table)', function(obj) {
-			switch (obj.event) {
-			case 'add':
-				edit('新增菜单','system/menu/toAdd');
-				break;
-			case 'expandAll':
-				treetable.expandAll('#menu-table');
-				break;
-			case 'foldAll':
-				treetable.foldAll('#menu-table');
-				break;
-			};
-		});
-      	
 		//监听行工具事件
 		table.on('tool(menu-table)', function(obj) {console.log(obj);
 			var data = obj.data;
@@ -138,8 +128,7 @@
 			layer.open({
 				type : 2,
 				title : title,
-				area : [ '700px', '500px' ],
-				maxmin : true,
+				area : [ '700px', '440px' ],
 				content : url,
 				end:function(){	//在层销毁时回调，不管是通过什么方式的销毁
 					window.location.reload();

@@ -3,6 +3,8 @@ package com.whyxs.controller.blog;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.whyxs.common.bean.entity.BlogArticle;
 import com.whyxs.common.bean.vo.PageListVo;
+import com.whyxs.common.bean.vo.RestResultVo;
+import com.whyxs.common.util.JSONUtil;
 import com.whyxs.controller.BaseController;
 import com.whyxs.service.blog.ArticleService;
 import com.whyxs.service.blog.SubjectService;
@@ -14,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * 文章
@@ -69,5 +73,32 @@ public class ArticleController extends BaseController {
         model.addAttribute("subjects",subjectService.selectList(null));
         model.addAttribute("tags",tagService.selectList(null));
         return "blog/article/articleAdd";
+    }
+
+    /**
+     * 保存
+     */
+    @ResponseBody
+    @RequestMapping("/save")
+    public RestResultVo save(String param) {
+
+        try {
+            BlogArticle article = JSONUtil.parseObject(param, BlogArticle.class);
+            List<String> tagIds = JSONUtil.parseObject(JSONUtil.parseObject(param).get("tag").toString(), List.class);
+            articleService.save(article, tagIds);
+            return RestResultVo.success(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestResultVo.error(null);
+        }
+    }
+
+    /**
+     * 预览文章
+     */
+    @RequestMapping("/showArticle")
+    public String showArticle(String id,Model model){
+        model.addAttribute("article",articleService.selectById(id));
+        return "blog/article/showArticle";
     }
 }

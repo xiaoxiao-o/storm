@@ -9,9 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/css/mainPage.css" />
+<base href="<%=basePath%>">
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -25,19 +24,14 @@
 					</div>
 				</div>
 				<div class="layui-inline margin-bottom-5">
-					<button class="layui-btn layui-btn-normal" id="search"><i class="layui-icon layui-icon-search"></i>查询</button>
+					<button id="search" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查询</button>
+					<button id="add" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>新增用户</button>
+					<button id="batchDel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
 				</div>
 			</div>
 		</div>
 
 		<table class="layui-hide" id="user-table" lay-filter="user-table"></table>
-		<!-- 头部工具栏 -->
-		<script type="text/html" id="toolbar">
-  			<div class="layui-btn-container">
-    			<button class="layui-btn" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>新增用户</button>
-				<button class="layui-btn layui-btn-danger" lay-event="batchDel"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
-  			</div>
-		</script>
 		<!-- 右侧工具栏 -->
 		<script type="text/html" id="bar">
   			<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
@@ -46,10 +40,8 @@
 		</script>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
-	
 	layui.use(['table','form'], function() {
 		var table = layui.table;
 		var form  = layui.form;
@@ -58,49 +50,44 @@
 		table.render({
 			elem : '#user-table',
 			url  : 'system/user/selectListPage',
-			toolbar: '#toolbar',
-			defaultToolbar: [],
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
 				{type  : 'numbers',title : '序号',align : 'center'}, 
 				{field : 'username',title : '用户名',align : 'center'}, 
 				{field : 'userDesc',title : '描述',align : 'center'}, 
-				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
-					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
-				}}, 
 				{field : 'userState',title : '状态',align : 'center',templet:function(d){
 					return d.userState==0?"禁用":"启用"
+				}},
+                {field : 'createBy',title : '创建者',align : 'center'},
+				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
+					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
 				}},
 				{fixed : 'right', title:'操作', toolbar: '#bar', width:200,align : 'center'}
 			] ],
 			id : 'user-table-reload',//数据重载该表格
 			page : true,
 			limits : [10,20,30,40,50,60,70,80,90],
-			limit : 10,
-			loading :false
+			limit : 10
 		});
 		
 		//查询按钮
 		$("#search").on('click',function(){
 			search();
 		});
-		
-		//头工具栏事件
-		table.on('toolbar(user-table)', function(obj) {
-			switch (obj.event) {
-			case 'add':
-				edit("新增用户",'system/user/toAdd');
-				break;
-			case 'batchDel':
-				var checkStatus = table.checkStatus(obj.config.id);
-				var data = checkStatus.data;	//选中的数据
-				batchDel(data);
-				break;
-			};
-		});
-		
 
+        //新增按钮
+        $("#add").on('click',function(){
+            edit("新增用户",'system/user/toAdd');
+        });
+
+        //批量删除
+        $("#batchDel").on('click',function(){
+            var checkStatus = table.checkStatus("user-table-reload");//表格id
+            var data = checkStatus.data;	//选中的数据
+            batchDel(data);
+        });
+		
 		//监听行工具事件
 		table.on('tool(user-table)', function(obj) {
 			var data = obj.data;
@@ -134,8 +121,7 @@
 			layer.open({
 				type : 2,
 				title : title,
-				area : [ '700px', '500px' ],
-				maxmin : true,
+				area : [ '700px', '530px' ],
 				content : url,
 				end:function(){	//在层销毁时回调，不管是通过什么方式的销毁
 					search();

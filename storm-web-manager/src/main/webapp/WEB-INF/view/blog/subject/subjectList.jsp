@@ -10,8 +10,7 @@
 <html>
 <head>
 <base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/css/mainPage.css" />
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -19,9 +18,9 @@
 		<div class="layui-form layui-form-pane" id="condition">
 			<div class="layui-form-item">
 				<div class="layui-inline">
-					<label class="layui-form-label">标题</label>
+					<label class="layui-form-label">标签名称</label>
 					<div class="layui-input-block">
-						<input type="text" name="title" autocomplete="off" class="layui-input">
+						<input type="text" name="subjectName" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
@@ -39,8 +38,7 @@
 		</script>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
 	
 	layui.use(['table','form'], function() {
@@ -56,6 +54,7 @@
 				{type  : 'numbers',title : '序号',align : 'center'}, 
 				{field : 'subjectName',title : '标签名称',align : 'center'},
 				{field : 'subjectDesc',title : '描述',align : 'center'},
+                {field : 'createBy',title : '创建者',align : 'center'},
 				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
 					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
 				}}, 
@@ -65,7 +64,6 @@
 			page : true,
 			limits : [10,20,30,40,50,60,70,80,90],
 			limit : 10,
-			loading :false
 		});
 		
 		//查询按钮
@@ -81,7 +79,7 @@
         //执行查询
         function search(){
             var param = {	//注意：这里的会回封装成map直接传递到数据库条件中,跟实体无关，所以这里的key使用数据库字段
-                'title':$('[name="title"]').val(),
+                'subject_name':$('[name="subjectName"]').val(),
             };
             //执行重载
             table.reload('subject-table-reload', {
@@ -99,7 +97,7 @@
             layer.open({
                 type : 2,
                 title : title,
-                area : [ '500px', '350px' ],
+                area : [ '500px', '320px' ],
                 content : url,
                 end:function(){	//在层销毁时回调，不管是通过什么方式的销毁
                     search();

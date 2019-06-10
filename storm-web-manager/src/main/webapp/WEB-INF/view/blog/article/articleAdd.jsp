@@ -9,10 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
-<link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
-<link rel="stylesheet" href="static/css/mainPage.css" />
-<link rel="stylesheet" href="static/css/layui-select-m.css" />
+<base href="<%=basePath%>">
+<jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
@@ -20,21 +18,14 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">标题</label>
 				<div class="layui-input-block">
-					<input type="text" name="blogName" lay-verify="blogName"
+					<input type="text" name="title" lay-verify="title"
 						   autocomplete="off" placeholder="请输入标题" class="layui-input">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">摘要</label>
-				<div class="layui-input-block">
-					<input type="text" name="summary" lay-verify="summary"
-						   placeholder="请输入摘要" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">分类</label>
 				<div class="layui-input-block">
-					<select name="subject" lay-filter="subject">
+					<select name="subject" lay-verify="subject">
 						<option value="">请选择分类</option>
 						<c:forEach var="subject" items="${subjects }">
 							<option value="${subject.id }">${subject.subjectName }</option>
@@ -47,16 +38,16 @@
 				<div class="layui-input-block">
 					<select name="tag" lay-verify="tag" multiple lay-search>
 						<option value="">请选择标签</option>
-						<c:forEach var="tag" items="${ }">
+						<c:forEach var="tag" items="${tags }">
 							<option value="${tag.id }">${tag.tagName }</option>
 						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
-				<label class="layui-form-label">文章正文</label>
+				<label class="layui-form-label">正文</label>
 				<div class="layui-input-block">
-					<textarea id="content" name="content" placeholder="请输入内容" class="layui-textarea" lay-verify="content"></textarea>
+					<textarea id="content" name="content" placeholder="请输入内容" autofocus  class="layui-textarea" lay-verify="content"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
@@ -67,6 +58,7 @@
 							<i class="layui-icon"></i>上传封面
 						</button>
 						<div class="layui-upload-list">
+							<input type="hidden" name="cover" id="cover" value="" lay-verify="cover">
 							<img class="layui-upload-img" id="cover-img" width="92px" height="92px">
 							<p id="cover-text" style="padding: 10px 0 0 132px;"></p>
 						</div>
@@ -82,14 +74,7 @@
 						</button>
 						<div class="layui-upload-list">
 							<table class="layui-table">
-								<thead>
-								<tr>
-									<th>文件名</th>
-									<th>大小</th>
-									<th>状态</th>
-									<th>操作</th>
-								</tr>
-								</thead>
+								<thead><tr><th>文件名</th><th>大小</th><th>状态</th><th>操作</th></tr></thead>
 								<tbody id="enclosureList"></tbody>
 							</table>
 						</div>
@@ -107,37 +92,55 @@
 		</form>
 	</div>
 </body>
-<script src="static/plugin/jquery-2.1.4.min.js" charset="utf-8"></script>
-<script src="static/plugin/layui-v2.4.5/layui/layui.js" charset="utf-8"></script>
+<jsp:include page="../../foot.jsp"/>
 <script>
     layui.config({
         base: 'static/plugin/layui-v2.4.5/layui/lay/modules/'
     }).extend({
         kzLayedit: 'kz.layedit',
 		kzForm: 'kz.form'
-    }).use(['kzLayedit','kzForm'], function(){
+    }).use(['kzLayedit','kzForm','upload'], function(){
         var $=layui.jquery;
-        var layedit = layui.kzLayedit;
+        //var layedit = layui.kzLayedit;// layui的富文本编辑器功能太少,基于layui的富文本编辑器扩展功能bug太多,不宜使用
         var form = layui.kzForm;
+        var upload = layui.upload;
 
-        layedit.set({
-            tool: [
-                'strong', 'italic', 'underline', 'del',
-                '|','fontFomatt','fontfamily','fontSize','colorpicker','fontBackColor',
-                '|','left', 'center', 'right', '|', 'link','code','image_alt',
-                '|','fullScreen','preview'
-            ],
-            uploadImage: {
-                url: 'img/upload/articleContent', //接口url
-                type: 'post'
-            }
+        // layui的富文本编辑器功能太少,基于layui的富文本编辑器扩展功能bug太多,不宜使用
+        // layedit.set({
+        //     tool: [
+        //         'strong', 'italic', 'underline', 'del',
+        //         '|','fontFomatt','fontfamily','fontSize','colorpicker','fontBackColor',
+        //         '|','left', 'center', 'right', '|', 'link','code','image_alt',
+        //         '|','fullScreen','preview'
+        //     ],
+        //     uploadImage: {
+        //         url: 'file/upload/articleContent', //接口url
+        //         type: 'post'
+        //     },
+        //     autoSync:true	//编辑内容自动同步到textarea
+        // });
+        // var ieditor = layedit.build('content');
+
+        var editor = new Simditor({
+            textarea: $('#content'),
+            toolbar: ['title','bold','italic','underline','strikethrough','fontScale','color',
+                'ol','ul','blockquote','code' ,'table','link','image','hr','indent','outdent','alignment'
+    		],
+            upload : {
+                url : 'fileUpload/articleContent', //文件上传的接口地址,返回参数{success:true,msg:'',file_path:''}
+                fileKey:'file', //服务器端获取文件数据的参数名
+                leaveConfirm: '正在上传文件..',
+                connectionCount: 3
+            },
+            imageButton: ['upload'],
+            pasteImage: true
         });
-        var ieditor = layedit.build('content');
+
 
         //封面示例
         var uploadInst = upload.render({
             elem: '#cover-btn',
-            url: 'file/upload/articleCover',
+            url: 'fileUpload/articleCover',
             before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
@@ -145,11 +148,12 @@
                 });
             },
             done: function(res){
-                if(res.code == 200){
-                    return layer.msg('上传成功',{icon:1});
+                if(res.code == 0){
+                    $("#cover").val(res.file_path);//把结果写入对应表单
+                    return layer.msg('上传成功');
                 }else{
                     this.error();
-                    return layer.msg('上传失败',{icon:2});
+                    return layer.msg('上传失败');
                 }
             },
             error:function(){
@@ -167,7 +171,7 @@
         var demoListView = $('#enclosureList');
         var uploadListIns = upload.render({
             elem: '#enclosure-btn',
-            url: 'file/upload/articleEnclosure',
+            url: 'fileUpload/articleEnclosure',
             accept: 'file',
             multiple: true,
             auto: true,
@@ -204,15 +208,16 @@
                 });
             },
             done: function(res, index, upload){
-                if(res.code == 200){ //上传成功
+                if(res.code == 0){ //上传成功
                     var tr = demoListView.find('tr#upload-'+ index)
                         ,tds = tr.children();
+                    tr.attr({"fileName":res.file_name,"filePath":res.file_path});
                     tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
                     tds.eq(3).find('.demo-delete').removeClass('layui-hide'); //清空操作
-                    layer.msg('上传成功',{icon:1});
+                    layer.msg('上传成功');
                     return delete this.files[index]; //删除文件队列已经上传成功的文件
                 }else{
-                    layer.msg('上传失败',{icon:2});
+                    layer.msg('上传失败');
                     this.error(index, upload);
                 }
             },
@@ -221,6 +226,68 @@
                     ,tds = tr.children();
                 tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
                 tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+
+        //监听提交
+        form.on('submit(form)', function(data) {
+            //附件列表
+            var enclosure = new Array();
+			demoListView.find("tr").each(function(){
+                enclosure.push({"fileName":$(this).attr("fileName"),"filePath":$(this).attr("filePath")});
+			});
+            data.field.enclosure = enclosure;
+            //富文本正文
+            data.field.content = editor.getValue();
+
+            $.ajax({
+                url:'blog/article/save',
+                data:{"param":JSON.stringify(data.field)},
+                dataType:'json',
+                success:function(data){
+                    if(data.code==200){
+                        layer.msg("新建文章成功",{shade: 0,icon:1},function(index){
+                            parent.layer.closeAll();	//关闭所有
+                        });
+                    }else{
+                        layer.msg("新建文章失败",{icon:2});
+                    }
+                }
+            });
+            return false;
+        });
+
+        //表单校验
+        form.verify({
+            title: function(value, item){
+                if(value == ''){
+                    return '标题不能为空';
+                }
+            },
+            summary: function(value, item){
+                if(value == ''){
+                    return '摘要不能为空';
+                }
+            },
+            subject: function(value, item){
+                if(value == ''){
+                    return '请勾选分类';
+                }
+            },
+            tag: function(value, item){
+                if(value == null || value.length==0){
+                    return '请勾选标签';
+                }
+            },
+            content: function(value, item){
+                if(value == ''){
+                    return '正文不能为空';
+                }
+            },
+            cover: function(value, item){
+                if(value == ''){
+                    return '封面未能正确设置';
+                }
             }
         });
 

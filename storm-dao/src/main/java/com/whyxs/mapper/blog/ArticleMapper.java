@@ -13,12 +13,19 @@ package com.whyxs.mapper.blog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.whyxs.common.bean.entity.BlogArticle;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author whyxs
  * @create 2019/5/10
  * @since 1.0.0
  */
 public interface ArticleMapper extends BaseMapper<BlogArticle> {
+
+    void BatchSaveUserRoleRel(List<Map<String,Object>> articleTags);
+
+    void deleteArticleTagRelByArticleId(String articleId);
 
 }
  

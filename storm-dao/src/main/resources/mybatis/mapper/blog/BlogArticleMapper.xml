@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whyxs.mapper.blog.ArticleMapper">
+
+	<insert id="BatchSaveUserRoleRel" parameterType="list">
+        insert into blog_article_tag_rel (id, article_id, tag_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.articleId},#{item.tagId})
+        </foreach>
+    </insert>
+    
+    <delete id="deleteArticleTagRelByArticleId" parameterType="string">
+        delete from blog_article_tag_rel where article_id = #{articleId}
+    </delete>
+    
+</mapper>
