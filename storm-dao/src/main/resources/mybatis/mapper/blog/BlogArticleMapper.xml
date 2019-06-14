@@ -13,5 +13,9 @@
     <delete id="deleteArticleTagRelByArticleId" parameterType="string">
         delete from blog_article_tag_rel where article_id = #{articleId}
     </delete>
-    
+
+    <update id="changeSomeStatus">
+        update blog_article set ${key} = #{val} where id = #{id}
+    </update>
+
 </mapper>

@@ -11,3 +11,5 @@
 <!-- zTreeStyle -->
 <script type="text/javascript" src="static/plugin/zTree_v3/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="static/plugin/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<!-- download -->
+<script type="text/javascript" src="static/js/fileDownload.js"></script>

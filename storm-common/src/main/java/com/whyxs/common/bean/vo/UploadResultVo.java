@@ -30,7 +30,7 @@ public class UploadResultVo {
 
     private String file_name;   //文件名称
 
-    private String file_path;   //文件路径
+    private String file_path;   //文件路径（访问）
 
     public UploadResultVo() {
     }

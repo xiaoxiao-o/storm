@@ -2,6 +2,7 @@ package com.whyxs.controller.blog;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.whyxs.common.bean.entity.BlogArticle;
+import com.whyxs.common.bean.entity.Enclosure;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.common.bean.vo.RestResultVo;
 import com.whyxs.common.util.JSONUtil;
@@ -76,6 +77,24 @@ public class ArticleController extends BaseController {
     }
 
     /**
+     * 新增页
+     */
+    @RequestMapping("/toEdit")
+    public Object toEdit(String id,Model model) {
+        BlogArticle article = articleService.selectById(id);
+        List<Enclosure> enclosures = JSONUtil.parseArray(article.getEnclosure(),Enclosure.class);
+        model.addAttribute("article",article);
+        model.addAttribute("enclosures",enclosures);
+
+        //获取文章标签
+        model.addAttribute("aTags",tagService.getTagsByArticleId(article.getId()));
+
+        model.addAttribute("subjects",subjectService.selectList(null));
+        model.addAttribute("tags",tagService.selectList(null));
+        return "blog/article/articleEdit";
+    }
+
+    /**
      * 保存
      */
     @ResponseBody
@@ -84,7 +103,7 @@ public class ArticleController extends BaseController {
 
         try {
             BlogArticle article = JSONUtil.parseObject(param, BlogArticle.class);
-            List<String> tagIds = JSONUtil.parseObject(JSONUtil.parseObject(param).get("tag").toString(), List.class);
+            List<String> tagIds = JSONUtil.parseArray(JSONUtil.parseObject(param).get("tag").toString(), String.class);
             articleService.save(article, tagIds);
             return RestResultVo.success(null);
         } catch (Exception e) {
@@ -98,7 +117,42 @@ public class ArticleController extends BaseController {
      */
     @RequestMapping("/showArticle")
     public String showArticle(String id,Model model){
-        model.addAttribute("article",articleService.selectById(id));
+        BlogArticle article = articleService.selectById(id);
+        List<Enclosure> enclosures = JSONUtil.parseArray(article.getEnclosure(),Enclosure.class);
+        model.addAttribute("article",article);
+        model.addAttribute("enclosures",enclosures);
         return "blog/article/showArticle";
     }
+
+    /**
+     * 删除
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public RestResultVo delete(String id) {
+        try {
+            articleService.deleteById(id);
+            tagService.deleteArticleTagRelByArticleId(id);
+            return RestResultVo.success(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestResultVo.error(null);
+        }
+    }
+
+    /**
+     * 修改文章的各个状态
+     */
+    @ResponseBody
+    @RequestMapping("/changeSomeStatus")
+    public RestResultVo changeSomeStatus(String id,String key,String val) {
+        try {
+            articleService.changeSomeStatus(id,key,val);
+            return RestResultVo.success(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RestResultVo.error(null);
+        }
+    }
+
 }

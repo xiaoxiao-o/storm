@@ -34,10 +34,30 @@
 		<!-- 右侧工具栏 -->
 		<script type="text/html" id="bar">
   			<a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
-  			<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">发布</a>
-			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">置顶</a>
-			<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="public">轮播</a>
+  			<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+			<!-- laytpl 的模板 -->
+			{{#  if(d.status == 0){ }}
+            	<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="publish">发布</a>
+            {{#  }else{ }}
+				{{#  if(d.recom == 0){ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="recom">推荐</a>
+				{{#  }else{ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="unRecom">取消推荐</a>
+				{{#  } }}
+
+				{{#  if(d.top == 0){ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="top">置顶</a>
+				{{#  }else{ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="unTop">取消置顶</a>
+				{{#  } }}
+
+				{{#  if(d.lunbo == 0){ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="lunbo">轮播</a>
+				{{#  }else{ }}
+					<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="unLunbo">取消轮播</a>
+				{{#  } }}
+
+			{{#  } }}
 		</script>
 	</div>
 </body>
@@ -57,11 +77,14 @@
                 {field : 'title',title : '标题',align : 'center',templet:function(d){d.title
 					return '<a class="table-a" onclick="showArticle(\''+d.id+'\')">'+d.title+'</a>';
 				}},
+                {field : 'status',title : '状态',align : 'center',templet:function(d){
+                    return d.status==0?"草稿":"已发布";
+                }},
                 {field : 'createBy',title : '创建者',align : 'center'},
 				{field : 'createTime',title : '创建时间',align : 'center',templet:function(d){
 					return layui.util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
 				}}, 
-				{fixed : 'right', title:'操作', toolbar: '#bar', align : 'center'}
+				{fixed : 'right', title:'操作', toolbar: '#bar', align : 'left',width : 320}
 			] ],
 			id : 'article-table-reload',//数据重载该表格
 			page : true,
@@ -109,55 +132,51 @@
         }
 
 		//监听行工具事件
-		table.on('tool(title-table)', function(obj) {
+		table.on('tool(article-table)', function(obj) {
 			var data = obj.data;
-			if (obj.event === 'del') {
-				del(data.id);
-			} else if (obj.event === 'update') {
-				edit("修改用户",'system/user/toEdit?userId='+data.id);
-			} else if(obj.event === 'resetPassword'){
-				resetPassword(data.id)
-			}
+			if (obj.event === 'update') {
+				edit("修改文章",'blog/article/toEdit?id='+data.id);
+			}else if (obj.event === 'delete') {
+			    del(data.id);
+            }else if (obj.event === 'publish') {
+                changeStatus(data.id,"status",1,"发布");
+            }else if (obj.event === 'recom') {
+                changeStatus(data.id,"recom",1,"推荐");
+            }else if (obj.event === 'unRecom') {
+                changeStatus(data.id,"recom",0,"取消推荐");
+            }else if (obj.event === 'top') {
+                changeStatus(data.id,"top",1,"置顶");
+            }else if (obj.event === 'unTop') {
+                changeStatus(data.id,"top",0,"取消置顶");
+            }else if (obj.event === 'lunbo') {
+                changeStatus(data.id,"lunbo",1,"轮播");
+            }else if (obj.event === 'unLunbo') {
+                changeStatus(data.id,"lunbo",0,"取消轮播");
+            }
 		});
-		
 
-		
-
-		
-		//删除用户(批量)
-		function batchDel(data){
-			if(data.length==0){
-				layer.msg("没有选择任何数据",{icon:2});
-				return;
-			}
-			layer.confirm('确认删除选择的用户？', function(index) {
-				var ids = new Array();
-				$.each(data,function(){
-					ids.push(this.id);
-				});
-				$.ajax({
-					url : 'system/user/batchDel',
-					data : {ids:JSON.stringify(ids)},
-					success:function(data){
-						if(data.code==200){
-							layer.msg("删除成功",{icon:1},function(){
-								search();
-							});
-						}else{
-							layer.alert("删除失败",{icon:2});
-						}
-					}
-				});
-			});
+        function changeStatus(id,key,val,msg){
+            $.ajax({
+                url : 'blog/article/changeSomeStatus',
+                data : {id:id,key:key,val:val},
+                success:function(data){
+                    if(data.code==200){
+                        layer.alert(msg+"成功",{icon:1},function(index){
+                            layer.close(index);
+                            search();
+                        });
+                    }else{
+                        layer.alert(msg+"失败",{icon:2});
+                    }
+                }
+            });
 		}
-		
-		//删除用户
-		function del(userId){
-			var ids = [userId];
-			layer.confirm('确认删除该用户？', function(index) {
+
+		//删除
+		function del(id){
+			layer.confirm('确认删除该文章？', function(index) {
 				$.ajax({
-					url : 'system/user/batchDel',
-					data : {ids:JSON.stringify(ids)},
+					url : 'blog/article/delete?id='+id,
 					success:function(data){
 						if(data.code==200){
 							layer.msg("删除成功",{icon:1},function(){
@@ -171,30 +190,14 @@
 			});
 		}
 		
-		//重置密码
-		function resetPassword(userId){
-			layer.confirm('确认重置密码？', function(index) {
-				$.ajax({
-					url : 'system/user/resetPassword',
-					data : {userId:userId},
-					success:function(data){
-						if(data.code==200){
-							layer.alert("已重置，初始密码为：" + data.data);
-						}else{
-							layer.msg("重置密码失败",{icon:2});
-						}
-					}
-				});
-			});
-		}
 	});
 
-    //角色下的用户
+    //文章预览
     function showArticle(id){
         layer.open({
             type : 2,
             title : "文章预览",
-            area : [ '770px', '380px' ],
+            area : [ '900px', '500px' ],
             content : "blog/article/showArticle?id="+id
         });
     }

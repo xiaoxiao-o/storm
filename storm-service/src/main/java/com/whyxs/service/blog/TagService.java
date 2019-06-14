@@ -3,6 +3,8 @@ package com.whyxs.service.blog;
 import com.baomidou.mybatisplus.service.IService;
 import com.whyxs.common.bean.entity.BlogTag;
 
+import java.util.List;
+
 /**
  *
  * @author whyxs
@@ -11,6 +13,9 @@ import com.whyxs.common.bean.entity.BlogTag;
  */
 public interface TagService extends IService<BlogTag> {
 
+    List<BlogTag> getTagsByArticleId(String articleId);
+
+    void deleteArticleTagRelByArticleId(String articleId);
 }
  
 

@@ -12,9 +12,12 @@ package com.whyxs.service.blog.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.whyxs.common.bean.entity.BlogTag;
-import com.whyxs.mapper.blog.TagsMapper;
+import com.whyxs.mapper.blog.TagMapper;
 import com.whyxs.service.blog.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -25,6 +28,18 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
-public class TagServiceImpl extends ServiceImpl<TagsMapper, BlogTag> implements TagService {
+public class TagServiceImpl extends ServiceImpl<TagMapper, BlogTag> implements TagService {
 
+    @Autowired
+    private TagMapper tagMapper;
+
+    @Override
+    public List<BlogTag> getTagsByArticleId(String articleId) {
+        return tagMapper.getTagsByArticleId(articleId);
+    }
+
+    @Override
+    public void deleteArticleTagRelByArticleId(String articleId) {
+        tagMapper.deleteArticleTagRelByArticleId(articleId);
+    }
 }

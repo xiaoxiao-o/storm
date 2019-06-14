@@ -1,0 +1,40 @@
+
+.article-view{
+
+}
+.article-view .header,.article-view .section,.article-view .footer{
+    background-color: white;
+    padding: 10px;
+}
+.article-view .line{
+    border-bottom: 1px solid #d2d2d2;
+}
+.article-view .header .title{
+    color: #004F8A;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.article-view .header .time{
+    height: 30px;
+    line-height: 30px;
+}
+.footer .en-list{
+    padding-left: 3em;
+}
+.footer .en-list li{
+    list-style: disc;
+    height: 30px;
+    line-height: 30px;
+}
+.footer .en-list a{
+    color: #00adff;
+    cursor: pointer;
+}
+.footer .en-list a:hover{
+    color: blue;
+    text-decoration: underline;
+}
+.footer .clear{
+    clear: both;
+}

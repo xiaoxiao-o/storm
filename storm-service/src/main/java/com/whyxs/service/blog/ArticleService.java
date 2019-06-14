@@ -15,6 +15,8 @@ public interface ArticleService extends IService<BlogArticle> {
 
     void save(BlogArticle article, List<String> tagIds);
 
+    void changeSomeStatus(String id,String key,String val);
+
 }
  
 

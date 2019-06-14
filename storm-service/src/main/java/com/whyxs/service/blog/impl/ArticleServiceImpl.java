@@ -44,7 +44,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
         //根据id更新或新增用户
         if(articleId != null && !"".equals(articleId)) {
             articleMapper.updateById(article);
-            //删除原有关联角色
+            //删除原有关联标签
             articleMapper.deleteArticleTagRelByArticleId(articleId);
         }else {
             articleId = UUIDUtil.get32UUID();
@@ -62,5 +62,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
             articleTagS.add(articleTag);
         }
         articleMapper.BatchSaveUserRoleRel(articleTagS);
+    }
+
+    @Override
+    public void changeSomeStatus(String id, String key, String val) {
+        articleMapper.changeSomeStatus(id,key,val);
     }
 }

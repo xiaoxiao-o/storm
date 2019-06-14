@@ -22,5 +22,5 @@ public class Constants {
 	
 	//密码初始值
 	public static final String ORIGINAL_PASSWORD				= "123456";
-	
+
 }

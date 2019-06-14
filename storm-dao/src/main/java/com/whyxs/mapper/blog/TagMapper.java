@@ -13,12 +13,18 @@ package com.whyxs.mapper.blog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.whyxs.common.bean.entity.BlogTag;
 
+import java.util.List;
+
 /**
  * @author whyxs
  * @create 2019/5/10
  * @since 1.0.0
  */
-public interface TagsMapper extends BaseMapper<BlogTag> {
+public interface TagMapper extends BaseMapper<BlogTag> {
+
+    List<BlogTag> getTagsByArticleId(String articleId);
+
+    void deleteArticleTagRelByArticleId(String articleId);
 
 }
  

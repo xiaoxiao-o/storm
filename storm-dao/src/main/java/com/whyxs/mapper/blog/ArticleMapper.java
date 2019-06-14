@@ -12,6 +12,7 @@ package com.whyxs.mapper.blog;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.whyxs.common.bean.entity.BlogArticle;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ public interface ArticleMapper extends BaseMapper<BlogArticle> {
     void BatchSaveUserRoleRel(List<Map<String,Object>> articleTags);
 
     void deleteArticleTagRelByArticleId(String articleId);
+
+    void changeSomeStatus(@Param("id") String id, @Param("key") String key,@Param("val")  String val);
 
 }
  
