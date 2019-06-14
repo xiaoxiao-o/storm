@@ -54,11 +54,11 @@
 				layui.use("layer",function(){
 					var layer = layui.layer;
 					if(data.code==200){
-						layer.msg("菜单分配成功",{shade: 0,icon:1},function(index){
+						layer.alert("菜单分配成功",{shade: 0,icon:1},function(index){
 							parent.layer.closeAll();	//关闭所有
 						});
 					}else{
-						layer.msg("菜单分配失败",{icon:2});
+						layer.alert("菜单分配失败",{icon:2});
 					}
 				});
 			}

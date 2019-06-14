@@ -91,11 +91,11 @@
 				dataType:'json',
 				success:function(data){
 					if(data.code==200){
-						layer.msg("修改用户成功",{shade: 0,icon:1},function(index){
+						layer.alert("修改用户成功",{shade: 0,icon:1},function(index){
 							parent.layer.closeAll();	//关闭所有
 						});
 					}else{
-						layer.mag("修改用户失败",{icon:2});
+						layer.alert("修改用户失败",{icon:2});
 					}
 				}
 			});

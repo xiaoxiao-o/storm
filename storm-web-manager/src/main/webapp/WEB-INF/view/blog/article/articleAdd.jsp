@@ -234,11 +234,11 @@
                 dataType:'json',
                 success:function(data){
                     if(data.code==200){
-                        layer.msg("新建文章成功",{shade: 0,icon:1},function(index){
+                        layer.alert("新建文章成功",{shade: 0,icon:1},function(index){
                             parent.layer.closeAll();	//关闭所有
                         });
                     }else{
-                        layer.msg("新建文章失败",{icon:2});
+                        layer.alert("新建文章失败",{icon:2});
                     }
                 }
             });

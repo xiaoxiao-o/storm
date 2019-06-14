@@ -57,11 +57,11 @@
 				dataType:'json',
 				success:function(data){
 					if(data.code==200){
-						layer.msg("新增角色成功",{shade: 0,icon:1},function(index){
+						layer.alert("新增角色成功",{shade: 0,icon:1},function(index){
 							parent.layer.closeAll();	//关闭所有
 						});
 					}else{
-						layer.msg("新增角色失败",{icon:2});
+						layer.alert("新增角色失败",{icon:2});
 					}
 				}
 			});

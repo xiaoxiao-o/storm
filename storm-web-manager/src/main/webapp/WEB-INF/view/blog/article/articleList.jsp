@@ -179,11 +179,12 @@
 					url : 'blog/article/delete?id='+id,
 					success:function(data){
 						if(data.code==200){
-							layer.msg("删除成功",{icon:1},function(){
+							layer.alert("删除成功",{icon:1},function(index){
+                                layer.close(index);
 								search();
 							});
 						}else{
-							layer.msg("删除失败",{icon:2});
+							layer.alert("删除失败",{icon:2});
 						}
 					}
 				});

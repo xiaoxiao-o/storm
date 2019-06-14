@@ -132,7 +132,7 @@
 		//删除用户(批量)
 		function batchDel(data){
 			if(data.length==0){
-				layer.msg("没有选择任何数据",{icon:2});
+				layer.alert("没有选择任何数据",{icon:2});
 				return;
 			}
 			layer.confirm('确认删除选择的用户？', function(index) {
@@ -145,7 +145,8 @@
 					data : {ids:JSON.stringify(ids)},
 					success:function(data){
 						if(data.code==200){
-							layer.msg("删除成功",{icon:1},function(){
+							layer.alert("删除成功",{icon:1},function(index){
+							    layer.close(index);
 								search();
 							});
 						}else{
@@ -165,11 +166,12 @@
 					data : {ids:JSON.stringify(ids)},
 					success:function(data){
 						if(data.code==200){
-							layer.msg("删除成功",{icon:1},function(){
+							layer.alert("删除成功",{icon:1},function(index){
+							    layer.close(index);
 								search();
 							});
 						}else{
-							layer.msg("删除失败",{icon:2});
+							layer.alert("删除失败",{icon:2});
 						}
 					}
 				});
@@ -186,7 +188,7 @@
 						if(data.code==200){
 							layer.alert("已重置，初始密码为：" + data.data);
 						}else{
-							layer.msg("重置密码失败",{icon:2});
+							layer.alert("重置密码失败",{icon:2});
 						}
 					}
 				});
