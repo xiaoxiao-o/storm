@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>storm后台管理</title>
+<title>后台@storm</title>
 <base href=" <%=basePath%>">
 <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />

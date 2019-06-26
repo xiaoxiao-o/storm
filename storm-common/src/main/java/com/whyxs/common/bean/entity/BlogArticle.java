@@ -1,14 +1,13 @@
 package com.whyxs.common.bean.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.whyxs.common.util.JSONUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 文章
@@ -23,16 +22,25 @@ public class BlogArticle extends Model<BlogArticle> {
     @TableId
     private String id;
     private String title;
+    private String summary;
     private String content;     //内容
     private String subject;     //分类
     private String cover;       //封面
-    private List<Enclosure> enclosure;   //附件
+    private String enclosure;   //附件
     private String status;  //状态
     private String recom;  //推荐
     private String top;     //置顶
     private String lunbo;  //轮播
+
+    private int readCount;
+    private int commentCount;
+    private int praiseCount;
+
     private String createBy;
     private Date createTime;
+
+    @TableField(exist = false)
+    private String subjectName;
 
     public String getId() {
         return id;
@@ -48,6 +56,14 @@ public class BlogArticle extends Model<BlogArticle> {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getContent() {
@@ -75,11 +91,11 @@ public class BlogArticle extends Model<BlogArticle> {
     }
 
     public String getEnclosure() {
-        return JSONUtil.toJSONString(this.enclosure);
+        return enclosure;
     }
 
-    public void setEnclosure(String enclosureStr) {
-        this.enclosure = enclosure = JSONUtil.parseArray(enclosureStr,Enclosure.class);
+    public void setEnclosure(String enclosure) {
+        this.enclosure = enclosure;
     }
 
     public String getStatus() {
@@ -114,6 +130,30 @@ public class BlogArticle extends Model<BlogArticle> {
         this.lunbo = lunbo;
     }
 
+    public int getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public int getPraiseCount() {
+        return praiseCount;
+    }
+
+    public void setPraiseCount(int praiseCount) {
+        this.praiseCount = praiseCount;
+    }
+
     public String getCreateBy() {
         return createBy;
     }
@@ -128,6 +168,14 @@ public class BlogArticle extends Model<BlogArticle> {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     @Override

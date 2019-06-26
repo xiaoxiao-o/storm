@@ -11,6 +11,7 @@
 package com.whyxs.mapper.blog;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.whyxs.common.bean.entity.BlogArticle;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,6 +30,12 @@ public interface ArticleMapper extends BaseMapper<BlogArticle> {
     void deleteArticleTagRelByArticleId(String articleId);
 
     void changeSomeStatus(@Param("id") String id, @Param("key") String key,@Param("val")  String val);
+
+
+    //api
+    List<BlogArticle> selectArticleTopList();
+
+    List<BlogArticle> selectPageCustom(Pagination page);
 
 }
  

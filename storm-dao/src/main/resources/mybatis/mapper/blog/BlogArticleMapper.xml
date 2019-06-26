@@ -18,4 +18,35 @@
         update blog_article set ${key} = #{val} where id = #{id}
     </update>
 
+
+    <!-- API -->
+    <select id="selectArticleTopList" resultType="BlogArticle">
+        SELECT
+            a.*,
+            s.subject_name
+        FROM
+            blog_article a,
+            blog_subject s
+        WHERE
+            a.top = 1
+            AND a.SUBJECT = s.id
+        ORDER BY
+            a.create_time DESC
+        LIMIT 8
+    </select>
+
+    <select id="selectPageCustom" resultType="BlogArticle">
+        SELECT
+            a.*,
+            s.subject_name
+        FROM
+            blog_article a,
+            blog_subject s
+        WHERE
+            a.SUBJECT = s.id
+        ORDER BY
+            a.create_time DESC
+    </select>
+
+
 </mapper>

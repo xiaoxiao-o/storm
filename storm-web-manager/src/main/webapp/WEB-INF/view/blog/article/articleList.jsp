@@ -77,6 +77,7 @@
                 {field : 'title',title : '标题',align : 'center',templet:function(d){d.title
 					return '<a class="table-a" onclick="showArticle(\''+d.id+'\')">'+d.title+'</a>';
 				}},
+                {field  : 'summary',title : '摘要',align : 'center'},
                 {field : 'status',title : '状态',align : 'center',templet:function(d){
                     return d.status==0?"草稿":"已发布";
                 }},

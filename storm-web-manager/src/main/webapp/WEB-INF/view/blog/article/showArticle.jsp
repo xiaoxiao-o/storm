@@ -23,7 +23,11 @@
 				<div class="line"></div>
 			</div>
 			<div class="section">
-				<div class="content">${article.content}</div>
+				<div class="content">
+					<div class="simditor">
+						<div class="simditor-body">${article.content}</div>
+					</div>
+			</div>
 			</div>
 			<div class="footer" <c:if test="${empty enclosures}">style="display: none;"</c:if>>
 				<div class="line"></div>

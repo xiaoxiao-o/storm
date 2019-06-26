@@ -50,6 +50,12 @@
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">摘要</label>
+				<div class="layui-input-block">
+					<textarea id="summary" name="summary" placeholder="请输入内容" autofocus  class="layui-textarea" lay-verify="summary">${article.summary}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">正文</label>
 				<div class="layui-input-block">
 					<textarea id="content" name="content" placeholder="请输入内容" autofocus  class="layui-textarea" lay-verify="content">${article.content}</textarea>
@@ -59,7 +65,7 @@
 				<label class="layui-form-label">封面</label>
 				<div class="layui-textarea">
 					<div class="layui-upload">
-						<button type="button" class="layui-btn layui-btn-normal" id="cover-btn" style="float: left;margin-right: 20px;">
+						<button type="button" class="layui-btn layui-btn-normal" id="cover-btn" >
 							<i class="layui-icon"></i>上传封面
 						</button>
 						<div class="layui-upload-list">
@@ -245,6 +251,7 @@
 
             $.ajax({
                 url:'blog/article/save',
+				method:'POST',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',
                 success:function(data){

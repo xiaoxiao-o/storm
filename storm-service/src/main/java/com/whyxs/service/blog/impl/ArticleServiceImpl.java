@@ -10,6 +10,7 @@
  */
 package com.whyxs.service.blog.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.whyxs.common.bean.entity.BlogArticle;
 import com.whyxs.common.util.CompleteUtil;
@@ -67,5 +68,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
     @Override
     public void changeSomeStatus(String id, String key, String val) {
         articleMapper.changeSomeStatus(id,key,val);
+    }
+
+
+    //api
+
+    @Override
+    public List<BlogArticle> selectArticleTopList() {
+        return articleMapper.selectArticleTopList();
+    }
+
+    @Override
+    public Page<BlogArticle> selectPageCustom(Page page) {
+        page.setRecords(articleMapper.selectPageCustom(page));
+        return page;
     }
 }

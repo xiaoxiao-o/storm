@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<#include "/common/layout.css.html">
+		<link href="static/css/articlelist.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 顶部导航 -->
+		<#include "/common/layout.nav.top.html">
+
+		<div class="blog-body">
+			<div class="layui-container">
+				<blockquote class="layui-elem-quote sitemap shadow">
+					<i class="layui-icon">&#xe715;</i>
+					<span class="layui-breadcrumb" lay-separator=">">
+						<a href="/">首页</a>
+							<a><cite>学海无涯</cite></a>
+					</span>
+				</blockquote>
+				<div class="layui-row layui-col-space15">
+					<div class="layui-col-md8">
+						<div class="left-box no-border">
+							<p class="left-box-title shadow"><i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i>全部文章</p>
+							<div id="article-page-list"></div>
+							<div class="blog-pagebox">
+								<div class="laypage-main">
+									<div id="page"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-sm6 layui-col-md12 layui-hide-xs layui-hide-sm">
+								<div class="blog-search">
+									<form class="layui-form" action="">
+										<div class="layui-form-item">
+											<div class="search-keywords  shadow">
+												<input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input">
+											</div>
+											<div class="search-submit  shadow">
+												<a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i class="fa fa-search"></i></a>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="article-category shadow subject-list subject-list-less">
+									<div class="article-category-title">分类导航</div>
+									<#list subjectAll as subject>
+										<a href="article/subject/${subject.id}">${subject.subjectName}</a>
+									</#list>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="article-category shadow subject-list subject-list-less">
+									<div class="article-category-title">常用标签</div>
+									<#list tagAll as tag>
+										<a href="article/tag/${tag.id}" class="a-tag">${tag.tagName}</a>
+									</#list>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="advertisement blog-card shadow sr-rightmodule">
+									<div class="emptybox">
+										<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+										<p>广告区域</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--右边悬浮 平板或手机设备显示-->
+						<div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- footer -->
+		<#include "/common/layout.footer.html">
+		<!-- 侧边栏导航 -->
+		<#include "/common/layout.nav.left.html">
+		<!-- 遮罩层 -->
+		<#include "/common/layout.mask.html">
+
+	</body>
+
+	<!-- js -->
+	<#include "/common/layout.js.html">
+	<script src="static/js/articlelist.js"></script>
+	<script>$(".blog-nav-list").find("a[href='articlelist']").parent("li").addClass("layui-this");</script>
+
+</html>

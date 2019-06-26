@@ -2,11 +2,11 @@ package com.whyxs.common.bean.vo;
 
 public class RestResultVo {
 	
-	private static final int SUCCESS_CODE = 200;
-	private static final int ERROR_CODE = 500;
-	
-	private static final String SUCCESS_MSG = "请求成功";
-	private static final String ERROR_MSG = "数据接口异常";
+	public static final int SUCCESS_CODE = 200;
+	public static final int ERROR_CODE = 500;
+
+	public static final String SUCCESS_MSG = "请求成功";
+	public static final String ERROR_MSG = "数据接口异常";
 
 	
 	private long code;

@@ -1,0 +1,35 @@
+@media (max-width: 768px) {
+	.layui-hide-xs {
+		display: none !important;
+	}
+}
+.load-more{
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-top: none;
+	text-align: center;
+	margin-top: -10px;
+}
+.subject-list-less{
+	padding-bottom: 5px;
+	max-height: 208px;
+	overflow: hidden;
+}
+.subject-list-more{
+	padding-bottom: 5px;
+	overflow: hidden;
+}
+.load-more i{
+	cursor: pointer;
+	color: #0072ff;
+}
+.a-tag{
+	color: #fff !important;
+	width: inherit !important;
+	float: none !important;
+	display: inline-block !important;
+	padding: 6px 12px !important;
+	border-radius: 15px;
+	border: none !important;
+	/*background-color: red !important;*/
+}

@@ -1,5 +1,6 @@
 package com.whyxs.service.blog;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.whyxs.common.bean.entity.BlogArticle;
 
@@ -16,6 +17,12 @@ public interface ArticleService extends IService<BlogArticle> {
     void save(BlogArticle article, List<String> tagIds);
 
     void changeSomeStatus(String id,String key,String val);
+
+
+    //api
+    List<BlogArticle> selectArticleTopList();
+
+    Page<BlogArticle> selectPageCustom(Page page);
 
 }
  
