@@ -10,7 +10,10 @@
         <module>../storm-service</module>
         <module>../storm-web-manager</module>
         <module>../storm-web-portal</module>
-        <module>../strom-web-blog</module>
+        <module>../strom-web-com.whyxs.controller.blog</module>
+        <module>../storm-web-wedding</module>
+        <module>../storm-web-resume</module>
+        <module>../storm-search</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -224,6 +227,13 @@
             <version>3.11.0</version>
         </dependency>
 
+        <!-- MP  代码生成工具需要的依赖1 velocity-engine-core 2 slf4j-api   3slf4j-log4j12 -->
+        <!-- Apache velocity -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
 
     </dependencies>
 </project>

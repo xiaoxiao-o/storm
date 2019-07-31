@@ -125,7 +125,7 @@
                     var r = t(this), o = r.next("." + a), u = this.disabled, d = l.value,
                         f = t(l.options[l.selectedIndex]), v = l.options[0];
                     if ("string" == typeof r.attr("lay-ignore")) return r.show();
-                    var h = "string" == typeof r.attr("lay-search"), p = v ? v.value ? i : v.innerHTML || i : i,
+                    var h = "string" == typeof r.attr("lay-blog"), p = v ? v.value ? i : v.innerHTML || i : i,
                         m = t(['<div class="' + (h ? "" : "layui-unselect ") + a, (u ? " layui-select-disabled" : "") + '">', '<div class="' + n + '">', '<input type="text" placeholder="' + p + '" ' + ('value="' + (d ? f.html() : "") + '"') + (h ? "" : " readonly") + ' class="layui-input' + (h ? "" : " layui-unselect") + (u ? " " + c : "") + '">', '<i class="layui-edge"></i></div>', '<dl class="layui-anim layui-anim-upbit' + (r.find("optgroup")[0] ? " layui-select-group" : "") + '">', function (e) {
                             var t = [];
                             return layui.each(e, function (e, a) {

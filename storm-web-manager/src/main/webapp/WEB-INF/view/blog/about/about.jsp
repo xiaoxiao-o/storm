@@ -2,15 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
@@ -337,12 +334,12 @@
             });
             data.field.lbody = lbody;
 
-            //存name
-            data.field.pProvince = $("[name='pProvince']").find("option:selected").text().trim();
-            data.field.pCity = $("[name='pCity']").find("option:selected").text().trim();
+            //存name,考录后决定存value
+            //data.field.pProvince = $("[name='pProvince']").find("option:selected").text().trim();
+            //data.field.pCity = $("[name='pCity']").find("option:selected").text().trim();
 
             $.ajax({
-                url:'blog/about/save',
+                url:'com.whyxs.controller.blog/about/save',
                 method:'POST',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',
@@ -362,12 +359,12 @@
 
     function lbodyTrAdd(){
         $("#lbody").find("tbody").append(
-        ['<tr>'
-        ,'<td><input type="text" autocomplete="off" placeholder="请输入" class="layui-input" value=""></td>'
-        ,'<td><input type="text" autocomplete="off" placeholder="请输入" class="layui-input" value=""></td>'
-        ,'<td><div><button type="button" class="layui-btn layui-btn-normal layui-btn-sm" upload-btn style="height: 26px;line-height: 26px;"> <i class="layui-icon"></i>上传 </button> <img src="" width="26px" height="26px"> <input type="hidden" name="" value=""> </div> </td>'
-        ,'<td> <i class="layui-icon layui-icon-delete" style="color:red;cursor: pointer" title="删除" onclick="lbodyTrRemove(this)"></i> </td>'
-        ,'</tr>'].join(' ')
+			['<tr>'
+			,'<td><input type="text" autocomplete="off" placeholder="请输入" class="layui-input" value=""></td>'
+			,'<td><input type="text" autocomplete="off" placeholder="请输入" class="layui-input" value=""></td>'
+			,'<td><div><button type="button" class="layui-btn layui-btn-normal layui-btn-sm" upload-btn style="height: 26px;line-height: 26px;"> <i class="layui-icon"></i>上传 </button> <img src="" width="26px" height="26px"> <input type="hidden" name="" value=""> </div> </td>'
+			,'<td> <i class="layui-icon layui-icon-delete" style="color:red;cursor: pointer" title="删除" onclick="lbodyTrRemove(this)"></i> </td>'
+			,'</tr>'].join(' ')
 		);
 	}
 

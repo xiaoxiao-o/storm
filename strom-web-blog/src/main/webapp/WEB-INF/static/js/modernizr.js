@@ -44,7 +44,7 @@ window.Modernizr = function(e, t, n) {
 			}("autocomplete autofocus list placeholder max min multiple pattern required step".split(" ")), m.inputtypes = function(e) {
 				for(var r, o, a, i = 0, c = e.length; c > i; i++) E.setAttribute("type", o = e[i]), r = "text" !== E.type, r && (E.value = w, E.style.cssText = "position:absolute;visibility:hidden;", /^range$/.test(o) && E.style.WebkitAppearance !== n ? (g.appendChild(E), a = t.defaultView, r = a.getComputedStyle && "textfield" !== a.getComputedStyle(E, null).WebkitAppearance && 0 !== E.offsetHeight, g.removeChild(E)) : /^(search|tel)$/.test(o) || (r = /^(url|email)$/.test(o) ? E.checkValidity && E.checkValidity() === !1 : E.value != w)), P[e[i]] = !!r;
 				return P
-			}("search tel url email datetime date month week time datetime-local number range color".split(" "))
+			}("blog tel url email datetime date month week time datetime-local number range color".split(" "))
 		}
 		var f, d, p = "2.8.3",
 			m = {},

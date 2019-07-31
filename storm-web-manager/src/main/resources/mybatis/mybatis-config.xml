@@ -6,6 +6,11 @@
      <settings>  
      	<!-- 驼峰命名 -->
         <setting name="mapUnderscoreToCamelCase" value="true" />  
-     </settings>  
+     </settings>
+
+    <typeAliases>
+        <typeAlias alias="Pagination" type="com.baomidou.mybatisplus.plugins.pagination.Pagination"/>
+        <typeAlias alias="Page" type="com.baomidou.mybatisplus.plugins.Page"/>
+    </typeAliases>
 
 </configuration>

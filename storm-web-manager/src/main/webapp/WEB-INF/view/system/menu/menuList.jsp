@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+<title>后台@storm</title>
+<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
-		<!-- search -->
+		<!-- blog -->
 		<div class="layui-form layui-form-pane" id="condition">
 			<div class="layui-form-item margin-bottom-0">
 				<div class="layui-inline margin-bottom-5">
@@ -78,7 +75,7 @@
         });
         
       	//查询按钮
-		$("#search").on('click',function(){
+		$("#blog").on('click',function(){
 			search();
 		});
 

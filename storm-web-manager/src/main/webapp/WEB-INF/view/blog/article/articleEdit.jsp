@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href="<%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
@@ -58,7 +55,8 @@
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">正文</label>
 				<div class="layui-input-block">
-					<textarea id="content" name="content" placeholder="请输入内容" autofocus  class="layui-textarea" lay-verify="content">${article.content}</textarea>
+					<div id="contentdiv"  style="display:none">${article.content}</div>
+					<textarea id="content" name="content" placeholder="请输入内容" autofocus  class="layui-textarea" lay-verify="content"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
@@ -87,7 +85,7 @@
 							<table class="layui-table">
 								<thead><tr><th>文件名</th><th>状态</th><th>操作</th></tr></thead>
 								<tbody id="enclosureList">
-									<c:forEach var="enclosure" items="${enclosures}">
+									<c:forEach var="enclosure" items="${blogEnclosures}">
 										<tr id="upload-ex" fileName="${enclosure.fileName}" filePath="${filePath}">
 											<td>${enclosure.fileName}</td>
 											<td><span style="color: #5FB878;">上传成功</span></td>
@@ -127,6 +125,17 @@
         var $=layui.jquery;
         var form = layui.kzForm;
         var upload = layui.upload;
+
+        var pre="";
+        //获取div中的pre的个数
+        var presize=$("#contentdiv pre").length;
+        //遍历pre
+        for(var i=0;i<presize;i++){
+            pre=$("#contentdiv pre").eq(i).text();
+            $("#contentdiv pre").eq(i).text(pre);
+        }
+        //装填到textarea中
+        $("#content").text($("#contentdiv").html());
 
         var editor = new Simditor({
             textarea: $('#content'),
@@ -250,7 +259,7 @@
             data.field.status = data.elem.value;
 
             $.ajax({
-                url:'blog/article/save',
+                url:'com.whyxs.controller.blog/article/save',
 				method:'POST',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',

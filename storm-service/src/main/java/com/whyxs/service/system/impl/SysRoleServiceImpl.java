@@ -1,6 +1,5 @@
 package com.whyxs.service.system.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.whyxs.common.bean.entity.SysMenu;
 import com.whyxs.common.bean.entity.SysRole;
-import com.whyxs.common.bean.entity.SysUser;
 import com.whyxs.common.util.CompleteUtil;
 import com.whyxs.common.util.UUIDUtil;
 import com.whyxs.mapper.system.SysMenuMapper;

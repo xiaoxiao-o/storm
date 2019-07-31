@@ -16,6 +16,7 @@ import com.whyxs.common.bean.entity.BlogArticle;
 import com.whyxs.common.util.CompleteUtil;
 import com.whyxs.common.util.UUIDUtil;
 import com.whyxs.mapper.blog.ArticleMapper;
+import com.whyxs.mapper.blog.TagMapper;
 import com.whyxs.service.blog.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
     public void save(BlogArticle article, List<String> tagIds) {
@@ -79,8 +83,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
     }
 
     @Override
-    public Page<BlogArticle> selectPageCustom(Page page) {
-        page.setRecords(articleMapper.selectPageCustom(page));
+    public Page<BlogArticle> selectPageCustom(Page page,Map<String,Object> condition) {
+        page.setRecords(articleMapper.selectPageCustom(page,condition));
         return page;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectArticleRecord() {
+        return articleMapper.selectArticleRecord();
+    }
+
+    @Override
+    public BlogArticle selectByIdCustom(String id) {
+        BlogArticle article = articleMapper.selectByIdCustom(id);
+        if(article!=null){
+            article.setTagList(tagMapper.getTagsByArticleId(article.getId()));
+        }
+        return article;
     }
 }

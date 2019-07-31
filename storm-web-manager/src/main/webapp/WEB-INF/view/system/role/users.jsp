@@ -2,20 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
-		<table  lay-filter="users-table">
+		<table lay-filter="users-table">
 			<thead>
 				<tr>
 					<th lay-data="{type:'numbers',align:'center'}">序号</th>

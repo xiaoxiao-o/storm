@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
-		<!-- search -->
+		<!-- blog -->
 		<div class="layui-form layui-form-pane" id="condition">
 			<div class="layui-form-item">
 				<div class="layui-inline">
@@ -69,7 +66,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#article-table',
-			url  : 'blog/article/selectListPage',
+			url  : 'com.whyxs.controller.blog/article/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -94,13 +91,13 @@
 		});
 		
 		//查询按钮
-		$("#search").on('click',function(){
+		$("#blog").on('click',function(){
 			search();	//执行查询
 		});
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建文章","blog/article/toAdd");	//执行新增
+            edit("新建文章","com.whyxs.controller.blog/article/toAdd");	//执行新增
         });
 
         //执行查询
@@ -136,7 +133,7 @@
 		table.on('tool(article-table)', function(obj) {
 			var data = obj.data;
 			if (obj.event === 'update') {
-				edit("修改文章",'blog/article/toEdit?id='+data.id);
+				edit("修改文章",'com.whyxs.controller.blog/article/toEdit?id='+data.id);
 			}else if (obj.event === 'delete') {
 			    del(data.id);
             }else if (obj.event === 'publish') {
@@ -158,7 +155,7 @@
 
         function changeStatus(id,key,val,msg){
             $.ajax({
-                url : 'blog/article/changeSomeStatus',
+                url : 'com.whyxs.controller.blog/article/changeSomeStatus',
                 data : {id:id,key:key,val:val},
                 success:function(data){
                     if(data.code==200){
@@ -177,7 +174,7 @@
 		function del(id){
 			layer.confirm('确认删除该文章？', function(index) {
 				$.ajax({
-					url : 'blog/article/delete?id='+id,
+					url : 'com.whyxs.controller.blog/article/delete?id='+id,
 					success:function(data){
 						if(data.code==200){
 							layer.alert("删除成功",{icon:1},function(index){
@@ -200,7 +197,7 @@
             type : 2,
             title : "文章预览",
             area : [ '900px', '500px' ],
-            content : "blog/article/showArticle?id="+id
+            content : "com.whyxs.controller.blog/article/showArticle?id="+id
         });
     }
 

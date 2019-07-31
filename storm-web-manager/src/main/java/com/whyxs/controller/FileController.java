@@ -25,17 +25,17 @@ import java.util.Date;
 @RequestMapping("/file")
 public class FileController extends BaseController {
 
-    //项目名,文件的root路径
-    @Value("#{configProperties['projectName']}")
-    private String projectName;
-
     //上传的root路径
-    @Value("#{configProperties['upload.basePath']}")
+    @Value("#{configProperties['upload.base.path']}")
     private String uploadBasePath;
 
-    //nginx访问静态文件的root路径
-    @Value("#{configProperties['nginx.file.url']}")
-    private String nginxFileUrl;
+    @Value("#{configProperties['upload.sub.path']}")
+    private String uploadSubPath;
+
+    //项目名,文件的root路径
+    @Value("#{configProperties['project.name']}")
+    private String projectName;
+
 
     /**
      * 文件上传(layui,返回值兼容Simditor富文本图片上传)
@@ -50,9 +50,9 @@ public class FileController extends BaseController {
                 String ext = FilenameUtils.getExtension(oName);
                 String reName = new Date().getTime() + RandomUtils.nextLong(100000, 999999) + "." + ext;
                 String cdate = DateFormatUtils.format(new Date(), "yyyyMMdd");
-                String realPath = uploadBasePath + "/" + projectName + "/" + folder + "/" + cdate;
+                String realPath = uploadBasePath + uploadSubPath + projectName + "/" + folder + "/" + cdate;
                 FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, reName));
-                return UploadResultVo.bulid(0, "上传成功", true, oName, nginxFileUrl + "/" + projectName + "/" + folder + "/" + cdate + "/" + reName);
+                return UploadResultVo.bulid(0, "上传成功", true, oName,  "/" + uploadSubPath + projectName + "/" + folder + "/" + cdate + "/" + reName);
             }else{
                 return UploadResultVo.bulid(1, "上传失败,空文件", true, "", "");
             }

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-
 <html>
 	<head>
 		<#include "/common/layout.css.html">
-		<link href="static/css/about.css" rel="stylesheet" />
+		<link href="${ctx}/static/css/blog/about.css" rel="stylesheet" />
 	</head>
 	<body>
 		<!-- 顶部导航 -->
 		<#include "/common/layout.nav.top.html">
 
-		<div class="blog-body">
+		<div class="com.whyxs.controller.blog-body">
 			<div class="layui-container">
 				<div class="layui-row layui-col-space15">
 					<div class="layui-col-xs12">
@@ -22,7 +21,7 @@
 						</blockquote>
 					</div>
 					<div class="layui-col-xs12">
-						<ul class="blog-nav-follow">
+						<ul class="com.whyxs.controller.blog-nav-follow">
 							<li class="current">
 								<a href="#author">关于作者</a>
 							</li>
@@ -36,7 +35,7 @@
 								<a href="#reward">小额赞赏</a>
 							</li>
 						</ul>
-						<div class="blog-about-container">
+						<div class="com.whyxs.controller.blog-about-container">
 							<span id="author" class="anchor"></span>
 							<div class="section">
 								<div class="section-title">
@@ -161,7 +160,29 @@
 
 	<!-- js -->
 	<#include "/common/layout.js.html">
-	<script src="static/js/about.js"></script>
-	<script>$(".blog-nav-list").find("a[href='about']").parent("li").addClass("layui-this");</script>
+	<script>
+		$(".com.whyxs.controller.blog-nav-list").find("a[href$='about']").parent("li").addClass("layui-this");
+
+        layui.use(['jquery'], function () {
+            var $ = layui.$;
+
+            $('.com.whyxs.controller.blog-nav-follow').onePageNav({
+                scrollThreshold: 0.1
+            });
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 65) {
+                    $('.com.whyxs.controller.blog-nav').addClass('layui-hide');
+                } else {
+                    $('.com.whyxs.controller.blog-nav').removeClass('layui-hide');
+                }
+                if ($(window).scrollTop() > 65) {
+                    $('.com.whyxs.controller.blog-nav-follow').addClass('fixed');
+                } else {
+                    $('.com.whyxs.controller.blog-nav-follow').removeClass('fixed');
+                }
+            });
+        });
+	</script>
 
 </html>

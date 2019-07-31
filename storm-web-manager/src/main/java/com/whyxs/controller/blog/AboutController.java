@@ -31,7 +31,6 @@ public class AboutController extends BaseController{
     @RequestMapping("/site")
     public String list(Model model){
 		BlogAbout about = aboutService.selectOne(new EntityWrapper<BlogAbout>().last("limit 1"));
-		JSONUtil.parse(about.getlBody());
 		model.addAttribute("about",about);
 		model.addAttribute("lBody",JSONUtil.parseArray(about.getlBody(), Map.class));
 		return "blog/about/about";

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.whyxs.common.bean.entity.BlogArticle;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,7 +23,11 @@ public interface ArticleService extends IService<BlogArticle> {
     //api
     List<BlogArticle> selectArticleTopList();
 
-    Page<BlogArticle> selectPageCustom(Page page);
+    Page<BlogArticle> selectPageCustom(Page page,Map<String,Object> condition);
+
+    List<Map<String,Object>> selectArticleRecord();
+
+    BlogArticle selectByIdCustom(String id);
 
 }
  

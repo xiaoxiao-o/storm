@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <#include "/common/layout.css.html">
+        <link href="${ctx}/static/css/blog/articlerecord.css" rel="stylesheet" />
+	</head>
+	<body>
+        <!-- 顶部导航 -->
+        <#include "/common/layout.nav.top.html">
+		<div class="com.whyxs.controller.blog-body">
+			<div class="layui-container">
+				<blockquote class="layui-elem-quote sitemap shadow">
+					<i class="layui-icon">&#xe715;</i>
+					<span class="layui-breadcrumb" lay-separator=">">
+                        <a href="/">首页</a>
+                        <a><cite>文章归档</cite></a>
+                    </span>
+				</blockquote>
+				<div class="com.whyxs.controller.blog-nav-two shadow">
+					<div class="layui-breadcrumb" lay-separator="|">
+						<a href="${ctx}/footprint/timeline"><span>轻言细语</span></a>
+						<a href="${ctx}/footprint/articlerecord" class="selected"><span>文章归档</span></a>
+					</div>
+				</div>
+				<div class="com.whyxs.controller.blog-panel">
+					<div class="layui-row">
+						<div class="layui-hide-xs layui-col-md2" style="margin:10px 0">
+							<ul class="article-record-title">
+                                <#list articleRecords as record>
+                                    <li class="<#if (record_index==0)>selected</#if>">
+                                        <a href="#${record.id}">${record.date}</a>
+                                    </li>
+                                </#list>
+							</ul>
+						</div>
+						<div class="layui-col-xs12 layui-col-md10">
+							<div class="article-record-content">
+                                <#list articleRecords as record>
+                                    <div class="article-record-item layui-show">
+                                        <h4><a class="datenav" id="${record.id}">${record.date}</a></h4>
+                                        <ul style="margin-left: 2em;">
+                                            <#list record.articles as article>
+                                                <li><span class="layui-badge layui-bg-black" style="margin-right:8px;">${article.createTime}</span>
+                                                    <a href="article/detail/${article.id}">${article.title}</a>
+                                                </li>
+                                            </#list>
+                                        </ul>
+                                    </div>
+                                </#list>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!-- footer -->
+        <#include "/common/layout.footer.html">
+        <!-- 侧边栏导航 -->
+        <#include "/common/layout.nav.left.html">
+        <!-- 遮罩层 -->
+        <#include "/common/layout.mask.html">
+
+    </body>
+
+    <!-- js -->
+    <#include "/common/layout.js.html">
+    <script>
+        $(".com.whyxs.controller.blog-nav-list").find("a[href$='footprint']").parent("li").addClass("layui-this");
+        layui.use('jquery', function() {
+            var $ = layui.jquery;
+            var i, t;
+            $(function() {
+                $('.article-record-title li').on('click', function() {
+                    var self = this;
+                    $(self).addClass('selected').siblings().removeClass('selected');
+                    clearTimeout(t);
+                    clearInterval(i);
+                    $('.datenav').removeClass('highlight');
+                    highlight(self);
+                    i = setInterval(function() {
+                        highlight(self);
+                    }, 600);
+                    t = setTimeout(function() {
+                        clearInterval(i);
+                    }, 1200);
+
+                    $("html, body").animate({
+                        scrollTop: $($(self).children().attr("href")).offset().top + -100 + "px"
+                    }, {
+                        duration: 400,
+                        easing: "swing"
+                    });
+                });
+
+                function highlight(elem) {
+                    var target = $(elem).children().text().replace('年', '').replace('月', '');
+                    $('#' + target).addClass('highlight');
+                    setTimeout(function() {
+                        $('#' + target).removeClass('highlight');
+                    }, 300);
+                }
+            });
+        });
+    </script>
+
+</html>

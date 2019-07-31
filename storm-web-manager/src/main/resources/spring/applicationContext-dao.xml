@@ -55,6 +55,14 @@
 		</property>
 	</bean>
 
+	<bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+		<property name="sqlInjector" ref="logicSqlInjector" />
+		<property name="logicDeleteValue" value="-1" />
+		<property name="logicNotDeleteValue" value="1" />
+	</bean>
+
+	<bean id="logicSqlInjector" class="com.baomidou.mybatisplus.mapper.LogicSqlInjector" />
+
 	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.whyxs.mapper" />
 	</bean>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<#assign ctx=request.contextPath />
+		<title>index@storm</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="${ctx}/static/img/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="${ctx}/static/plugin/font-awesome/css/font-awesome.css" />
+	</head>
+	<body class="loading">
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+				<header id="header">
+					<h1>${about.title}</h1>
+					<p>${about.subTitle}</p>
+					<nav>
+						<ul>
+							<#list links as link>
+								<li>
+									<a href="${link.siteLink}" class="${link.siteIcon}"><span>${link.siteName}</span></a>
+								</li>
+							</#list>
+						</ul>
+					</nav>
+				</header>
+				<footer id="footer">
+					<span class="copyright">${about.footer}</span>
+				</footer>
+			</div>
+		</div>
+	</body>
+	<script src="${ctx}/static/js/skel.min.js"></script>
+	<script>
+        skel.init({
+            reset: 'full',
+            breakpoints: {
+                'global': {range: '*',href: '${ctx}/static/css/style.css',lockViewport: true,viewport: 'minimal-ui'},
+                'wide': {range: '-1680',href: '${ctx}/static/css/style-wide.css'},
+                'normal': {range: '-1280',href: '${ctx}/static/css/style-normal.css'},
+                'mobile': {range: '-640',href: '${ctx}/static/css/style-mobile.css'},
+                'mobilep': {range: '-360',href: '${ctx}/static/css/style-mobilep.css'}
+            }
+        });
+        window.onload = function() {document.body.className = '';}
+        window.ontouchmove = function() {return false;}
+        window.onorientationchange = function() {document.body.scrollTop = 0;}
+	</script>
+	<noscript>
+		<link rel="stylesheet" href="${ctx}/static/css/skel.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/style.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/style-wide.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/style-noscript.css" />
+	</noscript>
+</html>

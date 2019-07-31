@@ -1,16 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>登录</title>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" href="static/css/login.css" />
 <link rel="stylesheet" href="static/plugin/layui-v2.4.5/layui/css/layui.css" />
@@ -40,7 +36,7 @@
 <script type="text/javascript">
 	$(function(){
 		if(self != top){   //不是顶层页面 
-		   top.location.href="login";  
+		   top.location.href="login";
 		}
 	});
 	

@@ -2,15 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
@@ -52,7 +49,7 @@
 		//监听提交
 		form.on('submit(form)', function(data) {
 			$.ajax({
-				url:'blog/note/save',
+				url:'com.whyxs.controller.blog/note/save',
 				data:{"param":JSON.stringify(data.field)},
 				dataType:'json',
 				success:function(data){

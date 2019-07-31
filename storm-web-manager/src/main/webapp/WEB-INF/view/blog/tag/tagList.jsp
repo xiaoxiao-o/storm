@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%String path = request.getContextPath() + "/";%>
 <!DOCTYPE html>
 <html>
 <head>
-<base href=" <%=basePath%>">
+	<title>后台@storm</title>
+	<base href=" <%=path%>">
 <jsp:include page="../../head.jsp"/>
 </head>
 <body>
 	<div class="main-content">
-		<!-- search -->
+		<!-- blog -->
 		<div class="layui-form layui-form-pane" id="condition">
 			<div class="layui-form-item">
 				<div class="layui-inline">
@@ -47,7 +44,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#tag-table',
-			url  : 'blog/tag/selectListPage',
+			url  : 'com.whyxs.controller.blog/tag/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -67,13 +64,13 @@
 		});
 		
 		//查询按钮
-		$("#search").on('click',function(){
+		$("#blog").on('click',function(){
 			search();	//执行查询
 		});
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建标签","blog/tag/toAdd");	//执行新增
+            edit("新建标签","com.whyxs.controller.blog/tag/toAdd");	//执行新增
         });
 
         //执行查询
@@ -111,7 +108,7 @@
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改标签",'blog/tag/toEdit?tagId='+data.id);
+				edit("修改标签",'com.whyxs.controller.blog/tag/toEdit?tagId='+data.id);
 			}
 		});
 		
@@ -120,7 +117,7 @@
 		function del(blogId){
 			layer.confirm('确认删除该标签？', function(index) {
 				$.ajax({
-					url : 'blog/tag/del',
+					url : 'com.whyxs.controller.blog/tag/del',
 					data : {id:blogId},
 					success:function(data){
 						if(data.code==200){

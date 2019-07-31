@@ -1,7 +1,6 @@
 package com.whyxs.service.system.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,14 +10,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.whyxs.common.bean.entity.SysRole;
 import com.whyxs.common.bean.entity.SysUser;
 import com.whyxs.common.util.CompleteUtil;
 import com.whyxs.common.util.ShiroUtil;
 import com.whyxs.common.util.UUIDUtil;
-import com.whyxs.mapper.system.SysRoleMapper;
 import com.whyxs.mapper.system.SysUserMapper;
 import com.whyxs.service.system.SysUserService;
 

@@ -1,32 +1,29 @@
 
 <!-- 公共的nav-top -->
-<nav class="blog-nav layui-header">
+<nav class="com.whyxs.controller.blog-nav layui-header">
     <div class="layui-container">
-        <a href="/user/login?provider=QQ&returnUrl=/" class="blog-user">
-            <i class="fa fa-qq"></i>
-        </a>
-        <a class="blog-logo" href="/">${about.wName}</a>
-        <ul class="blog-nav-list" lay-filter="nav">
+        <a class="com.whyxs.controller.blog-logo" href="${ctx}/home">${about.wName}</a>
+        <ul class="com.whyxs.controller.blog-nav-list" lay-filter="nav">
             <li class="layui-nav-item">
-                <a href="home"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+                <a href="${ctx}/home"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
             </li>
             <li class="layui-nav-item ">
-                <a href="articlelist"><i class="fa fa-book fa-fw"></i>&nbsp;学海无涯</a>
+                <a href="${ctx}/articlelist"><i class="fa fa-book fa-fw"></i>&nbsp;学海无涯</a>
             </li>
             <li class="layui-nav-item ">
-                <a href="timeline"><i class="fa fa-snowflake-o fa-fw"></i>&nbsp;点点滴滴</a>
+                <a href="${ctx}/footprint"><i class="fa fa-snowflake-o fa-fw"></i>&nbsp;点点滴滴</a>
             </li>
             <li class="layui-nav-item ">
-                <a href="music"><i class="fa fa-th-large fa-fw"></i>&nbsp;音乐驿站</a>
+                <a href="${ctx}/music"><i class="fa fa-th-large fa-fw"></i>&nbsp;音乐驿站</a>
             </li>
             <li class="layui-nav-item ">
-                <a href="comment"><i class="fa fa-comments fa-fw"></i>&nbsp;留言交流</a>
+                <a href="${ctx}/comment"><i class="fa fa-comments fa-fw"></i>&nbsp;留言交流</a>
             </li>
             <li class="layui-nav-item ">
-                <a href="about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+                <a href="${ctx}/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
             </li>
         </ul>
-        <a class="blog-navicon" href="javascript:;">
+        <a class="com.whyxs.controller.blog-navicon" href="javascript:;">
             <i class="fa fa-navicon"></i>
         </a>
     </div>

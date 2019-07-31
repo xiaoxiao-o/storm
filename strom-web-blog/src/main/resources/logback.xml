@@ -10,11 +10,6 @@
             <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n</pattern>
         </encoder>
     </appender>
-    
-    <!-- SQL相关日志输出-->
-    <logger name="org.apache.ibatis" level="INFO" additivity="false" />
-    <logger name="org.mybatis.spring" level="INFO" additivity="false" />
-    
     <!-- Logger 根目录 -->
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />

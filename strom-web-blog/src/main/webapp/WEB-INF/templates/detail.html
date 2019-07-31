@@ -1,323 +1,172 @@
 <!DOCTYPE html>
-
 <html>
-
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="x-stylesheet-fallback-test" content="" class="fa" />
-		<title>博客@storm</title>
-
-		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-		<link href="plugin/layui/css/layui.css" rel="stylesheet" />
-		<link href="plugin/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-		<link href="css/site.min.css" rel="stylesheet" />
-		<link href="css/site-animate.css" rel="stylesheet" />
-		<link href="css/site-media.css" rel="stylesheet" />
-		<link href="css/animate.min.css" rel="stylesheet" />
-		<link href="css/blog-pace.css" rel="stylesheet" />
-		<script data-pace-options='{ "ajax": false ,"eventLag": false}' src="js/pace.min.js"></script>
-		
-		<link href="css/article-detail.css" rel="stylesheet" />
-		<link href="css/prettify.min.css" rel="stylesheet" />
+		<#include "/common/layout.css.html">
+        <link href="${ctx}/static/css/blog/comment.css" rel="stylesheet" /><!-- 使用了部分样式 -->
+        <link href="${ctx}/static/css/blog/articlelist.css" rel="stylesheet" /><!-- 使用了部分样式 -->
+		<link href="${ctx}/static/css/blog/articledetail.css" rel="stylesheet" />
+		<link href="${ctx}/static/plugin/simditor-2.3.25/site/assets/styles/simditor.css" rel="stylesheet" />
 	</head>
-
 	<body>
-		<nav class="blog-nav layui-header">
-			<div class="layui-container">
-				<a href="/user/login?provider=QQ&returnUrl=/article/detail/43" class="blog-user">
-					<i class="fa fa-qq"></i>
-				</a>
-				<a class="blog-logo" href="/">不落阁</a>
-				<ul class="blog-nav-list" lay-filter="nav">
-					<li class="layui-nav-item ">
-						<a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-					</li>
-					<li class="layui-nav-item  layui-this">
-						<a href="/article/all"><i class="fa fa-book fa-fw"></i>&nbsp;学海无涯</a>
-					</li>
-					<li class="layui-nav-item ">
-						<a href="/footprint/timeline"><i class="fa fa-snowflake-o fa-fw"></i>&nbsp;点点滴滴</a>
-					</li>
-					<li class="layui-nav-item ">
-						<a href="/production"><i class="fa fa-th-large fa-fw"></i>&nbsp;个人作品</a>
-					</li>
-					<li class="layui-nav-item ">
-						<a href="/comment"><i class="fa fa-comments fa-fw"></i>&nbsp;留言交流</a>
-					</li>
-					<li class="layui-nav-item ">
-						<a href="/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-					</li>
-				</ul>
-				<a class="blog-navicon" href="javascript:;">
-					<i class="fa fa-navicon"></i>
-				</a>
-			</div>
-		</nav>
-		<div class="blog-body">
-
+		<!-- 顶部导航 -->
+		<#include "/common/layout.nav.top.html">
+		<div class="com.whyxs.controller.blog-body">
 			<div class="layui-container">
 				<blockquote class="layui-elem-quote sitemap shadow">
 					<i class="layui-icon">&#xe715;</i>
 					<span class="layui-breadcrumb" lay-separator=">">
-            <a href="/">首页</a>
-            <a href="/article/all">学海无涯</a>
-            <a href="/article/cate/9">Xamarin</a>
-            <a><cite>Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;5 &#xFF1A;XAML&#x6807;&#x8BB0;&#x6269;&#x5C55;</cite></a>
-        </span>
+						<a href="${ctx}/home">首页</a>
+						<a href="${ctx}/articlelist">学海无涯</a>
+						<a href="${ctx}/articlelist?subject=${article.subject}">${article.subjectName}</a>
+						<a><cite>${article.title}</cite></a>
+					</span>
 				</blockquote>
 				<div class="layui-row layui-col-space15 clearfix">
 					<div class="layui-col-md8 left">
 						<div data-fontsize="14" class="article-detail shadow">
 							<div class="article-tool">
 								<div style="float:left;">
-									<button class="layui-btn layui-btn-primary layui-btn-xs" title="发布日期">
-                            2019&#x5E74;05&#x6708;01&#x65E5;
-                        </button>
+									<button class="layui-btn layui-btn-primary layui-btn-xs" title="发布日期">${article.createTime?number_to_datetime?string('yyyy年MM月dd日')}</button>
 									<div class="layui-btn-group">
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="浏览">
-                                <i class="fa fa-eye fa-fw"></i><span style="margin-left:3px;">121</span>
-                            </button>
+                                            <i class="fa fa-eye fa-fw"></i><span style="margin-left:3px;" id="readCount">${article.readCount}</span>
+                                        </button>
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="评论">
-                                <i class="fa fa-comments fa-fw"></i><span style="margin-left:3px;">0</span>
-                            </button>
+                                            <i class="fa fa-comments fa-fw"></i><span style="margin-left:3px;" id="commentCount">${article.commentCount}</span>
+                                        </button>
 									</div>
 								</div>
 								<div class="tool-box">
 									<div class="layui-btn-group layui-hide-xs">
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="字体缩小">
-                                <i class="fa fa-minus fa-fw"></i>
-                            </button>
+                                            <i class="fa fa-minus fa-fw"></i>
+                                        </button>
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="字体还原">
-                                <i class="fa fa-undo fa-fw"></i>
-                            </button>
+                                            <i class="fa fa-undo fa-fw"></i>
+                                        </button>
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="字体放大">
-                                <i class="fa fa-plus fa-fw"></i>
-                            </button>
+                                            <i class="fa fa-plus fa-fw"></i>
+                                        </button>
 									</div>
 									<div class="layui-btn-group layui-hide-xs">
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="展开阅读">
-                                <i class="fa fa-arrows-h fa-fw"></i>
-                            </button>
+                                            <i class="fa fa-arrows-h fa-fw"></i>
+                                        </button>
 										<button class="layui-btn layui-btn-primary layui-btn-xs" title="全屏阅读">
-                                <i class="fa fa-arrows-alt fa-fw"></i>
-                            </button>
+                                            <i class="fa fa-arrows-alt fa-fw"></i>
+                                        </button>
 									</div>
 								</div>
 							</div>
-							<div class="article-detail-title">
-								Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;5 &#xFF1A;XAML&#x6807;&#x8BB0;&#x6269;&#x5C55;
-							</div>
+							<div class="article-detail-title">${article.title}</div>
 							<div class="article-detail-abstract">
 								<span class="layui-badge">摘要</span>
-								<span id="abstract">&#x672C;&#x6587;&#x4E3B;&#x8981;&#x8BB2;&#x8FF0;Xamarin.Forms&#x4E2D;XAML&#x7684;&#x6807;&#x8BB0;&#x6269;&#x5C55;&#x3002;</span>
+								<span id="abstract">${article.summary}</span>
 							</div>
 							<div class="article-detail-content w-e-text">
-								<h1><span style="font-weight: bold; color: rgb(0, 0, 0);">前言</span></h1>
-								<p>在
-									<a href="http://www.leo96.com/article/detail/42" target="_blank" style="color: rgb(49, 148, 208);">Xamarin.Forms移动开发系列4 ：XAML基础</a>一文中提到过XAML标记扩展，本文将对标记扩展进行更深入的了解。</p>
-								<h1><span style="font-weight: bold; color: rgb(0, 0, 0);">大纲</span></h1>
-								<p>1.了解XAML标记扩展</p>
-								<p>2.使用XAML标记扩展</p>
-								<p>3.创建XAML标记扩展</p>
-								<h1><span style="font-weight: bold; color: rgb(0, 0, 0);">内容</span></h1>
-								<h2><span style="font-weight: bold; color: rgb(0, 0, 0);">1.了解XAML标记扩展</span></h2>
-								<p>XAML标记扩展允许从文本字符串以外的源设置元素属性，从而帮助扩展XAML的功能和灵活性。</p>
-								<p>通常设置一个元素的属性是直接使用字符串，但有时候您可能更喜欢用存储在资源字典中的值设置属性，或者用类的静态属性的值来设置属性，或者从页面上另一个元素的属性值设置属性，这些统统都能够使用标记扩展实现。</p>
-								<p>XAML标记扩展并非对XML的扩展，实际上只是表示元素属性的另一种方式，通常表现为在一对大括号。如：</p><pre class="prettyprint linenums"><code>&lt;Label Text="Welcome to Xamarin Forms!" 
-       TextColor="{StaticResource themeColor}" /&gt;</code></pre>
-								<p>TextColor属性通过的StaticResource标记扩展来设置值。</p>
-								<h2><span style="font-weight: bold; color: rgb(0, 0, 0);">2.使用XAML标记扩展</span></h2>
-								<p>某些XAML标记扩展是XAML 2009规范的一部分，它们出现在具有常规x名称空间前缀的XAML文件中，通常使用此前缀进行引用。本文讨论以下标记扩展：</p>
-								<p>● x:Static – 引用静态属性、字段或枚举成员。&nbsp;</p>
-								<p>● x:Reference – 引用页面上已命名的元素.。</p>
-								<p>● x:Type – 返回一个类或结构的System.Type对象。</p>
-								<p>● x:Array – 构造特定类型的对象数组。&nbsp;</p>
-								<p>● x:Null – 将属性设置为Null值。&nbsp;</p>
-								<p>● OnPlatform – 根据运行平台自定义UI属性。&nbsp;</p>
-								<p>● OnIdiom – 根据运行应用程序的设备的惯用法自定义UI外观。</p>
-								<h3><span style="font-weight: bold; color: rgb(0, 0, 0);">2.1 x:Static标记扩展</span></h3>
-								<p><span style="color: rgb(255, 0, 255);">x:Static标记扩展</span>是由<span style="color: rgb(255, 0, 0);">StaticExtension</span>类支持的，该类实现了<span style="color: rgb(255, 0, 0);">IMarkupExtension</span>接口。</p>
-								<p><img src="http://res.leo96.com/images/upload/20190501_598839.png" style="max-width:100%;"><br></p>
-								<p><span style="color: rgb(255, 0, 0);">StaticExtension</span>类有个<span style="color: rgb(255, 0, 0);">Member</span>属性，该属性设置为要使用的公共常量、静态属性或枚举成员的<span style="color: rgb(255, 0, 255);">名称</span>。</p>
-								<p>首先，我们会在一些地方定义一些常用静态属性，如：</p><pre class="prettyprint linenums"><code>namespace App1
-{
-    static class AppConstants
-    {
-        public static double BigFontSize = 30;
-    }
-}</code></pre>
-								<p><span style="white-space: pre-wrap;">下面演示几种使用<span style="color: rgb(255, 0, 255);">x:Static标记扩展</span>的方法（实际上几乎所有标记扩展都有这几种写法）。</span>
-								</p>
-								<p><span style="white-space: pre-wrap;">最繁琐的方法是在属性元素之间实例化<span style="color: rgb(255, 0, 0);">StaticExtension</span>类：</span><br></p><pre class="prettyprint linenums"><code>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
-&lt;ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:App1" &lt;!--引用命名空间：App1--&gt;
-             x:Class="App1.MainPage"&gt;
-
-    &lt;StackLayout&gt;
-        &lt;Label Text="Label No. 1"&gt;
-            &lt;Label.FontSize&gt;
-                &lt;x:StaticExtension Member="local:AppConstants.BigFontSize" /&gt;
-            &lt;/Label.FontSize&gt;
-        &lt;/Label&gt;
-    &lt;/StackLayout&gt;
-
-&lt;/ContentPage&gt;</code></pre>
-								<p>XAML解析器允许将<span style="color: rgb(255, 0, 0);">StaticExtension</span>缩写为<span style="color: rgb(255, 0, 0);">x:Static</span>：</p><pre class="prettyprint linenums"><code>&lt;Label Text="Label No. 2"&gt;
-    &lt;Label.FontSize&gt;
-        &lt;x:Static Member="local:AppConstants.BigFontSize" /&gt;
-    &lt;/Label.FontSize&gt;
-&lt;/Label&gt;</code></pre>
-								<p>还可以进一步简化，这涉及到一种新的语法：将StaticExtension类和成员设置放在<span style="color: rgb(255, 0, 255);">花括号"{}"</span>中，以表达式的方式直接设置FontSize属性：</p><pre class="prettyprint linenums"><code>&lt;Label Text="Label No. 3"
-       FontSize="{x:StaticExtension Member=local:AppConstants.BigFontSize}" /&gt;</code></pre>
-								<p>注意，大括号中没有引号，<span style="color: rgb(255, 0, 0);">StaticExtension</span>的<span style="color: rgb(255, 0, 0);">Member</span>属性不再是XML元素的属性，它是标记扩展表达式的一部分。</p>
-								<p>就像<span style="color: rgb(255, 0, 0);">StaticExtension</span>缩写为<span style="color: rgb(255, 0, 0);">x:Static</span>一样，也可以将花括号中表达式缩写为：</p><pre class="prettyprint linenums"><code>&lt;Label Text="Label No. 4"
-       FontSize="{x:Static Member=local:AppConstants.BigFontSize}" /&gt;</code></pre>
-								<p>此外，<span style="color: rgb(255, 0, 0);">StaticExtension</span>类包含一个<span style="color: rgb(255, 0, 0);">[ContentProperty("Member")]</span>特性（这是在本系列<span style="color: rgb(255, 0, 255);">XAML基础</span>篇中提到的<span style="color: rgb(255, 0, 255);">内容属性</span>），这表示<span style="color: rgb(255, 0, 0);">Member</span>属性将作为<span style="color: rgb(255, 0, 0);">StaticExtension</span>类默认的内容属性。</p>
-								<p>因此，还可以将标记扩展表达式进一步缩写：</p><pre class="prettyprint linenums"><code>&lt;Label Text="Label No. 5"
-       FontSize="{x:Static local:AppConstants.BigFontSize}" /&gt;</code></pre>
-								<p>以上5种写法，都将使文本的字号设置为30。<span style="color: rgb(255, 0, 255);">最后一种表达式是标记扩展最常见的写法。</span></p>
-								<p><span style="color: rgb(255, 0, 255);">提示：</span>别忘记在XML文档的开头引入需要使用的常量、静态属性、枚举所在的<span style="color: rgb(255, 0, 255);">命名空间</span>。如上文的：</p><pre class="prettyprint linenums"><code>xmlns:local="clr-namespace:App1"</code></pre>
-								<p><span style="color: rgb(255, 0, 0);">备注：</span>后文介绍的其他标记扩展将不再演示前面几种繁琐的写法。</p>
-								<p>2.2 x:Reference标记扩展<br></p>
-								<p>待续</p>
-								<p>2.3 x:Type标记扩展</p>
-								<p>待续</p>
-								<p>2.4 x:Array标记扩展</p>
-								<p>待续</p>
-								<p>2.5 x:Null标记扩展</p>
-								<p>待续</p>
-								<p>2.6 OnPlatform标记扩展</p>
-								<p>待续</p>
-								<p>2.7 OnIdiom标记扩展</p>
-								<p>待续</p>
-								<h2><span style="font-weight: bold; color: rgb(0, 0, 0);">3.创建XAML标记扩展</span></h2>
-								<p>1</p>
-								<h1><span style="font-weight: bold; color: rgb(0, 0, 0);">下一篇</span></h1>
-								<p>111</p>
-								<p><br></p>
+                                <div class="simditor">
+                                    <div class="simditor-body">
+                                        ${article.content}
+                                    </div>
+                                </div>
 								<div class="article-detail-copyright">
 									<p>版权声明：本文由
-										<a href="/" style="color:#1E9FFF;margin:0 5px;">不落阁</a>原创出品，转载请注明出处！</p>
+										<a href="${ctx}/home" style="color:#1E9FFF;margin:0 5px;">${about.wName}</a>原创出品，转载请注明出处！</p>
 									<p>本文链接：
-										<a href="/article/detail/43">http://www.leo96.com/article/detail/43</a>
+										<a href="${ctx}/article/detail/${article.id}">http://www.leo96.com/article/detail/${article.id}</a>
 									</p>
 								</div>
 							</div>
 						</div>
 						<div class="article-component">
 							<div class="component-box">
-								<a href="javascript:;" class="praise" blog-event="praise"><i class="fa fa-thumbs-up fa-fw"></i>点赞（<span id="praiseCnt">1</span>）</a>
-								<a href="javascript:;" class="reword" blog-event="reword">赏</a>
-								<a href="javascript:;" class="share" blog-event="share"><i class="fa fa-share-alt fa-fw"></i>分享（<span id="shareCnt">0</span>）</a>
+								<a href="javascript:;" class="praise" com.whyxs.controller.blog-event="praise"><i class="fa fa-thumbs-up fa-fw"></i>点赞（<span id="praiseCnt">${article.praiseCount}</span>）</a>
+								<a href="javascript:;" class="reword" com.whyxs.controller.blog-event="reword">赏</a>
+								<a href="javascript:;" class="share" com.whyxs.controller.blog-event="share"><i class="fa fa-share-alt fa-fw"></i>分享（<span id="shareCnt">${article.shareCount}</span>）</a>
 							</div>
 						</div>
 
-						<div class="blog-card blog-card-padding shadow">
+						<div class="com.whyxs.controller.blog-card com.whyxs.controller.blog-card-padding shadow">
 							<fieldset class="layui-elem-field layui-field-title" style="margin-bottom:0">
 								<legend>来说两句吧</legend>
 								<div class="layui-field-box">
-									<form class="layui-form blog-editor" action="">
-										<input type="hidden" id="hidArticleId" name="ArticleId" value="43" />
+									<form class="layui-form layui-form-pane com.whyxs.controller.blog-editor" action="">
+										<input type="hidden" name="articleId" value="${article.id}">
 										<div class="layui-form-item">
-											<textarea name="EditorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+											<textarea name="content" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
 										</div>
 										<div class="layui-form-item">
-											<button class="layui-btn  " lay-submit="formRemark" lay-filter="formRemark">提交评论</button>
+											<button class="layui-btn  " lay-submit="formComment" lay-filter="formComment">提交评论</button>
 										</div>
 									</form>
 								</div>
 							</fieldset>
-							<div class="blog-card-title">最新评论</div>
-							<div class="emptybox">
-								<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe705;</i></p>
-								<p>暂无评论，大侠不妨来一发？</p>
-							</div>
 						</div>
+                        <div class="layui-row layui-col-space8 commentlist">
+                            <div class="layui-col-md12">
+                                <div class="emptybox">
+                                    <p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe705;</i></p>
+                                    <p>暂无评论，大侠不妨来一发？</p>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 					<div class="layui-col-md4 right">
 						<div class="layui-row layui-col-space10">
-							<div class="layui-col-sm6 layui-col-md12 padding0">
-								<div class="article-category shadow">
-									<div class="article-category-title">分类导航</div>
-									<a href="/article/cate/1">.NET Core</a>
-									<a href="/article/cate/2">Web&#x524D;&#x7AEF;</a>
-									<a href="/article/cate/3">C#&#x57FA;&#x7840;</a>
-									<a href="/article/cate/4">&#x6742;&#x6587;&#x968F;&#x7B14;</a>
-									<a href="/article/cate/5">&#x7F51;&#x7AD9;&#x7BA1;&#x7406;</a>
-									<a href="/article/cate/6">&#x5FAE;&#x4FE1;&#x5F00;&#x53D1;</a>
-									<a href="/article/cate/8">&#x5FAE;&#x4FE1;&#x5C0F;&#x7A0B;&#x5E8F;</a>
-									<a href="/article/cate/9">Xamarin</a>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="layui-col-sm6 layui-col-md12">
-								<div class="blog-card shadow">
-									<div class="blog-card-title">相似文章</div>
-									<ul class="blog-card-ul">
-										<li>
-											<span class="layui-badge  ">1</span>
-											<a href="/article/detail/42" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;4 &#xFF1A;XAML&#x57FA;&#x7840;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;4 &#xFF1A;XAML&#x57FA;&#x7840;</a>
-										</li>
-										<li>
-											<span class="layui-badge  ">2</span>
-											<a href="/article/detail/41" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217; &#xFF1A;&#x76EE;&#x5F55;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217; &#xFF1A;&#x76EE;&#x5F55;</a>
-										</li>
-										<li>
-											<span class="layui-badge  ">3</span>
-											<a href="/article/detail/39" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;2&#xFF1A;&#x521B;&#x5EFA;&#x548C;&#x8C03;&#x8BD5;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;2&#xFF1A;&#x521B;&#x5EFA;&#x548C;&#x8C03;&#x8BD5;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">4</span>
-											<a href="/article/detail/38" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;1&#xFF1A;&#x4ECB;&#x7ECD;&#x548C;&#x5B89;&#x88C5;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;1&#xFF1A;&#x4ECB;&#x7ECD;&#x548C;&#x5B89;&#x88C5;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">5</span>
-											<a href="/article/detail/40" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;3&#xFF1A;&#x9879;&#x76EE;&#x5256;&#x6790;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;3&#xFF1A;&#x9879;&#x76EE;&#x5256;&#x6790;</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="layui-col-sm6 layui-col-md12">
-								<div class="blog-card shadow sr-rightmodule">
-									<div class="blog-card-title">随便看看</div>
-									<ul class="blog-card-ul">
-										<li>
-											<span class="layui-badge  ">1</span>
-											<a href="/article/detail/36" title="&#x5C0F;&#x7A0B;&#x5E8F;&#x9ED1;&#x79D1;&#x6280;&#x4E4B;&#x83B7;&#x53D6;&#x624B;&#x673A;&#x53F7;&#x7801;&#x3001;&#x901A;&#x8BAF;&#x5730;&#x5740;&#x3001;&#x5730;&#x7406;&#x4F4D;&#x7F6E;">&#x5C0F;&#x7A0B;&#x5E8F;&#x9ED1;&#x79D1;&#x6280;&#x4E4B;&#x83B7;&#x53D6;&#x624B;&#x673A;&#x53F7;&#x7801;&#x3001;&#x901A;&#x8BAF;&#x5730;&#x5740;&#x3001;&#x5730;&#x7406;&#x4F4D;&#x7F6E;</a>
-										</li>
-										<li>
-											<span class="layui-badge  ">2</span>
-											<a href="/article/detail/29" title="ASP.NET Core&#x7B2C;&#x4E09;&#x65B9;&#x8BA4;&#x8BC1;&#x4E4B;QQ&#x767B;&#x5F55;">ASP.NET Core&#x7B2C;&#x4E09;&#x65B9;&#x8BA4;&#x8BC1;&#x4E4B;QQ&#x767B;&#x5F55;</a>
-										</li>
-										<li>
-											<span class="layui-badge  ">3</span>
-											<a href="/article/detail/41" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217; &#xFF1A;&#x76EE;&#x5F55;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217; &#xFF1A;&#x76EE;&#x5F55;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">4</span>
-											<a href="/article/detail/31" title="&#x90AE;&#x6211;&#x7EC4;&#x4EF6; - &#x7528;&#x6237;&#x70B9;&#x51FB;&#x5373;&#x53EF;&#x53D1;&#x9001;&#x90AE;&#x4EF6;">&#x90AE;&#x6211;&#x7EC4;&#x4EF6; - &#x7528;&#x6237;&#x70B9;&#x51FB;&#x5373;&#x53EF;&#x53D1;&#x9001;&#x90AE;&#x4EF6;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">5</span>
-											<a href="/article/detail/37" title="&#x4F7F;&#x7528;ASP.NET Core SignalR&#x642D;&#x5EFA;&#x804A;&#x5929;&#x5BA4;&#xFF08;&#x672C;&#x7AD9;&#x804A;&#x5929;&#x5BA4;&#xFF09;">&#x4F7F;&#x7528;ASP.NET Core SignalR&#x642D;&#x5EFA;&#x804A;&#x5929;&#x5BA4;&#xFF08;&#x672C;&#x7AD9;&#x804A;&#x5929;&#x5BA4;&#xFF09;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">6</span>
-											<a href="/article/detail/39" title="Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;2&#xFF1A;&#x521B;&#x5EFA;&#x548C;&#x8C03;&#x8BD5;">Xamarin.Forms&#x79FB;&#x52A8;&#x5F00;&#x53D1;&#x7CFB;&#x5217;2&#xFF1A;&#x521B;&#x5EFA;&#x548C;&#x8C03;&#x8BD5;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">7</span>
-											<a href="/article/detail/30" title="&#x540E;&#x53F0;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;&#x6587;&#x7AE0;&#x4E86;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5F00;&#x59CB;&#x505A;&#x535A;&#x5BA2;&#x524D;&#x53F0;&#x3002;">&#x540E;&#x53F0;&#x53EF;&#x4EE5;&#x7BA1;&#x7406;&#x6587;&#x7AE0;&#x4E86;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5F00;&#x59CB;&#x505A;&#x535A;&#x5BA2;&#x524D;&#x53F0;&#x3002;</a>
-										</li>
-										<li>
-											<span class="layui-badge  layui-bg-blue">8</span>
-											<a href="/article/detail/32" title="&#x65B0;&#x529F;&#x80FD;&#x4E0A;&#x7EBF; - &#x535A;&#x6587;&#x914D;&#x4E50;&#xFF08;&#x7F51;&#x9875;&#x97F3;&#x4E50;&#x64AD;&#x653E;&#x5668;&#x63A8;&#x8350;&#xFF09;">&#x65B0;&#x529F;&#x80FD;&#x4E0A;&#x7EBF; - &#x535A;&#x6587;&#x914D;&#x4E50;&#xFF08;&#x7F51;&#x9875;&#x97F3;&#x4E50;&#x64AD;&#x653E;&#x5668;&#x63A8;&#x8350;&#xFF09;</a>
-										</li>
-									</ul>
-								</div>
-							</div>
+                            <div class="layui-col-sm6 layui-col-md12 layui-hide-xs layui-hide-sm">
+                                <div class="com.whyxs.controller.blog-search">
+                                    <form class="layui-form" action="">
+                                        <div class="layui-form-item">
+                                            <div class="search-keywords  shadow">
+                                                <input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input">
+                                            </div>
+                                            <div class="search-submit  shadow">
+                                                <a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i class="fa fa-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12 padding0">
+                                <div class="article-category shadow subject-list subject-list-less">
+                                    <div class="article-category-title">分类导航</div>
+                                    <#list subjectAll as subject>
+                                    <a href="${ctx}/articlelist?subject=${subject.id}">${subject.subjectName}</a>
+                                </#list>
+                                <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12 padding0">
+                                <div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12 padding0">
+                                <div class="article-category shadow subject-list subject-list-less">
+                                    <div class="article-category-title">常用标签</div>
+                                    <#list tagAll as tag>
+                                    <a href="${ctx}/articlelist?tag=${tag.id}" class="a-tag">${tag.tagName}</a>
+                                </#list>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12 padding0">
+                                <div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12">
+                                <div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+                                    <div class="ad-box">
+                                        <p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+                                        <p>广告区域</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6 layui-col-md12">
+                                <div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+                                    <div class="ad-box">
+                                        <p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+                                        <p>广告区域</p>
+                                    </div>
+                                </div>
+                            </div>
 						</div>
 						<!--右边悬浮 平板或手机设备显示-->
 						<div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
@@ -325,300 +174,310 @@
 				</div>
 			</div>
 
-			<script src="plugin/layui/layui.js"></script>
+            <script id="commentTpl" type="text/html">
+                {{# layui.each(d, function(index, item){ }}
+                <div class="layui-col-md12">
+                    <div class="comment-item sr-bottom byflow">
+                        <div class="comment-item-left">
+                            <div class="useravator" title="神秘游客">
+                                <img src="${ctx}/static/images/cat-head.jpg" alt="神秘游客" />
+                            </div>
+                        </div>
+                        <div class="comment-item-right">
+                            <div class="content">
+                                {{ item.content }}
+                            </div>
+                            <p class="createtime">— 来自<span style="padding:0 3px;padding-right:10px;color:#0094ff">神秘游客</span>{{ layui.util.timeAgo(item.createTime, false) }}</p>
+                        </div>
+                    </div>
+                </div>
+                {{# }); }}
+            </script>
 
-			<script src="js/prettify.js"></script>
-
-			<script type="text/javascript">
-				var shareIndex, $;
-
-				prettyPrint();
-
-				layui.use(['layer', 'form'], function() {
-					$ = layui.$;
-					var form = layui.form,
-						device = layui.device();
-
-					//文章顶部工具栏按钮点击事件
-					$('.tool-box button').on('click', function() {
-						var title = $(this).attr('title');
-						switch(title) {
-							case '全屏阅读':
-								var content = $('.article-detail').prop("outerHTML");
-								layer.open({
-									title: false,
-									type: 1,
-									content: content,
-									closeBtn: 0,
-									scrollbar: false,
-									area: ['100vw', '100vh'],
-									success: function(layero, index) {
-										$(layero).find('.article-tool').html('<div class="tool-box"><div class="layui-btn-group"><button class="layui-btn layui-btn-primary layui-btn-xs" title="关闭全屏"><i class="fa fa-compress fa-fw"></i></button></div></div>');
-										$(layero).find('.article-tool button').on('click', function() {
-											layer.close(index);
-										});
-									}
-								});
-								break;
-							case '展开阅读':
-								$('.right').hide();
-								$('.left').css({
-									'width': '100%'
-								});
-								$(this).attr('title', '收缩阅读');
-								$(this).html('<i class="fa fa-compress fa-fw"></i>');
-								break;
-							case '收缩阅读':
-								$('.right').show();
-								$('.left').css('width', '');
-								$(this).attr('title', '展开阅读');
-								$(this).html('<i class="fa fa-arrows-h fa-fw"></i>');
-								break;
-							case '字体缩小':
-								var fontsize = Number($('.article-detail').data('fontsize'));
-								fontsize = fontsize - 1;
-								if(fontsize < 12) fontsize = 12;
-								$('.article-detail').data('fontsize', fontsize);
-								$('.article-detail-abstract,.article-detail-content').css('font-size', fontsize + 'px');
-								break;
-							case '字体还原':
-								$('.article-detail').data('fontsize', 14);
-								$('.article-detail-abstract,.article-detail-content').css('font-size', '');
-								break;
-							case '字体放大':
-								var fontsize = Number($('.article-detail').data('fontsize'));
-								fontsize = fontsize + 1;
-								if(fontsize > 20) fontsize = 20;
-								$('.article-detail').data('fontsize', fontsize);
-								$('.article-detail-abstract,.article-detail-content').css('font-size', fontsize + 'px');
-								break;
-							case '静音':
-								$(this).attr('title', '开启');
-								$(this).html('<i class="fa fa-volume-off fa-fw"></i>');
-								ap.volume(0, false);
-								break;
-							case '开启':
-								$(this).attr('title', '静音');
-								$(this).html('<i class="fa fa-volume-up fa-fw"></i>');
-								ap.volume(0.5, false);
-								break;
-							default:
-						}
-					});
-
-					//回复按钮点击事件
-					$('.btn-reply').on('click', function() {
-						var targetId = $(this).data('targetid'),
-							targetName = $(this).data('targetname'),
-							$container = $(this).parent('p').parent().siblings('.replycontainer');
-						if($(this).text() == '回复') {
-							$container.find('textarea').attr('placeholder', '回复【' + targetName + '】');
-							$container.removeClass('layui-hide');
-							$container.find('input[name="targetUserId"]').val(targetId);
-							$(this).parents('.blog-comment li').find('.btn-reply').text('回复');
-							$(this).text('收起');
-						} else {
-							$container.addClass('layui-hide');
-							$container.find('input[name="targetUserId"]').val(0);
-							$(this).text('回复');
-						}
-					});
-
-					//监听留言回复提交
-					form.on('submit(formReply)', function(data) {
-						if($(data.elem).hasClass('layui-btn-disabled')) {
-							return false;
-						}
-						var index = layer.load(1);
-						$.ajax({
-							type: 'post',
-							url: '/api/article/reply',
-							data: data.field,
-							success: function(res) {
-								layer.close(index);
-								if(res.code === 1) {
-									layer.msg(res.msg, {
-										icon: 6
-									});
-									setTimeout(function() {
-										location.reload(true);
-									}, 500);
-								} else {
-									if(res.msg != undefined) {
-										layer.msg(res.msg, {
-											icon: 5
-										});
-									} else {
-										layer.msg('程序异常，请重试或联系作者', {
-											icon: 5
-										});
-									}
-								}
-							},
-							error: function(e) {
-								layer.close(index);
-								layer.msg("请求异常", {
-									icon: 2
-								});
-							}
-						});
-						return false;
-					});
-					var events = {
-						//分享
-						share: function() {
-								shareIndex = layer.open({
-									type: 1,
-									shade: 0.6,
-									shadeClose: true,
-									area: ['auto', '50px'],
-									resize: false,
-									skin: 'share',
-									closeBtn: 0,
-									anim: 1,
-									title: false, //不显示标题
-									content: $('.bdsharebuttonbox')
-								});
-							}
-
-							//点赞
-							,
-						praise: function() {
-								var localdata = layui.data('blog'),
-									articleId = $('#hidArticleId').val(),
-									self = this;
-								if(localdata['praise' + articleId]) {
-									layer.tips('你已点过赞了，若收获颇大，可打赏作者！^_^', self, {
-										tips: 1,
-										time: 2000
-									});
-									return;
-								}
-								$.post('/api/article/praiseorshare', {
-									articleId: articleId,
-									type: 'praise'
-								}, function(res) {
-									if(res.code === 1) {
-										layui.data('blog', {
-											key: 'praise' + $('#hidArticleId').val(),
-											value: true
-										});
-										//点赞+1
-										var cnt = Number($('#praiseCnt').text()) + 1;
-										$('#praiseCnt').text(cnt);
-										layer.tips('Thank you ^_^', self, {
-											tips: 1,
-											time: 2000
-										});
-									} else {
-										layer.msg('点赞出错啦！0.0');
-									}
-								});
-							}
-
-							//打赏
-							,
-						reword: function() {
-							layer.tab({
-								area: ['330px', '373px'],
-								shade: 0.6,
-								tab: [{
-									title: '微信',
-									content: '<img style="width:330px;height:330px;" src="/images/wx_reward.png" />'
-								}, {
-									title: '支付宝',
-									content: '<img style="width:330px;height:330px;" src="/images/ali_reward.jpg" />'
-								}]
-							});
-
-						}
-					};
-
-					$('*[blog-event]').on('click', function() {
-						var eventName = $(this).attr('blog-event');
-						events[eventName] && events[eventName].call(this);
-					});
-
-					$('*[blog-event="reword"]').on('mouseover', function() {
-						layer.tips('一元足以感动我 ^_^', this, {
-							tips: 1,
-							time: 2000
-						});
-					});
-				});
-			</script>
-
-			<div class="bdsharebuttonbox" data-tag="share_1" style="display:none;">
-				<a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-				<a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-				<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-				<a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-			</div>
-			<!--百度分享-->
-			<script>
-				window._bd_share_config = {
-					common: {
-						bdPic: 'http://res.leo96.com/images/cover/20190419_606694.jpg',
-						onAfterClick: function(cmd) {
-							var articleId = $('#hidArticleId').val();
-							if(cmd === 'weixin') {
-								layer.close(shareIndex);
-								$.post('/api/article/praiseorshare', {
-									articleId: articleId,
-									type: 'share'
-								});
-								var cnt = Number($('#shareCnt').text()) + 1;
-								$('#shareCnt').text(cnt);
-							}
-						}
-					},
-					share: [{
-						"tag": "share_1",
-						"bdSize": "32"
-					}]
-				}
-				with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion=' + ~(-new Date() / 36e5)];
-			</script>
 		</div>
-		<footer class="blog-footer">
-			<p>
-				<a href="javascript:layer.msg('正在制作')">文章归档</a>
-				<a href="javascript:layer.msg('正在制作')">网站地图</a>
-				<a href="http://sighttp.qq.com/authd?IDKEY=2167096a0e422402c1aed4ff61d3a377f190a83ac69aa30a" target="_blank">联系作者</a>
-				<a href="javascript:layer.msg('正在制作')">小额赞赏</a>
-			</p>
-			<p><span>Copyright</span><span>&copy;</span><span>2017 - 2018</span>
-				<a href="http://www.leo96.com">leo96.com</a>
-				<a href="http://www.miibeian.gov.cn/" target="_blank">蜀ICP备16029915号-4</a>
-			</p>
-		</footer>
-		<!--侧边导航-->
-		<ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
-			<li class="layui-nav-item ">
-				<a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-			</li>
-			<li class="layui-nav-item  layui-this">
-				<a href="/article/all"><i class="fa fa-book fa-fw"></i>&nbsp;学海无涯</a>
-			</li>
-			<li class="layui-nav-item ">
-				<a href="/footprint/timeline"><i class="fa fa-snowflake-o fa-fw"></i>&nbsp;点点滴滴</a>
-			</li>
-			<li class="layui-nav-item ">
-				<a href="/production"><i class="fa fa-th-large fa-fw"></i>&nbsp;个人作品</a>
-			</li>
-			<li class="layui-nav-item ">
-				<a href="/comment"><i class="fa fa-comments fa-fw"></i>&nbsp;留言交流</a>
-			</li>
-			<li class="layui-nav-item ">
-				<a href="/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-			</li>
-		</ul>
-		<!--遮罩-->
-		<div class="blog-mask animated layui-hide"></div>
-		
+
+		<!-- footer -->
+		<#include "/common/layout.footer.html">
+		<!-- 侧边栏导航 -->
+		<#include "/common/layout.nav.left.html">
+		<!-- 遮罩层 -->
+		<#include "/common/layout.mask.html">
+
 	</body>
-	<!--js-->
-	<script src="js/scrollreveal.min.js"></script>
-	<script src="js/site.min.js"></script>
+
+	<!-- js -->
+	<#include "/common/layout.js.html">
+	<script type="text/javascript">
+        $(".com.whyxs.controller.blog-nav-list").find("a[href$='articlelist']").parent("li").addClass("layui-this");
+
+        $(".load-more i").click(function(){
+            if($(this).attr("class").indexOf("down")>0){
+                $(this).removeClass("fa-angle-double-down").addClass("fa-angle-double-up").attr("title","收起更多");
+                $(this).parent().parent().prev().find(".subject-list").removeClass("subject-list-less").addClass("subject-list-more");
+            }else{
+                $(this).removeClass("fa-angle-double-up").addClass("fa-angle-double-down").attr("title","加载更多");
+                $(this).parent().parent().prev().find(".subject-list").removeClass("subject-list-more").addClass("subject-list-less");
+            }
+        });
+        var colorArr=["#2ec770","#c62e2e","#c4c62e","#3bf51c","#1c49f5","#f51ce1"],i=0;
+        $(".a-tag").each(function(){
+            $(this).css("cssText","background-color:"+colorArr[i++]+" !important")
+            if(i==6) i=0;
+        });
+
+        //阅读数+1
+        $.ajax({
+            url :'${ctx}/article/read/add',
+            data : {param:JSON.stringify({id:$("[name='articleId']").val()})},
+            success:function(res){
+                res = JSON.parse(res);
+                if(res.code == 200){
+                    $("#readCount").text(res.data.readCount);
+                }
+            }
+        });
+
+        layui.use(['layer', 'form','layedit','jquery','laytpl','flow'], function() {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var flow = layui.flow;
+            var laytpl = layui.laytpl;
+            var layedit = layui.layedit;
+            var editIndex = layedit.build('remarkEditor', {
+                height: 150,
+                tool: ['face', '|', 'left', 'center', 'right', '|', 'link'],
+            });
+
+
+            //文章顶部工具栏按钮点击事件
+            $('.tool-box button').on('click', function() {
+                var title = $(this).attr('title');
+                switch(title) {
+                    case '全屏阅读':
+                        var content = $('.article-detail').prop("outerHTML");
+                        layer.open({
+                            title: false,
+                            type: 1,
+                            content: content,
+                            closeBtn: 0,
+                            scrollbar: false,
+                            area: ['100vw', '100vh'],
+                            success: function(layero, index) {
+                                $(layero).find('.article-tool').html('<div class="tool-box"><div class="layui-btn-group"><button class="layui-btn layui-btn-primary layui-btn-xs" title="关闭全屏"><i class="fa fa-compress fa-fw"></i></button></div></div>');
+                                $(layero).find('.article-tool button').on('click', function() {
+                                    layer.close(index);
+                                });
+                            }
+                        });
+                        break;
+                    case '展开阅读':
+                        $('.right').hide();
+                        $('.left').css({'width': '100%'});
+                        $(this).attr('title', '收缩阅读');
+                        $(this).html('<i class="fa fa-compress fa-fw"></i>');
+                        break;
+                    case '收缩阅读':
+                        $('.right').show();
+                        $('.left').css('width', '');
+                        $(this).attr('title', '展开阅读');
+                        $(this).html('<i class="fa fa-arrows-h fa-fw"></i>');
+                        break;
+                    case '字体缩小':
+                        var fontsize = Number($('.article-detail').data('fontsize'));
+                        fontsize = fontsize - 1;
+                        if(fontsize < 12) fontsize = 12;
+                        $('.article-detail').data('fontsize', fontsize);
+                        $('.article-detail-abstract,.simditor-body').css('font-size', fontsize + 'px');
+                        break;
+                    case '字体还原':
+                        $('.article-detail').data('fontsize', 14);
+                        $('.article-detail-abstract,.simditor-body').css('font-size', '');
+                        break;
+                    case '字体放大':
+                        var fontsize = Number($('.article-detail').data('fontsize'));
+                        fontsize = fontsize + 1;
+                        if(fontsize > 24) fontsize = 24;
+                        $('.article-detail').data('fontsize', fontsize);
+                        $('.article-detail-abstract,.simditor-body').css('font-size', fontsize + 'px');
+                        break;
+                    default:
+                }
+            });
+
+            var alreadyShare = false;
+            var alreadyPraise = false;
+            var events = {
+                //分享
+                share: function() {
+                    var text="hahahahahah";
+                    var output = document.createElement('input');
+                    output.value = text;
+                    document.body.appendChild(output);
+                    output.select(); // 选择对象
+                    document.execCommand("Copy"); // 执行浏览器复制命令
+                    output.style.display='none';
+                    layer.msg('链接已复制到粘贴板,可以随时分享哦 ^_^',{tips: 1,time: 2000});
+                    if(alreadyShare){
+                        return;
+                    }
+                    //分享数+1
+                    $.ajax({
+                        url :'${ctx}/article/share/add',
+                        data : {param:JSON.stringify({id:$("[name='articleId']").val()})},
+                        success:function(res){
+                            res = JSON.parse(res);
+                            if(res.code == 200){
+                                $("#shareCnt").text(res.data.shareCount);
+                                alreadyShare = true;
+                            }
+                        }
+                    });
+                },
+                //点赞
+                praise: function() {
+                    if(alreadyPraise){
+                        layer.msg('您已经点过赞了,如果您觉得本文对您的帮助较大,可以打赏作者哦 ^_^',{tips: 1,time: 2000});
+                        return;
+                    }
+                    //点赞数+1
+                    $.ajax({
+                        url :'${ctx}/article/praise/add',
+                        data : {param:JSON.stringify({id:$("[name='articleId']").val()})},
+                        success:function(res){
+                            res = JSON.parse(res);
+                            if(res.code == 200){
+                                $('#praiseCnt').text(res.data.praiseCount);
+                                alreadyPraise = true;
+                                layer.msg('Thank you ^_^',{tips: 1,time: 2000});
+                            }else{
+                                this.error();
+                            }
+                        },
+                        error:function(e){
+                            layer.msg('点赞出错啦！0.0');
+                        }
+                    });
+                },
+
+                //打赏
+                reword: function() {
+                    layer.tab({
+                        area: ['330px', '373px'],
+                        shade: 0.6,
+                        tab: [{
+                            title: '微信',
+                            content: '<img style="width:330px;height:330px;" src="${about.mWechatCode}" />'
+                        }, {
+                            title: '支付宝',
+                            content: '<img style="width:330px;height:330px;" src="${about.mAlibabaCode}" />'
+                        }]
+                    });
+                }
+            };
+
+            $('*[com.whyxs.controller.blog-event]').on('click', function() {
+                var eventName = $(this).attr('com.whyxs.controller.blog-event');
+                events[eventName] && events[eventName].call(this);
+            });
+
+            $('*[com.whyxs.controller.blog-event="reword"]').on('mouseover', function() {
+                layer.tips('一元足以感动我 ^_^', this, {tips: 1,time: 2000});
+            });
+
+            //流加载
+            flow.load({
+                elem: '.commentlist',
+                isAuto: false,
+                end: '没有更多了',
+                //mb: 200,
+                done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+                    var pages, pageSize = 5;
+                    var lis = [];
+                    var param = {current:page,size:pageSize,articleId:$("[name='articleId']").val()};
+                    $.ajax({
+                        type: 'get',
+                        url: '${ctx}/comment/page',
+                        data: {param:JSON.stringify(param)},
+                        success: function (res) {
+                            res = JSON.parse(res);
+                            if (res.code === 200) {
+                                if(res.data.records.length > 0){
+                                    $('.emptybox').parent().remove();
+                                    laytpl(commentTpl.innerHTML).render(res.data.records, function (html) {lis.push(html);});
+                                    pages = res.data.pages;
+                                    next(lis.join(''), page < pages);
+
+                                    //绑定事件
+                                    sr.reveal('.sr-bottom', {scale: 1, opacity: .1, distance: '60px', duration: 1000});
+                                }
+                            } else {
+                                this.error();
+                            }
+                        },
+                        error: function (e) {
+                            layer.msg('获取数据失败', { icon: 2, shift: 6 });
+                        }
+                    });
+                }
+            });
+
+            //监听留言提交
+            form.on('submit(formComment)', function (data) {
+                var loading = layer.load(1);
+                data.field.content = layedit.getContent(editIndex);
+                $.ajax({
+                    type: 'post',
+                    url: '${ctx}/comment/add',
+                    data: {param:JSON.stringify(data.field)},
+                    success: function (res) {
+                        res = JSON.parse(res);
+                        layer.close(loading);
+                        if (res.code === 200) {
+                            layer.msg("留言发表成功", { icon: 6 });
+                            var tpl = commentTpl.innerHTML;
+                            laytpl(tpl).render([data.field], function (html) {$('.commentlist').prepend(html);});
+                            //重置编辑器
+                            $('#remarkEditor').val('');
+                            $('.com.whyxs.controller.blog-editor .layui-layedit').remove();
+                            editIndex = layedit.build('remarkEditor', {
+                                height: 150,
+                                tool: ['face', '|', 'left', 'center', 'right', '|', 'link'],
+                            });
+                            //留言数+1
+                            $.ajax({
+                                url :'${ctx}/article/comment/add',
+                                data : {param:JSON.stringify({id:$("[name='articleId']").val()})},
+                                success:function(res){
+                                    res = JSON.parse(res);
+                                    if(res.code == 200){
+                                        $("#commentCount").text(res.data.commentCount);
+                                    }
+                                }
+                            });
+                        } else {
+                            this.error();
+                        }
+                    },
+                    error: function (e) {
+                        layer.close(loading);
+                        layer.msg('程序异常，请重试或联系作者', { icon: 5 });
+                    }
+                });
+                return false;
+            });
+
+            //自定义验证规则
+            form.verify({
+                content: function (value) {
+                    value = layedit.getContent(editIndex);
+                    if (value == ""){
+                        return "至少得有一个字吧";
+                    }
+                }
+            });
+
+
+        });
+	</script>
 
 </html>

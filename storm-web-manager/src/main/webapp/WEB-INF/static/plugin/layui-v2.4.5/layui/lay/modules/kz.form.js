@@ -578,7 +578,7 @@ layui.define('layer', function(exports){
 
                     if(typeof othis.attr('lay-ignore') === 'string') return othis.show();
 
-                    var isSearch = typeof othis.attr('lay-search') === 'string'
+                    var isSearch = typeof othis.attr('lay-blog') === 'string'
                         ,placeholder = optionsFirst ? (
                         optionsFirst.value ? TIPS : (optionsFirst.innerHTML || TIPS)
                     ) : TIPS,inputValue =  !(typeof $(select).attr("lay-omit") === 'undefined')&&value!=null&&value.length>0 ? '已选择'+value.length+"条" : "";

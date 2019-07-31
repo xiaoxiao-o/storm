@@ -11,6 +11,7 @@
 package com.whyxs.mapper.blog;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.whyxs.common.bean.entity.BlogArticle;
 import org.apache.ibatis.annotations.Param;
@@ -35,7 +36,11 @@ public interface ArticleMapper extends BaseMapper<BlogArticle> {
     //api
     List<BlogArticle> selectArticleTopList();
 
-    List<BlogArticle> selectPageCustom(Pagination page);
+    List<BlogArticle> selectPageCustom(Page page,@Param("condition")Map<String,Object> condition);
+
+    List<Map<String,Object>> selectArticleRecord();
+
+    BlogArticle selectByIdCustom(String id);
 
 }
  

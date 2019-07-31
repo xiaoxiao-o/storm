@@ -3,11 +3,14 @@ package com.whyxs.common.bean.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章
@@ -35,12 +38,19 @@ public class BlogArticle extends Model<BlogArticle> {
     private int readCount;
     private int commentCount;
     private int praiseCount;
+    private int shareCount;
 
     private String createBy;
     private Date createTime;
 
+    @TableLogic
+    private Integer deleteFlag;
+
     @TableField(exist = false)
     private String subjectName;
+
+    @TableField(exist = false)
+    private List<BlogTag> tagList = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -154,6 +164,14 @@ public class BlogArticle extends Model<BlogArticle> {
         this.praiseCount = praiseCount;
     }
 
+    public int getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(int shareCount) {
+        this.shareCount = shareCount;
+    }
+
     public String getCreateBy() {
         return createBy;
     }
@@ -176,6 +194,14 @@ public class BlogArticle extends Model<BlogArticle> {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public List<BlogTag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<BlogTag> tagList) {
+        this.tagList = tagList;
     }
 
     @Override

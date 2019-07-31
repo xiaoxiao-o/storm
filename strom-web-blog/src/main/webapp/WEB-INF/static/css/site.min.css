@@ -34,13 +34,27 @@ body .share .layui-layer-content {
 .clearfix {
 	zoom: 1
 }
+.ad-box {
+	background-color: #fff;
+	padding: 25px 15px;
+	text-align: center;
+	font-size: 18px;
+}
+
+
+.ad-box  p {
+	margin: 15px 0
+}
 
 .emptybox {
 	background-color: #fff;
 	padding: 25px 15px;
 	text-align: center;
-	font-size: 18px
+	font-size: 18px;
+	border: 1px solid #ddd;
+	border-top: none;
 }
+
 
 .emptybox p {
 	margin: 15px 0
@@ -329,7 +343,8 @@ body .share .layui-layer-content {
 .blog-card {
 	background: #fff;
 	height: 100%;
-	border: 1px solid #ddd
+	border: 1px solid #ddd;
+	margin-bottom: 10px;
 }
 
 .blog-card>.blog-card-title {
@@ -776,19 +791,19 @@ body .share .layui-layer-content {
 }
 
 .bdsharebuttonbox .bds_qzone {
-	background: url(/images/global/qzone_32.png) no-repeat
+	background: url(../images/qzone_32.png) no-repeat
 }
 
 .bdsharebuttonbox .bds_tsina {
-	background: url(/images/global/weibo_32.png) no-repeat
+	background: url(../images/weibo_32.png) no-repeat
 }
 
 .bdsharebuttonbox .bds_weixin {
-	background: url(/images/global/wechat_32.png) no-repeat
+	background: url(../images/wechat_32.png) no-repeat
 }
 
 .bdsharebuttonbox .bds_sqq {
-	background: url(/images/global/qq_32.png) no-repeat
+	background: url(../images/qq_32.png) no-repeat
 }
 
 .blog-footer {
@@ -1122,7 +1137,7 @@ body .share .layui-layer-content {
 		width: 232px
 	}
 	.blogerinfo-contact>a {
-		margin: 0 15px
+		/*margin: 0 15px*/
 	}
 }
 

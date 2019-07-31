@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.whyxs.mapper.blog.ArticleMapper">
+<mapper namespace="com.whyxs.mapper.com.whyxs.controller.blog.ArticleMapper">
 
 	<insert id="BatchSaveUserRoleRel" parameterType="list">
         insert into blog_article_tag_rel (id, article_id, tag_id)
@@ -35,7 +35,7 @@
         LIMIT 8
     </select>
 
-    <select id="selectPageCustom" resultType="BlogArticle">
+    <select id="selectPageCustom" parameterType="map" resultType="BlogArticle">
         SELECT
             a.*,
             s.subject_name
@@ -44,8 +44,53 @@
             blog_subject s
         WHERE
             a.SUBJECT = s.id
+        <if test="condition != null">
+            <!-- 分类查询 -->
+            <if test="condition.subject != null and condition.subject.size() > 0">
+                AND a.SUBJECT IN
+                <foreach collection="condition.subject" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <!-- 标签查询 -->
+            <if test="condition.tag != null and condition.tag.size() > 0">
+                and EXISTS (
+                    select r.article_id from blog_article_tag_rel r where r.article_id = a.id and r.tag_id in
+                    <foreach collection="condition.tag" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                )
+            </if>
+        </if>
         ORDER BY
             a.create_time DESC
+    </select>
+
+    <select id="selectArticleRecord" resultType="map">
+        SELECT
+            DATE_FORMAT( create_time, '%Y%m' ) id,
+            DATE_FORMAT( create_time, '%Y年%m月' ) date,
+            concat('[',group_concat( concat_ws(',',concat('{\"id\":\"',id,'\",\"title\":\"',title,'\",\"createTime\":\"',DATE_FORMAT( create_time, '%m月%d日' ),'\"}')) separator ',' ),']') articles
+        FROM
+            blog_article
+        WHERE
+            STATUS = 1
+        GROUP BY
+            DATE_FORMAT( create_time, '%Y-%m' )
+        ORDER BY DATE_FORMAT( create_time, '%Y-%m' ) desc
+    </select>
+
+
+    <select id="selectByIdCustom" parameterType="string" resultType="BlogArticle">
+        SELECT
+            a.*,
+            s.subject_name
+        FROM
+            blog_article a,
+            blog_subject s
+        WHERE
+            a.SUBJECT = s.id
+        AND A.id = #{id}
     </select>
 
 

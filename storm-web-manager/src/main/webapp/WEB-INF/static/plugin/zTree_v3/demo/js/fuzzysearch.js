@@ -5,7 +5,7 @@
 
 /**
  * @param zTreeId the ztree id used to get the ztree object
- * @param searchField selector of your input for fuzzy search
+ * @param searchField selector of your input for fuzzy blog
  * @param isHighLight whether highlight the match words, default true
  * @param isExpand whether to expand the node, default false
  * 

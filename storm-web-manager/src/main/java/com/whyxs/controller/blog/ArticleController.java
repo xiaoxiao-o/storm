@@ -2,7 +2,7 @@ package com.whyxs.controller.blog;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.whyxs.common.bean.entity.BlogArticle;
-import com.whyxs.common.bean.entity.Enclosure;
+import com.whyxs.common.bean.entity.BlogEnclosure;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.common.bean.vo.RestResultVo;
 import com.whyxs.common.util.JSONUtil;
@@ -77,14 +77,14 @@ public class ArticleController extends BaseController {
     }
 
     /**
-     * 新增页
+     * 编辑页
      */
     @RequestMapping("/toEdit")
     public Object toEdit(String id,Model model) {
         BlogArticle article = articleService.selectById(id);
-        List<Enclosure> enclosures = JSONUtil.parseArray(article.getEnclosure(),Enclosure.class);
+        List<BlogEnclosure> blogEnclosures = JSONUtil.parseArray(article.getEnclosure(), BlogEnclosure.class);
         model.addAttribute("article",article);
-        model.addAttribute("enclosures",enclosures);
+        model.addAttribute("enclosures", blogEnclosures);
 
         //获取文章标签
         model.addAttribute("aTags",tagService.getTagsByArticleId(article.getId()));
@@ -118,9 +118,9 @@ public class ArticleController extends BaseController {
     @RequestMapping("/showArticle")
     public String showArticle(String id,Model model){
         BlogArticle article = articleService.selectById(id);
-        List<Enclosure> enclosures = JSONUtil.parseArray(article.getEnclosure(),Enclosure.class);
+        List<BlogEnclosure> blogEnclosures = JSONUtil.parseArray(article.getEnclosure(), BlogEnclosure.class);
         model.addAttribute("article",article);
-        model.addAttribute("enclosures",enclosures);
+        model.addAttribute("enclosures", blogEnclosures);
         return "blog/article/showArticle";
     }
 
@@ -132,7 +132,8 @@ public class ArticleController extends BaseController {
     public RestResultVo delete(String id) {
         try {
             articleService.deleteById(id);
-            tagService.deleteArticleTagRelByArticleId(id);
+            //文章删除改为逻辑删除,故关联标签不做删除
+            //tagService.deleteArticleTagRelByArticleId(id);
             return RestResultVo.success(null);
         } catch (Exception e) {
             e.printStackTrace();
