@@ -14,7 +14,7 @@
         delete from sys_user_role_rel where user_id = #{userId}
     </delete>
     
-    <select id="selectUserCountByRoleId" parameterType="string" resultType="_int">
+    <select id="selectUserCountByRoleId" parameterType="string" resultType="int">
 		SELECT
 			count(u.id) 
 		FROM
@@ -27,7 +27,7 @@
 			AND r.id = #{roleId}
 	</select>
 	
-	<select id="selectUserByRoleId" parameterType="string" resultType="SysUser">
+	<select id="selectUserByRoleId" parameterType="string" resultType="com.whyxs.common.bean.entity.SysUser">
 		SELECT
 			u.* 
 		FROM

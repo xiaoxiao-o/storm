@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.whyxs.mapper.com.whyxs.controller.blog.TagMapper">
+<mapper namespace="com.whyxs.mapper.blog.TagMapper">
 
 
-    <select id="getTagsByArticleId" parameterType="string" resultType="BlogTag">
+    <select id="getTagsByArticleId" parameterType="string" resultType="com.whyxs.common.bean.entity.BlogTag">
       SELECT
             t.*
         FROM

@@ -66,7 +66,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#article-table',
-			url  : 'com.whyxs.controller.blog/article/selectListPage',
+			url  : 'blog/article/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -97,7 +97,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建文章","com.whyxs.controller.blog/article/toAdd");	//执行新增
+            edit("新建文章","blog/article/toAdd");	//执行新增
         });
 
         //执行查询
@@ -133,7 +133,7 @@
 		table.on('tool(article-table)', function(obj) {
 			var data = obj.data;
 			if (obj.event === 'update') {
-				edit("修改文章",'com.whyxs.controller.blog/article/toEdit?id='+data.id);
+				edit("修改文章",'blog/article/toEdit?id='+data.id);
 			}else if (obj.event === 'delete') {
 			    del(data.id);
             }else if (obj.event === 'publish') {
@@ -155,7 +155,7 @@
 
         function changeStatus(id,key,val,msg){
             $.ajax({
-                url : 'com.whyxs.controller.blog/article/changeSomeStatus',
+                url : 'blog/article/changeSomeStatus',
                 data : {id:id,key:key,val:val},
                 success:function(data){
                     if(data.code==200){
@@ -174,7 +174,7 @@
 		function del(id){
 			layer.confirm('确认删除该文章？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/article/delete?id='+id,
+					url : 'blog/article/delete?id='+id,
 					success:function(data){
 						if(data.code==200){
 							layer.alert("删除成功",{icon:1},function(index){
@@ -197,7 +197,7 @@
             type : 2,
             title : "文章预览",
             area : [ '900px', '500px' ],
-            content : "com.whyxs.controller.blog/article/showArticle?id="+id
+            content : "blog/article/showArticle?id="+id
         });
     }
 

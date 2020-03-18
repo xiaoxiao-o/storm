@@ -34,7 +34,7 @@ import java.util.Map;
  */
 @Api(value="博客系统相关接口")
 @RestController
-@RequestMapping("/api/com.whyxs.controller.blog")
+@RequestMapping("/api/blog")
 public class BlogController extends BaseController {
 
     @Autowired

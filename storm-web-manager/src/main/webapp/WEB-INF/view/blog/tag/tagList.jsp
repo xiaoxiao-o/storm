@@ -44,7 +44,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#tag-table',
-			url  : 'com.whyxs.controller.blog/tag/selectListPage',
+			url  : 'blog/tag/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -70,7 +70,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建标签","com.whyxs.controller.blog/tag/toAdd");	//执行新增
+            edit("新建标签","blog/tag/toAdd");	//执行新增
         });
 
         //执行查询
@@ -108,7 +108,7 @@
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改标签",'com.whyxs.controller.blog/tag/toEdit?tagId='+data.id);
+				edit("修改标签",'blog/tag/toEdit?tagId='+data.id);
 			}
 		});
 		
@@ -117,7 +117,7 @@
 		function del(blogId){
 			layer.confirm('确认删除该标签？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/tag/del',
+					url : 'blog/tag/del',
 					data : {id:blogId},
 					success:function(data){
 						if(data.code==200){

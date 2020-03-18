@@ -44,7 +44,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#subject-table',
-			url  : 'com.whyxs.controller.blog/subject/selectListPage',
+			url  : 'blog/subject/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -70,7 +70,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建分组","com.whyxs.controller.blog/subject/toAdd");	//执行新增
+            edit("新建分组","blog/subject/toAdd");	//执行新增
         });
 
         //执行查询
@@ -108,7 +108,7 @@
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改分类",'com.whyxs.controller.blog/subject/toEdit?id='+data.id);
+				edit("修改分类",'blog/subject/toEdit?id='+data.id);
 			}
 		});
 		
@@ -117,7 +117,7 @@
 		function del(id){
 			layer.confirm('确认删除该分类？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/subject/del',
+					url : 'blog/subject/del',
 					data : {id:id},
 					success:function(data){
 						if(data.code==200){

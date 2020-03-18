@@ -8,7 +8,7 @@
 		<!-- 顶部导航 -->
 		<#include "/common/layout.nav.top.html">
 
-		<div class="com.whyxs.controller.blog-body">
+		<div class="blog-body">
 			<div class="layui-container">
 				<div class="layui-row layui-col-space15">
 					<div class="layui-col-xs12">
@@ -21,7 +21,7 @@
 						</blockquote>
 					</div>
 					<div class="layui-col-xs12">
-						<ul class="com.whyxs.controller.blog-nav-follow">
+						<ul class="blog-nav-follow">
 							<li class="current">
 								<a href="#author">关于作者</a>
 							</li>
@@ -35,7 +35,7 @@
 								<a href="#reward">小额赞赏</a>
 							</li>
 						</ul>
-						<div class="com.whyxs.controller.blog-about-container">
+						<div class="blog-about-container">
 							<span id="author" class="anchor"></span>
 							<div class="section">
 								<div class="section-title">
@@ -161,25 +161,25 @@
 	<!-- js -->
 	<#include "/common/layout.js.html">
 	<script>
-		$(".com.whyxs.controller.blog-nav-list").find("a[href$='about']").parent("li").addClass("layui-this");
+		$(".blog-nav-list").find("a[href$='about']").parent("li").addClass("layui-this");
 
         layui.use(['jquery'], function () {
             var $ = layui.$;
 
-            $('.com.whyxs.controller.blog-nav-follow').onePageNav({
+            $('.blog-nav-follow').onePageNav({
                 scrollThreshold: 0.1
             });
 
             $(window).scroll(function () {
                 if ($(window).scrollTop() > 65) {
-                    $('.com.whyxs.controller.blog-nav').addClass('layui-hide');
+                    $('.blog-nav').addClass('layui-hide');
                 } else {
-                    $('.com.whyxs.controller.blog-nav').removeClass('layui-hide');
+                    $('.blog-nav').removeClass('layui-hide');
                 }
                 if ($(window).scrollTop() > 65) {
-                    $('.com.whyxs.controller.blog-nav-follow').addClass('fixed');
+                    $('.blog-nav-follow').addClass('fixed');
                 } else {
-                    $('.com.whyxs.controller.blog-nav-follow').removeClass('fixed');
+                    $('.blog-nav-follow').removeClass('fixed');
                 }
             });
         });

@@ -44,7 +44,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#note-table',
-			url  : 'com.whyxs.controller.blog/note/selectListPage',
+			url  : 'blog/note/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -75,7 +75,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建通知","com.whyxs.controller.blog/note/toAdd");	//执行新增
+            edit("新建通知","blog/note/toAdd");	//执行新增
         });
 
         //执行查询
@@ -113,7 +113,7 @@
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改通知",'com.whyxs.controller.blog/note/toEdit?id='+data.id);
+				edit("修改通知",'blog/note/toEdit?id='+data.id);
 			}
 		});
 		
@@ -122,7 +122,7 @@
 		function del(id){
 			layer.confirm('确认删除该通知？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/note/del',
+					url : 'blog/note/del',
 					data : {id:id},
 					success:function(data){
 						if(data.code==200){

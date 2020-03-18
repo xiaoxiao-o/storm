@@ -50,7 +50,7 @@
         //监听提交
         form.on('submit(form)', function(data) {
             $.ajax({
-                url:'com.whyxs.controller.blog/note/save',
+                url:'blog/note/save',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',
                 success:function(data){

@@ -44,7 +44,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#music-table',
-			url  : 'com.whyxs.controller.blog/music/selectListPage',
+			url  : 'blog/music/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -72,7 +72,7 @@
 
         //新增按钮
         $("#add").on('click',function(){
-            edit("新建音乐","com.whyxs.controller.blog/music/toAdd");	//执行新增
+            edit("新建音乐","blog/music/toAdd");	//执行新增
         });
 
         //执行查询
@@ -110,7 +110,7 @@
 			if (obj.event === 'del') {
 				del(data.id);
 			} else if (obj.event === 'update') {
-				edit("修改音乐",'com.whyxs.controller.blog/music/toEdit?id='+data.id);
+				edit("修改音乐",'blog/music/toEdit?id='+data.id);
 			}
 		});
 		
@@ -119,7 +119,7 @@
 		function del(id){
 			layer.confirm('确认删除该音乐？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/music/del',
+					url : 'blog/music/del',
 					data : {id:id},
 					success:function(data){
 						if(data.code==200){

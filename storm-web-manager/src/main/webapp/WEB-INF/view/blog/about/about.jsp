@@ -339,7 +339,7 @@
             //data.field.pCity = $("[name='pCity']").find("option:selected").text().trim();
 
             $.ajax({
-                url:'com.whyxs.controller.blog/about/save',
+                url:'blog/about/save',
                 method:'POST',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',

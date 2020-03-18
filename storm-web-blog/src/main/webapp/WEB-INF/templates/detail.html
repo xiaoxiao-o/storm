@@ -10,7 +10,7 @@
 	<body>
 		<!-- 顶部导航 -->
 		<#include "/common/layout.nav.top.html">
-		<div class="com.whyxs.controller.blog-body">
+		<div class="blog-body">
 			<div class="layui-container">
 				<blockquote class="layui-elem-quote sitemap shadow">
 					<i class="layui-icon">&#xe715;</i>
@@ -80,7 +80,7 @@
 						</div>
 						<div class="article-component">
 							<div class="component-box">
-								<a href="javascript:;" class="praise" com.whyxs.controller.blog-event="praise"><i class="fa fa-thumbs-up fa-fw"></i>点赞（<span id="praiseCnt">${article.praiseCount}</span>）</a>
+								<a href="javascript:;" class="praise" blog-event="praise"><i class="fa fa-thumbs-up fa-fw"></i>点赞（<span id="praiseCnt">${article.praiseCount}</span>）</a>
 								<a href="javascript:;" class="reword" com.whyxs.controller.blog-event="reword">赏</a>
 								<a href="javascript:;" class="share" com.whyxs.controller.blog-event="share"><i class="fa fa-share-alt fa-fw"></i>分享（<span id="shareCnt">${article.shareCount}</span>）</a>
 							</div>

@@ -259,7 +259,7 @@
             data.field.status = data.elem.value;
 
             $.ajax({
-                url:'com.whyxs.controller.blog/article/save',
+                url:'blog/article/save',
 				method:'POST',
                 data:{"param":JSON.stringify(data.field)},
                 dataType:'json',

@@ -18,15 +18,15 @@
         });
 
 
-        $('.com.whyxs.controller.blog-navicon').click(function () {
+        $('.blog-navicon').click(function () {
             var sear = new RegExp('layui-hide');
-            if (sear.test($('.com.whyxs.controller.blog-nav-left').attr('class'))) {leftIn();
+            if (sear.test($('.blog-nav-left').attr('class'))) {leftIn();
             } else {leftOut();}
         });
 
-        $('.com.whyxs.controller.blog-mask').click(function () {leftOut();});
+        $('.blog-mask').click(function () {leftOut();});
 
-        $('.com.whyxs.controller.blog-body,.com.whyxs.controller.blog-footer').click(function () {categoryOut();});
+        $('.blog-body,.blog-footer').click(function () {categoryOut();});
 
         $('.category-toggle').click(function (e) {e.stopPropagation();categroyIn();});
 
@@ -56,35 +56,35 @@
 
 
         function leftIn() {
-            $('.com.whyxs.controller.blog-mask').unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-            $('.com.whyxs.controller.blog-nav-left').unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+            $('.blog-mask').unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+            $('.blog-nav-left').unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
 
-            $('.com.whyxs.controller.blog-mask').removeClass('maskOut');
-            $('.com.whyxs.controller.blog-mask').addClass('maskIn');
-            $('.com.whyxs.controller.blog-mask').removeClass('layui-hide');
-            $('.com.whyxs.controller.blog-mask').addClass('layui-show');
+            $('.blog-mask').removeClass('maskOut');
+            $('.blog-mask').addClass('maskIn');
+            $('.blog-mask').removeClass('layui-hide');
+            $('.blog-mask').addClass('layui-show');
 
-            $('.com.whyxs.controller.blog-nav-left').removeClass('leftOut');
-            $('.com.whyxs.controller.blog-nav-left').addClass('leftIn');
-            $('.com.whyxs.controller.blog-nav-left').removeClass('layui-hide');
-            $('.com.whyxs.controller.blog-nav-left').addClass('layui-show');
+            $('.blog-nav-left').removeClass('leftOut');
+            $('.blog-nav-left').addClass('leftIn');
+            $('.blog-nav-left').removeClass('layui-hide');
+            $('.blog-nav-left').addClass('layui-show');
         }
 
         function leftOut() {
-            $('.com.whyxs.controller.blog-mask').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                $('.com.whyxs.controller.blog-mask').addClass('layui-hide');
+            $('.blog-mask').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $('.blog-mask').addClass('layui-hide');
             });
-            $('.com.whyxs.controller.blog-nav-left').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                $('.com.whyxs.controller.blog-nav-left').addClass('layui-hide');
+            $('.blog-nav-left').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $('.blog-nav-left').addClass('layui-hide');
             });
 
-            $('.com.whyxs.controller.blog-mask').removeClass('maskIn');
-            $('.com.whyxs.controller.blog-mask').addClass('maskOut');
-            $('.com.whyxs.controller.blog-mask').removeClass('layui-show');
+            $('.blog-mask').removeClass('maskIn');
+            $('.blog-mask').addClass('maskOut');
+            $('.blog-mask').removeClass('layui-show');
 
-            $('.com.whyxs.controller.blog-nav-left').removeClass('leftIn');
-            $('.com.whyxs.controller.blog-nav-left').addClass('leftOut');
-            $('.com.whyxs.controller.blog-nav-left').removeClass('layui-show');
+            $('.blog-nav-left').removeClass('leftIn');
+            $('.blog-nav-left').addClass('leftOut');
+            $('.blog-nav-left').removeClass('layui-show');
         }
 
     });

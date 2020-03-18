@@ -7,7 +7,7 @@
 	<body>
         <!-- 顶部导航 -->
         <#include "/common/layout.nav.top.html">
-		<div class="com.whyxs.controller.blog-body">
+		<div class="blog-body">
 			<div class="layui-container">
 				<blockquote class="layui-elem-quote sitemap shadow">
 					<i class="layui-icon">&#xe715;</i>
@@ -16,13 +16,13 @@
                         <a><cite>文章归档</cite></a>
                     </span>
 				</blockquote>
-				<div class="com.whyxs.controller.blog-nav-two shadow">
+				<div class="blog-nav-two shadow">
 					<div class="layui-breadcrumb" lay-separator="|">
 						<a href="${ctx}/footprint/timeline"><span>轻言细语</span></a>
 						<a href="${ctx}/footprint/articlerecord" class="selected"><span>文章归档</span></a>
 					</div>
 				</div>
-				<div class="com.whyxs.controller.blog-panel">
+				<div class="blog-panel">
 					<div class="layui-row">
 						<div class="layui-hide-xs layui-col-md2" style="margin:10px 0">
 							<ul class="article-record-title">
@@ -65,7 +65,7 @@
     <!-- js -->
     <#include "/common/layout.js.html">
     <script>
-        $(".com.whyxs.controller.blog-nav-list").find("a[href$='footprint']").parent("li").addClass("layui-this");
+        $(".blog-nav-list").find("a[href$='footprint']").parent("li").addClass("layui-this");
         layui.use('jquery', function() {
             var $ = layui.jquery;
             var i, t;

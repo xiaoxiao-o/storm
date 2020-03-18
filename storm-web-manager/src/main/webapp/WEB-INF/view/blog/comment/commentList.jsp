@@ -47,7 +47,7 @@
 		//方法级渲染
 		table.render({
 			elem : '#comment-table',
-			url  : 'com.whyxs.controller.blog/comment/selectListPage',
+			url  : 'blog/comment/selectListPage',
 			loading: true,
 			cols : [ [ 
 				{checkbox : true,fixed : 'left',align : 'center'}, 
@@ -109,7 +109,7 @@
         function shield(id,status,msg){
             layer.confirm('确认'+msg+'该留言？', function(index) {
                 $.ajax({
-                    url : 'com.whyxs.controller.blog/comment/shield',
+                    url : 'blog/comment/shield',
                     data : {id:id,status:status},
                     success:function(data){
                         if(data.code==200){
@@ -130,7 +130,7 @@
 		function del(id){
 			layer.confirm('确认删除该留言？', function(index) {
 				$.ajax({
-					url : 'com.whyxs.controller.blog/comment/del',
+					url : 'blog/comment/del',
 					data : {id:id},
 					success:function(data){
 						if(data.code==200){

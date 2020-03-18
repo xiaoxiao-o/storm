@@ -42,7 +42,7 @@
 		//监听提交
 		form.on('submit(form)', function(data) {
 			$.ajax({
-				url:'com.whyxs.controller.blog/subject/save',
+				url:'blog/subject/save',
 				data:{"param":JSON.stringify(data.field)},
 				dataType:'json',
 				success:function(data){
