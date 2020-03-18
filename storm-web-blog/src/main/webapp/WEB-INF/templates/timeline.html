@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<#include "/common/layout.css.html">
+		<link href="${ctx}/static/css/blog/timeline.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 顶部导航 -->
+		<#include "/common/layout.nav.top.html">
+		<div class="com.whyxs.controller.blog-body">
+			<div class="layui-container">
+				<blockquote class="layui-elem-quote sitemap shadow">
+					<i class="layui-icon">&#xe715;</i>
+					<span class="layui-breadcrumb" lay-separator=">">
+						<a href="/">首页</a>
+						<a><cite>轻言细语</cite></a>
+					</span>
+				</blockquote>
+				<div class="com.whyxs.controller.blog-nav-two shadow">
+					<div class="layui-breadcrumb" lay-separator="|">
+						<a href="${ctx}/footprint/timeline" class="selected"><span>轻言细语</span></a>
+						<a href="${ctx}/footprint/articlerecord"><span>文章归档</span></a>
+					</div>
+				</div>
+				<div class="com.whyxs.controller.blog-panel">
+					<section id="cd-timeline" class="cd-container">
+
+                        <#list words as word>
+                            <div class="cd-timeline-block">
+                                <div class="cd-timeline-img cd-picture">
+                                    <#if (word_index%3==0)><img src="${ctx}/static/images/cd-icon-picture.svg" alt="Location"></#if>
+                                    <#if (word_index%3==1)><img src="${ctx}/static/images/cd-icon-movie.svg" alt="Location"></#if>
+                                    <#if (word_index%3==2)><img src="${ctx}/static/images/cd-icon-location.svg" alt="Location"></#if>
+                                </div>
+                                <div class="cd-timeline-content">
+                                    <h2>${word.title}</h2>
+                                    <p>${word.word}</p>
+                                    <span class="cd-date">${word.createTime?number_to_datetime?string('yyyy年MM月dd日')}</span>
+                                </div>
+                            </div>
+                        </#list>
+
+					</section>
+				</div>
+			</div>
+
+
+		</div>
+		<!-- footer -->
+		<#include "/common/layout.footer.html">
+		<!-- 侧边栏导航 -->
+		<#include "/common/layout.nav.left.html">
+		<!-- 遮罩层 -->
+		<#include "/common/layout.mask.html">
+
+	</body>
+
+	<!-- js -->
+	<#include "/common/layout.js.html">
+	<script>
+		$(".com.whyxs.controller.blog-nav-list").find("a[href$='footprint']").parent("li").addClass("layui-this");
+        layui.use('jquery', function() {
+            var $ = layui.jquery;
+
+            $(function() {
+                var $timeline_block = $('.cd-timeline-block');
+                $timeline_block.each(function() {
+                    if($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
+                        $(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
+                    }
+                });
+                $(window).on('scroll', function() {
+                    $timeline_block.each(function() {
+                        if($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75 && $(this).find('.cd-timeline-img').hasClass('is-hidden')) {
+                            $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+                        }
+                    });
+                });
+            });
+        });
+	</script>
+
+</html>

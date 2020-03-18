@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<#include "/common/layout.css.html">
+		<link href="${ctx}/static/css/blog/home.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 顶部导航 -->
+		<#include "/common/layout.nav.top.html">
+
+		<div class="com.whyxs.controller.blog-body">
+			<div class="layui-container">
+				<div class="layui-row layui-col-space15">
+					<div class="layui-col-md12">
+						<div class="home-tips shadow">
+							<i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>
+							<div class="home-tips-container">
+								<#list noteAvailables as note>
+									<span style="color: <#if (note.highLight==0)>#009688<#else >red</#if>"><p>${note.note}</p></span>
+								</#list>
+							</div>
+						</div>
+					</div>
+					<!--左边文章列表-->
+					<div class="layui-col-md8">
+						<div class="left-box shadow" style="padding:5px;background-color:#fff;">
+							<div class="carousel-div">
+		                		<div class="layui-carousel" id="carousel" lay-filter="">
+									<div carousel-item="">
+										<#list articleLunbos as article>
+											<div>
+												<img src="${article.cover}" width="100%" height="100%" style="cursor: pointer"
+													 title="${article.title}" onclick="window.location.href='${ctx}/article/detail/${article.id}'">
+											</div>
+										</#list>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="left-box no-border">
+							<p class="left-box-title shadow"><i class="fa fa-diamond fa-fw" aria-hidden="true"></i>置顶博文</p>
+							<#list articleTops as article>
+								<div class="article shadow clearfix <#if (article_index>0)> sr-listshow </#if>" <#if (article_index==0)>style="border-top: none;"</#if> >
+									<div class="article-left">
+										<img src="${article.cover}" alt="${article.title}" />
+									</div>
+									<div class="article-right">
+										<div class="article-title">
+											<a href="${ctx}/article/detail/${article.id}">${article.title}</a>
+										</div>
+										<div class="article-abstract">${article.summary}</div>
+										<div class="article-footer">
+											<span class="layui-hide-xs" style="width: 80px;display: inline-block">
+												<i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
+												<a style="color:#009688" href="${ctx}/articlelist?subject=${article.subject}">${article.subjectName}</a>
+											</span>
+											<span><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;${article.createTime?number_to_datetime?string('yyyy-MM-dd')}</span>
+											<span class="article-viewinfo">${article.readCount}阅读</span>
+											<span class="article-viewinfo">${article.commentCount}评论</span>
+											<span class="article-viewinfo">${article.praiseCount}点赞</span>
+											<a class="read layui-btn layui-btn-xs layui-btn-normal layui-hide-xs" href="${ctx}/article/detail/${article.id}" title="阅读全文：${article.title}">阅读全文</a>
+										</div>
+									</div>
+									<#if (article.recom==1)>
+										<div class="flag flag-left">推荐</div>
+									</#if>
+								</div>
+							</#list>
+						</div>
+					</div>
+					<!--右边小栏目-->
+					<div class="layui-col-md4">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-sm12 layui-col-md12">
+								<div class="blogerinfo shadow">
+									<div class="blogerinfo-figure">
+										<img src="${about.pHead}" alt="${about.pName}" />
+									</div>
+									<div class="blogerinfo-info">
+										<p class="blogerinfo-nickname">${about.pName}</p>
+										<p class="blogerinfo-introduce">${about.pSign}</p>
+										<p class="blogerinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;${about.pProvince}-${about.pCity}</p>
+									</div>
+									<div class="blogerinfo-contact">
+										<a target="_blank" title="微信交流" href="${about.pWechat}"><i class="fa fa-wechat fa-2x"></i></a>
+										<a target="_blank" title="QQ交流" href="${about.pQp}"><i class="fa fa-qq fa-2x"></i></a>
+										<a target="_blank" title="给我写信" href="${about.pEmail}" style="text-decoration:none;"><i class="fa fa-envelope fa-2x"></i></a>
+										<a target="_blank" title="新浪微博" href="${about.pWeibo}"><i class="fa fa-weibo fa-2x"></i></a>
+										<a target="_blank" title="GitHub" href="${about.pGit}"><i class="fa fa-github fa-2x"></i></a>
+									</div>
+									<div class="bloginfo-statistics">
+										<div class="item"><span>19</span><p>博文</p></div>
+										<div class="item"><span>12</span><p>细语</p></div>
+										<div class="item"><span>32</span><p>评论</p></div>
+										<div class="item"><span>12</span><p>留言</p></div>
+									</div>
+									<div class="bloginfo-runtime">${about.wOnTime}</div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="com.whyxs.controller.blog-card shadow">
+									<div class="com.whyxs.controller.blog-card-title">
+										<span class="icon"><i class="layui-icon" aria-hidden="true"></i></span>
+										<span class="text">热文排行</span>
+									</div>
+									<ul class="com.whyxs.controller.blog-card-ul">
+										<#list articleHots as article>
+											<li>
+												<span class="layui-badge <#if (article_index>3)>layui-bg-blue</#if>">${article_index+1}</span>
+												<a href="${ctx}/article/detail/${article.id}" title="${article.title}">${article.title}</a>
+											</li>
+										</#list>
+									</ul>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="com.whyxs.controller.blog-card shadow sr-rightmodule">
+									<div class="com.whyxs.controller.blog-card-title">
+										<span class="icon"><i class="layui-icon" aria-hidden="true"></i></span>
+										<span class="text">站长推荐</span>
+									</div>
+									<ul class="com.whyxs.controller.blog-card-ul">
+										<#list articleRecoms as article>
+										<li>
+											<span class="layui-badge <#if (article_index>3)>layui-bg-blue</#if>">${article_index+1}</span>
+											<a href="${ctx}/article/detail/${article.id}" title="${article.title}">${article.title}</a>
+										</li>
+									</#list>
+									</ul>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="com.whyxs.controller.blog-card shadow sr-rightmodule" data-scroll-reveal>
+									<div class="com.whyxs.controller.blog-card-title">
+										<span class="icon"><i class="layui-icon" aria-hidden="true"></i></span>
+										<span class="text">友情链接</span>
+									</div>
+									<ul class="blogroll">
+										<#list lBody as lb>
+											<li>
+												<a target="_blank" href="https://${lb.link}" title="${lb.name}">${lb.name}</a>
+											</li>
+										</#list>
+									</ul>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+									<div class="emptybox">
+										<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+										<p>广告区域</p>
+									</div>
+								</div>
+								<div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+									<div class="emptybox">
+										<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+										<p>广告区域</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<#include "/common/layout.footer.html">
+		<!-- 侧边栏导航 -->
+		<#include "/common/layout.nav.left.html">
+		<!-- 遮罩层 -->
+		<#include "/common/layout.mask.html">
+
+	</body>
+
+	<!-- js -->
+	<#include "/common/layout.js.html">
+	<script>
+
+        $(".com.whyxs.controller.blog-nav-list").find("a[href$='home']").parent("li").addClass("layui-this");
+
+        layui.use(['jquery', 'util','carousel'], function (carousel) {
+            var $ = layui.jquery;
+            var util = layui.util;
+
+            var serverTime = new Date();
+            var startTime = new Date(Number($(".bloginfo-runtime").text().trim()));  //开始时间  js月份从0开始;
+
+            $(function () {
+                playAnnouncement();
+                playRunTimeStr(startTime, serverTime, '.bloginfo-runtime');
+            });
+
+            function showRunTime(startTime, serverTime, selecter) {
+                var date3 = serverTime.getTime() - startTime.getTime()  //时间差的毫秒数
+
+                //计算出相差天数
+                var days = Math.floor(date3 / (24 * 3600 * 1000))
+
+                //计算出小时数
+                var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+                var hours = Math.floor(leave1 / (3600 * 1000))
+                //计算相差分钟数
+                var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+                var minutes = Math.floor(leave2 / (60 * 1000))
+                //计算相差秒数
+                var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+                var seconds = Math.round(leave3 / 1000);
+
+                var str = '博客已运行<span style="margin-left:4px;">' + util.digit(days, 2) + '天' + util.digit(hours, 2) + '时' + util.digit(minutes, 2) + '分' + util.digit(seconds, 2) + '秒</span>';
+                $(selecter).html(str);
+            }
+
+            function playRunTimeStr(startTime, serverTime, selecter) {
+                showRunTime(startTime, serverTime, selecter);
+                setInterval(function () {
+                    showRunTime(startTime, serverTime, selecter);
+                    serverTime = new Date(serverTime.getTime() + 1000 * 1);
+                }, 1000);
+            }
+
+            //播放公告
+            function playAnnouncement() {
+                var index = 0;
+                var $announcement = $('.home-tips-container>span');
+                //自动轮换
+                setInterval(function () {
+                    index++;    //下标更新
+                    if (index >= $announcement.length) {
+                        index = 0;
+                    }
+                    $announcement.eq(index).stop(true, true).fadeIn().siblings('span').fadeOut();  //下标对应的图片显示，同辈元素隐藏
+                }, 3000);
+            }
+
+            //首页轮播
+            var carousel = layui.carousel;
+            //设定各种参数
+            var ins3 = carousel.render({
+                elem: '#carousel',
+                width: '100%',
+                height: '307',
+                //indicator : 'none'
+            });
+        });
+	</script>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<#include "/common/layout.css.html">
+		<link href="${ctx}/static/css/blog/articlelist.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 顶部导航 -->
+		<#include "/common/layout.nav.top.html">
+
+		<div class="com.whyxs.controller.blog-body">
+			<div class="layui-container">
+				<blockquote class="layui-elem-quote sitemap shadow">
+					<i class="layui-icon"></i>
+					<span class="layui-breadcrumb" lay-separator=">">
+						<a href="${ctx}/home">首页</a>
+						<a><cite>学海无涯</cite></a>
+					</span>
+				</blockquote>
+				<div class="layui-row layui-col-space15">
+					<div class="layui-col-md8">
+						<div class="left-box no-border">
+							<p class="left-box-title shadow"><i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i>全部文章</p>
+							<div id="article-page-list"></div>
+							<div class="com.whyxs.controller.blog-pagebox">
+								<div class="laypage-main">
+									<div id="page"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-sm6 layui-col-md12 layui-hide-xs layui-hide-sm">
+								<div class="com.whyxs.controller.blog-search">
+									<form class="layui-form" action="">
+										<div class="layui-form-item">
+											<div class="search-keywords  shadow">
+												<input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input">
+											</div>
+											<div class="search-submit  shadow">
+												<a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i class="fa fa-search"></i></a>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="article-category shadow subject-list subject-list-less">
+									<div class="article-category-title">分类导航</div>
+									<#list subjectAll as subject>
+										<a href="${ctx}/articlelist?subject=${subject.id}">${subject.subjectName}</a>
+									</#list>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="article-category shadow subject-list subject-list-less">
+									<div class="article-category-title">常用标签</div>
+									<#list tagAll as tag>
+										<a href="${ctx}/articlelist?tag=${tag.id}" class="a-tag">${tag.tagName}</a>
+									</#list>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12 padding0">
+								<div class="load-more"><i class="fa fa-angle-double-down" title="加载更多"></i></div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+									<div class="emptybox">
+										<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+										<p>广告区域</p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md12">
+								<div class="advertisement com.whyxs.controller.blog-card shadow sr-rightmodule">
+									<div class="emptybox">
+										<p><i style="font-size:50px;color:#5fb878" class="layui-icon">&#xe64a;</i></p>
+										<p>广告区域</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--右边悬浮 平板或手机设备显示-->
+						<div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 模板 -->
+			<script id="articleTpl" type="text/html">
+				{{# layui.each(d, function(index, item){ }}
+				{{#  if(index==0){ }}
+					<div class="article shadow clearfix" style="border-top: none;" >
+				{{#  } else { }}
+					<div class="article shadow clearfix sr-listshow">
+				{{#  } }}
+						<div class="article-left">
+							<img src="{{item.cover}}" alt="{{item.title}}" />
+						</div>
+						<div class="article-right">
+							<div class="article-title">
+								<a href="${ctx}/article/detail/{{item.id}}">{{item.title}}</a>
+							</div>
+							<div class="article-abstract">{{item.summary}}</div>
+							<div class="article-footer">
+								<span class="layui-hide-xs"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;<a style="color:#009688" href="${ctx}/articlelist?subject={{item.subject}}">{{item.subjectName}}</a></span>
+								<span><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;2019-04-22</span>
+								<span class="article-viewinfo">{{item.readCount}}阅读</span>
+								<span class="article-viewinfo">{{item.commentCount}}评论</span>
+								<span class="article-viewinfo">{{item.praiseCount}}点赞</span>
+								<a class="read layui-btn layui-btn-xs layui-btn-normal layui-hide-xs" href="${ctx}/article/detail/{{item.id}}" title="阅读全文：{{item.title}}">阅读全文</a>
+							</div>
+						</div>
+						{{# if(item.recom==1){ }}
+							<div class="flag flag-left">推荐</div>
+						{{# } }}
+					</div>
+				{{# }); }}
+			</script>
+
+		</div>
+		<!-- footer -->
+		<#include "/common/layout.footer.html">
+		<!-- 侧边栏导航 -->
+		<#include "/common/layout.nav.left.html">
+		<!-- 遮罩层 -->
+		<#include "/common/layout.mask.html">
+
+	</body>
+
+	<!-- js -->
+	<#include "/common/layout.js.html">
+	<script>$(".com.whyxs.controller.blog-nav-list").find("a[href$='articlelist']").parent("li").addClass("layui-this");</script>
+	<script>
+		layui.use(['laypage','jquery','laytpl'], function () {
+			var $ = layui.jquery;
+			var laypage = layui.laypage;
+            var laytpl = layui.laytpl;
+
+			var condition = '${condition}';
+			if(condition==""){ condition = "{}"; }
+			loadArticleList(1,10,condition);
+			function loadArticleList(page,limit,condition){
+				var data = {current:page,size:limit,conditionJson:JSON.parse(condition)};
+				$.ajax({
+					url : 'article/page',           //数据接口
+					data : {param:JSON.stringify(data)},
+					success : function(res){
+						res = JSON.parse(res);
+						//数据的回显
+						var articleAll = '';
+						if(res.code == 200){
+							if(res.data.records.length > 0){
+                                laytpl(articleTpl.innerHTML).render(res.data.records, function (html) {articleAll += html;});
+								//执行一个laypage实例
+								laypage.render({
+									elem : 'page',
+									count : res.data.total,
+									limit : res.data.size,
+									curr : res.data.current,
+									jump:function(obj,first){
+										if(!first) {
+											var curr = obj.curr;
+											//回调该展示数据的方法,数据展示
+											loadArticleList(obj.curr,obj.limit,condition);
+										}
+									}
+								});
+							}else{
+                                articleAll = '<div class="emptybox shadow"><p><i style="font-size:50px;color:#5fb878" class="layui-icon"></i></p><p>暂时没有任何数据</p></div>';
+                            }
+						}else {
+                            articleAll = '<div class="emptybox shadow"><p><i style="font-size:50px;color:#5fb878" class="layui-icon"></i></p><p>服务器出错了</p></div>';
+						}
+                        $("#article-page-list").html(articleAll);
+					}
+				});
+			}
+
+			$(".load-more i").click(function(){
+				if($(this).attr("class").indexOf("down")>0){
+					$(this).removeClass("fa-angle-double-down").addClass("fa-angle-double-up").attr("title","收起更多");
+					$(this).parent().parent().prev().find(".subject-list").removeClass("subject-list-less").addClass("subject-list-more");
+				}else{
+					$(this).removeClass("fa-angle-double-up").addClass("fa-angle-double-down").attr("title","加载更多");
+					$(this).parent().parent().prev().find(".subject-list").removeClass("subject-list-more").addClass("subject-list-less");
+				}
+			});
+
+			var colorArr=["#2ec770","#c62e2e","#c4c62e","#3bf51c","#1c49f5","#f51ce1"],i=0;
+			$(".a-tag").each(function(){
+				$(this).css("cssText","background-color:"+colorArr[i++]+" !important")
+				if(i==6) i=0;
+			});
+
+
+			//监听搜索提交
+			// form.on('submit(formSearch)', function (data) {
+			//     location.href = "/Article/Search?keywords=" + escape(data.field.keywords);
+			//     return false;
+			// });
+			//
+			// //自定义验证规则
+			// form.verify({
+			//     keyword: function (value) {
+			//         if (value == ""){
+			//             return "请输入关键词";
+			//         }
+			//     }
+			// });
+
+		});
+	</script>
+
+</html>

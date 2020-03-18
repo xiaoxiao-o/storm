@@ -1,0 +1,43 @@
+.remark-list {
+	min-height: 445px;
+}
+
+.remark-list li {
+	position: relative;
+	min-height: 50px;
+	margin: 5px 0;
+}
+
+.remark-list li .user-avator {
+	padding: 2px;
+	border: 1px solid #ddd;
+	position: absolute;
+}
+
+.remark-list li .remark-content {
+	margin-left: 60px;
+	border: 1px solid #efefef;
+	height: 46px;
+	padding: 5px 8px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 12px;
+	overflow: hidden;
+	line-height: 18px;
+	background-color: #efefef;
+	color: #666;
+}
+
+.remark-list li .remark-content::after {
+	content: "";
+	border: 10px solid rgba(255, 255, 255, 0.00);
+	border-bottom: 8px solid rgba(255, 255, 255, 0.00);
+	border-top: 8px solid rgba(255, 255, 255, 0.00);
+	border-right-color: #efefef;
+	position: absolute;
+	top: 12px;
+	left: 42px;
+	display: block;
+}
+
