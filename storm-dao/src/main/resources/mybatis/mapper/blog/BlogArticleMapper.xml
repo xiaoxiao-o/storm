@@ -81,7 +81,7 @@
     </select>
 
 
-    <select id="selectByIdCustom" parameterType="string" resultType="BlogArticle">
+    <select id="selectByIdCustom" parameterType="string" resultType="com.whyxs.common.bean.entity.BlogArticle">
         SELECT
             a.*,
             s.subject_name
