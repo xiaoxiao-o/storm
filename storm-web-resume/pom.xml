@@ -8,10 +8,10 @@
         <relativePath>../storm-parent/pom.xml</relativePath>
     </parent>
     <groupId>com.whyxs</groupId>
-    <artifactId>strom-web-resume</artifactId>
+    <artifactId>storm-web-resume</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>strom-resume-com.whyxs.controller.blog Maven Webapp</name>
+    <name>storm-web-resume Maven Webapp</name>
     <url>http://www.example.com</url>
     <dependencies>
         <dependency>

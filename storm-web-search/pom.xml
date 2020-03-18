@@ -10,10 +10,10 @@
         <relativePath>../storm-parent/pom.xml</relativePath>
     </parent>
     <groupId>com.whyxs</groupId>
-    <artifactId>storm-search</artifactId>
+    <artifactId>storm-web-search</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>storm-search Maven Webapp</name>
+    <name>storm-web-search Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

@@ -8,10 +8,10 @@
         <relativePath>../storm-parent/pom.xml</relativePath>
     </parent>
     <groupId>com.whyxs</groupId>
-    <artifactId>strom-web-wedding</artifactId>
+    <artifactId>storm-web-wedding</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>strom-web-wedding Maven Webapp</name>
+    <name>storm-web-wedding Maven Webapp</name>
     <url>http://www.example.com</url>
     <dependencies>
         <dependency>

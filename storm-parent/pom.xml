@@ -10,10 +10,10 @@
         <module>../storm-service</module>
         <module>../storm-web-manager</module>
         <module>../storm-web-portal</module>
-        <module>../strom-web-com.whyxs.controller.blog</module>
+        <module>../storm-web-blog</module>
         <module>../storm-web-wedding</module>
         <module>../storm-web-resume</module>
-        <module>../storm-search</module>
+        <module>../storm-web-search</module>
     </modules>
     <packaging>pom</packaging>
 
