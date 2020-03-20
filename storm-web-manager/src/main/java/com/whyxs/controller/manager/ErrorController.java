@@ -1,4 +1,4 @@
-package com.whyxs.controller;
+package com.whyxs.controller.manager;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

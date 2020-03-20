@@ -1,9 +1,10 @@
-package com.whyxs.controller;
+package com.whyxs.controller.manager;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import com.whyxs.controller.BaseController;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;

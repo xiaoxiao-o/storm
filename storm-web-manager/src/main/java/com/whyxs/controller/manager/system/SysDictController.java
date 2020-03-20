@@ -1,4 +1,4 @@
-package com.whyxs.controller.system;
+package com.whyxs.controller.manager.system;
 
 import com.whyxs.controller.BaseController;
 import com.whyxs.service.system.SysDictService;

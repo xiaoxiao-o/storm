@@ -1,4 +1,4 @@
-package com.whyxs.controller.blog;
+package com.whyxs.controller.manager.blog;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.whyxs.common.bean.entity.BlogAbout;

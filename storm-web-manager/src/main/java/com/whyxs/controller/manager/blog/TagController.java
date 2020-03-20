@@ -1,11 +1,14 @@
-package com.whyxs.controller.blog;
+package com.whyxs.controller.manager.blog;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.whyxs.common.bean.entity.BlogComment;
+import com.whyxs.common.bean.entity.BlogTag;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.common.bean.vo.RestResultVo;
+import com.whyxs.common.util.CompleteUtil;
+import com.whyxs.common.util.JSONUtil;
 import com.whyxs.controller.BaseController;
-import com.whyxs.service.blog.CommentService;
+import com.whyxs.service.blog.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,19 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/blog/comment")
-public class CommentController extends BaseController{
+@RequestMapping("/blog/tag")
+public class TagController extends BaseController{
 	
 	@Autowired
-	private CommentService commentService;
+	private TagService tagService;
 	
 	/**
 	 * list页
 	 */
-	@RequiresPermissions({"comment:list"})
+	@RequiresPermissions({"tag:list"})
     @RequestMapping("/list")  
     public String list(Model model){
-    	return "blog/comment/commentList";
+    	return "blog/tag/tagList";
     }
     
 	/**
@@ -40,11 +43,48 @@ public class CommentController extends BaseController{
     		@RequestParam(defaultValue="10")int limit,
     		@RequestParam(required=false)String paramJson) {
     	try {
-			Page<BlogComment> pageResut = commentService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
+			Page<BlogTag> pageResut = tagService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
 			return PageListVo.success(pageResut.getTotal(), pageResut.getRecords());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return PageListVo.error();
+		}
+    }
+
+	/**
+	 * 新增
+	 */
+    @RequestMapping("/toAdd")
+    public Object toAdd(Model model) {
+		return "blog/tag/tagAdd";
+    }
+
+	/**
+	 * 编辑
+	 */
+    @RequestMapping("/toEdit")
+    public Object edit(String tagId,Model model) {
+		BlogTag tag=  tagService.selectById(tagId);
+		model.addAttribute("tag", tag);
+		return "blog/tag/tagEdit";
+    }
+
+	/**
+	 * 保存
+	 */
+    @ResponseBody
+    @RequestMapping("/save")
+    public RestResultVo save(String param) {
+    	try {
+			BlogTag tag = JSONUtil.parseObject(param, BlogTag.class);
+			if (StringUtils.isEmpty(tag.getId())){
+				CompleteUtil.initCreateInfo(tag);	//id为空时，完善创建信息
+			}
+			tagService.insertOrUpdate(tag);
+			return RestResultVo.success(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return RestResultVo.error(null);
 		}
     }
 
@@ -55,7 +95,7 @@ public class CommentController extends BaseController{
     @RequestMapping("/del")
     public RestResultVo del(String id) {
     	try {
-			commentService.deleteById(id);
+			tagService.deleteById(id);
 			return RestResultVo.success(null);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,22 +103,5 @@ public class CommentController extends BaseController{
 		}
     }
 
-	/**
-	 * 屏蔽该留言,状态置0,1
-	 */
-	@ResponseBody
-	@RequestMapping("/shield")
-	public RestResultVo shield (String id,Integer status) {
-		try {
-			BlogComment comment = commentService.selectById(id);
-			comment.setStatus(status);
-			commentService.updateById(comment);
-			return RestResultVo.success(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return RestResultVo.error(null);
-		}
-	}
-
-
+    
 }

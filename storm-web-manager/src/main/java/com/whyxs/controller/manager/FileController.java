@@ -1,6 +1,7 @@
-package com.whyxs.controller;
+package com.whyxs.controller.manager;
 
 import com.whyxs.common.bean.vo.UploadResultVo;
+import com.whyxs.controller.BaseController;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;

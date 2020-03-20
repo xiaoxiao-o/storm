@@ -1,4 +1,4 @@
-package com.whyxs.controller.portal;
+package com.whyxs.controller.manager.portal;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.whyxs.common.bean.entity.PortalAbout;

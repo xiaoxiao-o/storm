@@ -1,6 +1,7 @@
-package com.whyxs.controller;
+package com.whyxs.controller.manager;
 
 import com.whyxs.common.bean.vo.TreeMenuVo;
+import com.whyxs.controller.BaseController;
 import com.whyxs.service.system.SysMenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

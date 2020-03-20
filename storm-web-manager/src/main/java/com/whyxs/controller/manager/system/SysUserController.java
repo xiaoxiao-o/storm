@@ -1,4 +1,4 @@
-package com.whyxs.controller.system;
+package com.whyxs.controller.manager.system;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;

@@ -1,13 +1,13 @@
-package com.whyxs.controller.blog;
+package com.whyxs.controller.manager.blog;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.whyxs.common.bean.entity.BlogTag;
+import com.whyxs.common.bean.entity.BlogSubject;
 import com.whyxs.common.bean.vo.PageListVo;
 import com.whyxs.common.bean.vo.RestResultVo;
 import com.whyxs.common.util.CompleteUtil;
 import com.whyxs.common.util.JSONUtil;
 import com.whyxs.controller.BaseController;
-import com.whyxs.service.blog.TagService;
+import com.whyxs.service.blog.SubjectService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/blog/tag")
-public class TagController extends BaseController{
+@RequestMapping("/blog/subject")
+public class SubjectController extends BaseController{
 	
 	@Autowired
-	private TagService tagService;
+	private SubjectService subjectService;
 	
 	/**
 	 * list页
 	 */
-	@RequiresPermissions({"tag:list"})
+	@RequiresPermissions({"subject:list"})
     @RequestMapping("/list")  
     public String list(Model model){
-    	return "blog/tag/tagList";
+    	return "blog/subject/subjectList";
     }
     
 	/**
@@ -43,7 +43,7 @@ public class TagController extends BaseController{
     		@RequestParam(defaultValue="10")int limit,
     		@RequestParam(required=false)String paramJson) {
     	try {
-			Page<BlogTag> pageResut = tagService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
+			Page<BlogSubject> pageResut = subjectService.selectPage(this.getPage(page, limit), this.getEtityWrapper(paramJson));
 			return PageListVo.success(pageResut.getTotal(), pageResut.getRecords());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,17 +56,17 @@ public class TagController extends BaseController{
 	 */
     @RequestMapping("/toAdd")
     public Object toAdd(Model model) {
-		return "blog/tag/tagAdd";
+		return "blog/subject/subjectAdd";
     }
 
 	/**
 	 * 编辑
 	 */
     @RequestMapping("/toEdit")
-    public Object edit(String tagId,Model model) {
-		BlogTag tag=  tagService.selectById(tagId);
-		model.addAttribute("tag", tag);
-		return "blog/tag/tagEdit";
+    public Object edit(String id,Model model) {
+		BlogSubject subject =  subjectService.selectById(id);
+		model.addAttribute("subject", subject);
+		return "blog/subject/subjectEdit";
     }
 
 	/**
@@ -76,11 +76,11 @@ public class TagController extends BaseController{
     @RequestMapping("/save")
     public RestResultVo save(String param) {
     	try {
-			BlogTag tag = JSONUtil.parseObject(param, BlogTag.class);
-			if (StringUtils.isEmpty(tag.getId())){
-				CompleteUtil.initCreateInfo(tag);	//id为空时，完善创建信息
+			BlogSubject subject = JSONUtil.parseObject(param, BlogSubject.class);
+			if (StringUtils.isEmpty(subject.getId())){
+				CompleteUtil.initCreateInfo(subject);	//id为空时，完善创建信息
 			}
-			tagService.insertOrUpdate(tag);
+			subjectService.insertOrUpdate(subject);
 			return RestResultVo.success(null);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class TagController extends BaseController{
     @RequestMapping("/del")
     public RestResultVo del(String id) {
     	try {
-			tagService.deleteById(id);
+			subjectService.deleteById(id);
 			return RestResultVo.success(null);
 		} catch (Exception e) {
 			e.printStackTrace();
